@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="admin_style.css"> 
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;700&display=swap" rel="stylesheet">
     <style>
-        /* 認証フォームの基本的なスタイル (admin_style.cssに移動しても良い) */
+        /* 認証フォームの基本的なスタイル */
         #auth-container {
             position: fixed;
             top: 0;
@@ -76,11 +76,26 @@
         .file-attachment img {
             display: block;
             margin-bottom: 5px;
-            max-width: 100%; /* 親要素に合わせて調整 */
+            max-width: 100%; 
             height: auto;
         }
         .file-attachment a {
             word-break: break-all;
+        }
+        /* ログアウトボタンのスタイル */
+        .logout-button {
+            background-color: #dc3545; /* 赤色 */
+            color: white;
+            padding: 8px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-left: 20px;
+            transition: background-color 0.3s;
+        }
+        .logout-button:hover {
+            background-color: #c82333;
         }
     </style>
 </head>
@@ -111,6 +126,8 @@
       <a href="#code" class="hero-tab-button">調整用コード</a>
       <a href="#chat" class="hero-tab-button">班員チャット</a>
     </nav>
+    
+    <button onclick="logout()" class="logout-button">ログアウト</button>
 
     <div class="menu-icon" onclick="toggleMenu()">&#9776;</div>
   </div>
@@ -177,7 +194,7 @@
         <div class="tech-card animate-on-scroll">
             <h4>部品リスト (Excel)</h4>
             <p>使用部品、単価、調達状況をまとめたリストです。部品の予備発注にご活用ください。</p>
-            <a href="./parts_list_v1.xlsx" class="resource-link">部品リスト (Excel) ダウンलोड</a>
+            <a href="./parts_list_v1.xlsx" class="resource-link">部品リスト (Excel) ダウンロード</a>
         </div>
         <div class="tech-card animate-on-scroll">
             <h4>設計変更ログ</h4>
@@ -455,6 +472,14 @@ function showContent() {
     loadMessages(); // コンテンツ表示後にチャットをロード
 }
 
+// ログアウト機能を追加
+function logout() {
+    localStorage.removeItem(AUTH_KEY);
+    localStorage.removeItem(USERNAME_KEY);
+    // ページを再読み込みしてログイン画面に戻す
+    window.location.reload(); 
+}
+
 // ページ読み込み時に認証チェックを行う
 if (localStorage.getItem(AUTH_KEY) === 'true') {
     showContent();
@@ -533,8 +558,8 @@ function createAndAppendMessage(author, timeStr, text, type, fileUrl) {
         }
     }
 
-    // 投稿者名の表示を修正 (ログインユーザーが投稿した場合は「(あなた)」を付けない)
-    const displayAuthor = (currentUser === author && type === 'outgoing') ? author : author;
+    // 投稿者名の表示を修正
+    const displayAuthor = author;
 
     newMessage.innerHTML = `
         <span class="author">${displayAuthor}</span>
@@ -576,7 +601,7 @@ function postMessage() {
         author: author,
         time: timeStr,
         text: text,
-        type: 'outgoing', // 自分の投稿は常にoutgoingとして保存
+        type: 'outgoing', 
         fileUrl: fileUrl
     });
     localStorage.setItem(MESSAGE_STORAGE_KEY, JSON.stringify(savedMessages));
@@ -598,7 +623,7 @@ function getStoredMessages() {
             console.error("Failed to parse stored messages:", e);
         }
     }
-    // 初期メッセージ (投稿者名を既存のユーザー名に修正し、fileUrlを追加)
+    // 初期メッセージ (投稿者名とfileUrl)
     return [
         { author: "katunari", time: "2025/11/30 14:30", text: "Uターン角度を145度に微調整したところ、安定性が向上しました。UTURN_DURATION_MSは1450msでテスト中です。", type: "incoming", fileUrl: "" },
         { author: "Arikawa", time: "2025/11/30 15:45", text: "了解。そのコードを今日の夕方に「調整用コード」セクションに反映しておきます。", type: "outgoing", fileUrl: "" },
@@ -615,7 +640,7 @@ function loadMessages() {
     
     const messages = getStoredMessages();
     messages.forEach(msg => {
-        // ロード時は、保存されているtype（incoming/outgoing）とログインユーザーを比較して表示タイプを決定
+        // ロード時は、保存されているtypeとログインユーザーを比較して表示タイプを決定
         const isOutgoing = (localStorage.getItem(USERNAME_KEY) === msg.author);
         const displayType = isOutgoing ? 'outgoing' : 'incoming';
         
