@@ -357,14 +357,17 @@ function toggleMenu() {
   menu.classList.toggle("is-open"); 
 }
 
-// --- JS: コードコピー機能 (新規) ---
+// --- JS: コードコピー機能の修正 ---
 function copyCode(elementId) {
     const codeElement = document.getElementById(elementId);
     if (!codeElement) return;
 
-    // テキストエリアにコードを一時的にコピー
+    // 💡 修正: preタグ内の<code>のテキスト内容を正確に取得
+    const codeText = codeElement.querySelector('code').textContent; 
+    
     const tempTextArea = document.createElement('textarea');
-    tempTextArea.value = codeElement.textContent;
+    tempTextArea.value = codeText.trim();
+    
     document.body.appendChild(tempTextArea);
     tempTextArea.select();
     document.execCommand('copy');
@@ -373,31 +376,107 @@ function copyCode(elementId) {
     alert('コードがクリップボードにコピーされました！');
 }
 
-// --- JS: ダミーチャット機能 (新規) ---
+
+// ====================================================================
+// ★★★ 班員チャットの永続化機能 (localStorage) ★★★
+// ====================================================================
+
+const MESSAGE_STORAGE_KEY = 'a1_admin_chat_messages';
+
+/**
+ * 画面にメッセージ要素を生成し追加する関数
+ * @param {string} author - 投稿者名
+ * @param {string} timeStr - 投稿時間
+ * @param {string} text - メッセージ本文
+ * @param {string} type - 'outgoing' or 'incoming'
+ */
+function createAndAppendMessage(author, timeStr, text, type) {
+    const board = document.getElementById('messageBoard');
+    const newMessage = document.createElement('div');
+    newMessage.className = `message ${type}`;
+
+    newMessage.innerHTML = `
+        <span class="author">${author}</span>
+        <span class="time">${timeStr}</span>
+        <p>${text}</p>
+    `;
+    board.appendChild(newMessage);
+    // スクロールを一番下へ
+    board.scrollTop = board.scrollHeight;
+}
+
+/**
+ * メッセージを投稿し、localStorageに保存する関数
+ */
 function postMessage() {
     const input = document.getElementById('chatInput');
-    const board = document.getElementById('messageBoard');
     const text = input.value.trim();
 
     if (text) {
-        const newMessage = document.createElement('div');
-        newMessage.className = 'message outgoing';
         const now = new Date();
-        const timeStr = `${now.getFullYear()}/${now.getMonth() + 1}/${now.getDate()} ${now.getHours()}:${now.getMinutes().toString().padStart(2, '0')}`;
-        
-        newMessage.innerHTML = `
-            <span class="author">Aさん (あなた)</span>
-            <span class="time">${timeStr}</span>
-            <p>${text}</p>
-        `;
-        board.appendChild(newMessage);
+        const timeStr = `${now.getFullYear()}/${(now.getMonth() + 1).toString().padStart(2, '0')}/${now.getDate().toString().padStart(2, '0')} ${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
+        const author = "Aさん (あなた)"; // 投稿者は常に「あなた」とする
+
+        // 1. 画面に追加
+        createAndAppendMessage(author, timeStr, text, 'outgoing');
+
+        // 2. localStorageに保存
+        const savedMessages = getStoredMessages();
+        savedMessages.push({
+            author: author,
+            time: timeStr,
+            text: text,
+            type: 'outgoing'
+        });
+        localStorage.setItem(MESSAGE_STORAGE_KEY, JSON.stringify(savedMessages));
+
+        // 3. 入力フィールドをクリア
         input.value = '';
-        // スクロールを一番下へ
-        board.scrollTop = board.scrollHeight;
     }
 }
+
+/**
+ * localStorageからメッセージデータを取得する関数
+ * @returns {Array} 既存のメッセージ配列（存在しない場合は初期メッセージを含む）
+ */
+function getStoredMessages() {
+    const json = localStorage.getItem(MESSAGE_STORAGE_KEY);
+    if (json) {
+        try {
+            return JSON.parse(json);
+        } catch (e) {
+            console.error("Failed to parse stored messages:", e);
+            // パース失敗時は初期メッセージを返す
+        }
+    }
+    // メッセージが存在しない、またはパース失敗時はHTMLの初期メッセージを返す
+    return [
+        { author: "Bさん", time: "2025/11/30 14:30", text: "Uターン角度を145度に微調整したところ、安定性が向上しました。UTURN_DURATION_MSは1450msでテスト中です。", type: "incoming" },
+        { author: "Aさん (あなた)", time: "2025/11/30 15:45", text: "了解。そのコードを今日の夕方に「調整用コード」セクションに反映しておきます。", type: "outgoing" },
+        { author: "Cさん", time: "2025/11/30 18:00", text: "回路図の電源分離の場所について、少し質問があります。明日の朝会で確認させてください。", type: "incoming" }
+    ];
+}
+
+/**
+ * ページ読み込み時にメッセージボードをクリアし、保存されたメッセージを復元する関数
+ */
+function loadMessages() {
+    const board = document.getElementById('messageBoard');
+    // HTMLにハードコードされたメッセージを削除 (二重表示を防ぐ)
+    board.innerHTML = ''; 
+    
+    const messages = getStoredMessages();
+    messages.forEach(msg => {
+        createAndAppendMessage(msg.author, msg.time, msg.text, msg.type);
+    });
+}
+
+// ページ読み込みが完了したらメッセージを復元
+window.onload = loadMessages;
+
 </script>
 </body>
 </html>
+
 
 
