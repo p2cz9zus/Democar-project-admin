@@ -9,110 +9,10 @@
     <link rel="stylesheet" href="admin_style.css"> 
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;700&display=swap" rel="stylesheet">
     <style>
-        /* 認証フォームの基本的なスタイル */
-        #auth-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: #f0f0f0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-            text-align: center;
-        }
-        .auth-form {
-            background: white;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            max-width: 350px;
-            width: 90%;
-        }
-        .auth-form input {
-            width: 90%;
-            padding: 10px;
-            margin: 8px 0 15px 0;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
-            font-size: 16px;
-        }
-        .auth-form button {
-            background-color: #007bff;
-            color: white;
-            padding: 12px 20px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            width: 90%;
-            font-size: 18px;
-        }
-        .auth-form button:hover {
-            background-color: #0056b3;
-        }
-        #auth-message {
-            color: red;
-            margin-top: 10px;
-            font-weight: bold;
-        }
-        /* コンテンツをデフォルトで非表示にする */
-        #content-wrapper {
-            display: none;
-        }
-        /* 班員チャットの添付ファイル表示スタイル */
-        .file-input {
-            margin-bottom: 10px;
-        }
-        .file-attachment {
-            margin-top: 10px;
-            padding: 8px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            background-color: #f9f9f9;
-        }
-        .file-attachment img {
-            display: block;
-            margin-bottom: 5px;
-            max-width: 100%; 
-            height: auto;
-        }
-        .file-attachment a {
-            word-break: break-all;
-        }
-        /* ログアウトボタンのスタイル */
-        .logout-button {
-            background-color: #dc3545; /* 赤色 */
-            color: white;
-            padding: 8px 15px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 14px;
-            margin-left: 20px;
-            transition: background-color 0.3s;
-        }
-        .logout-button:hover {
-            background-color: #c82333;
-        }
+        /* 以前の認証やチャットボード、AIボード関連のインラインスタイルは全て削除しました */
     </style>
 </head>
 <body>
-
-<div id="auth-container">
-    <div class="auth-form">
-        <h2>管理者サイトへようこそ</h2>
-        <p>アクセスには認証が必要です。</p>
-        <input type="text" id="username" placeholder="ユーザー名 (例: Yuto)" required>
-        <input type="password" id="password" placeholder="パスワード" required>
-        <button onclick="checkAuth()">ログイン</button>
-        <p id="auth-message"></p>
-    </div>
-</div>
-
-<div id="content-wrapper">
 
 <header class="navbar">
   <div class="navbar-container">
@@ -124,10 +24,7 @@
       <a href="#schedule" class="hero-tab-button">今後の予定</a>
       <a href="#resources" class="hero-tab-button">技術リソース</a>
       <a href="#code" class="hero-tab-button">調整用コード</a>
-      <a href="#chat" class="hero-tab-button">班員チャット</a>
     </nav>
-    
-    <button onclick="logout()" class="logout-button">ログアウト</button>
 
     <div class="menu-icon" onclick="toggleMenu()">&#9776;</div>
   </div>
@@ -136,7 +33,6 @@
     <a href="#schedule" onclick="toggleMenu()">今後の予定を見る</a>
     <a href="#resources" onclick="toggleMenu()">技術リソースを見る</a>
     <a href="#code" onclick="toggleMenu()">調整用コードを見る</a>
-    <a href="#chat" onclick="toggleMenu()">班員チャットを見る</a>
   </div>
 </header>
   
@@ -145,9 +41,11 @@
     <div class="hero-content">
         <h1>【管理者用サイト】 A1班</h1>
         <h2>プロジェクト進捗管理と開発リソース共有の場</h2>
-        <p>機密性の高い情報を含むため、関係者のみ利用してください。</p>
+        <p>関係者専用の情報共有サイトです。</p>
     </div>
 </section>
+
+---
 
 <section id="schedule" class="section light-bg">
     <h3>🗓️ 今後の予定とマイルストーン</h3>
@@ -177,6 +75,8 @@
     </div>
 </section>
 
+---
+
 <section id="resources" class="section dark-bg">
     <h3>🔧 技術リソース</h3>
     <div class="tech-card-container">
@@ -203,6 +103,8 @@
         </div>
     </div>
 </section>
+
+---
 
 <section id="code" class="section light-bg">
     <h3>💻 調整用プログラム (C++ / Arduino)</h3>
@@ -385,21 +287,7 @@ void loop(void) {
     </div>
 </section>
 
-<section id="chat" class="section dark-bg">
-    <h3>💬 班員メッセージボード</h3>
-    <p class="process-preamble">班員間で非同期にメッセージを共有するための掲示板です。</p>
-
-    <div class="chat-container animate-on-scroll">
-        <div class="message-input">
-            <input type="url" placeholder="PDF/画像などの共有URL (オプション)" id="fileUrlInput" class="file-input">
-            <input type="text" placeholder="メッセージを入力してください..." id="chatInput">
-            <button onclick="postMessage()">送信</button>
-        </div>
-        <div class="message-board" id="messageBoard">
-            </div>
-    </div>
-</section>
-
+---
 
 <footer class="site-footer dark-footer">
     <div class="footer-container">
@@ -432,64 +320,13 @@ void loop(void) {
     </div>
 </footer>
 
-</div> <script>
+
+<script>
 // ====================================================================
-// ★★★ 認証ロジック ★★★
-// ====================================================================
-
-const VALID_USERS = ['Yuto', 'Arikawa', 'katunari', 'takuto'];
-const VALID_PASSWORD = 'okadaiA1';
-const AUTH_KEY = 'a1_admin_authenticated';
-const USERNAME_KEY = 'a1_current_user'; // ユーザー名を保存するキー
-
-function checkAuth() {
-    const usernameInput = document.getElementById('username').value.trim();
-    const passwordInput = document.getElementById('password').value.trim();
-    const message = document.getElementById('auth-message');
-
-    // ユーザー名チェック
-    const isUserValid = VALID_USERS.includes(usernameInput);
-    // パスワードチェック
-    const isPasswordValid = (passwordInput === VALID_PASSWORD);
-
-    if (isUserValid && isPasswordValid) {
-        // 認証成功
-        message.textContent = 'ログイン成功！';
-        localStorage.setItem(AUTH_KEY, 'true'); 
-        localStorage.setItem(USERNAME_KEY, usernameInput); // ★ ユーザー名を保存 ★
-        showContent();
-    } else {
-        // 認証失敗
-        message.textContent = 'ユーザー名またはパスワードが違います。';
-        document.getElementById('password').value = ''; 
-    }
-}
-
-// 認証状態に応じてコンテンツの表示を切り替える
-function showContent() {
-    document.getElementById('auth-container').style.display = 'none';
-    document.getElementById('content-wrapper').style.display = 'block';
-    loadMessages(); // コンテンツ表示後にチャットをロード
-}
-
-// ログアウト機能を追加
-function logout() {
-    localStorage.removeItem(AUTH_KEY);
-    localStorage.removeItem(USERNAME_KEY);
-    // ページを再読み込みしてログイン画面に戻す
-    window.location.reload(); 
-}
-
-// ページ読み込み時に認証チェックを行う
-if (localStorage.getItem(AUTH_KEY) === 'true') {
-    showContent();
-}
-
-// ====================================================================
-// ★★★ その他のJSロジック (チャット永続化機能を含む) ★★★
+// ★★★ JSロジック (認証・チャット機能は削除されました) ★★★
 // ====================================================================
 
-// --- JS: アニメーション処理 (メインサイトと共通) ---
+// --- JS: アニメーション処理 ---
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
@@ -499,7 +336,7 @@ const observer = new IntersectionObserver((entries) => {
 });
 document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
 
-// --- JS: モバイルメニュー処理 (メインサイトと共通) ---
+// --- JS: モバイルメニュー処理 ---
 function toggleMenu() {
   const menu = document.getElementById("mobileMenu");
   menu.classList.toggle("is-open"); 
@@ -519,136 +356,11 @@ function copyCode(elementId) {
     tempTextArea.select();
     document.execCommand('copy');
     document.body.removeChild(tempTextArea);
+    
+    // コピー成功メッセージ表示
+    alert("コードをクリップボードにコピーしました！");
 }
-
-
-// ====================================================================
-// ★★★ 班員チャットの永続化機能 (localStorage) ★★★
-// ====================================================================
-
-const MESSAGE_STORAGE_KEY = 'a1_admin_chat_messages';
-
-/**
- * 画面にメッセージ要素を生成し追加する関数
- */
-function createAndAppendMessage(author, timeStr, text, type, fileUrl) {
-    const board = document.getElementById('messageBoard');
-    const newMessage = document.createElement('div');
-    
-    // ログインユーザー名とメッセージ投稿者名を比較してタイプを決定
-    const currentUser = localStorage.getItem(USERNAME_KEY);
-    // 自分の投稿であれば outgoing にする（他の班員がログインしても自分のブラウザでは outgoing）
-    const messageType = (currentUser === author) ? 'outgoing' : type; 
-
-    newMessage.className = `message ${messageType}`;
-    
-    let fileHtml = '';
-    if (fileUrl) {
-        // ファイルの拡張子に基づいて表示を切り替える（簡易版）
-        const ext = fileUrl.split('.').pop().toLowerCase();
-        let linkText = '添付ファイルを開く';
-
-        if (ext === 'pdf') {
-            linkText = 'PDFファイルを開く 📄';
-        } else if (['png', 'jpg', 'jpeg', 'gif'].includes(ext)) {
-            // 画像の場合はサムネイルを表示 (URLが直リンクの場合のみ動作)
-            fileHtml = `<div class="file-attachment"><a href="${fileUrl}" target="_blank" class="resource-link"><img src="${fileUrl}" alt="添付画像" style="max-width: 100px; max-height: 100px; display: block; margin-bottom: 5px; object-fit: contain;"></a><a href="${fileUrl}" target="_blank">${linkText}</a></div>`;
-        } else {
-            fileHtml = `<div class="file-attachment"><a href="${fileUrl}" target="_blank" class="resource-link">${linkText}</a></div>`;
-        }
-    }
-
-    // 投稿者名の表示を修正
-    const displayAuthor = author;
-
-    newMessage.innerHTML = `
-        <span class="author">${displayAuthor}</span>
-        <span class="time">${timeStr}</span>
-        <p>${text}</p>
-        ${fileHtml} 
-    `;
-    board.appendChild(newMessage);
-    board.scrollTop = board.scrollHeight;
-}
-
-/**
- * メッセージを投稿し、localStorageに保存する関数
- */
-function postMessage() {
-    const input = document.getElementById('chatInput');
-    const urlInput = document.getElementById('fileUrlInput'); 
-    
-    const text = input.value.trim();
-    const fileUrl = urlInput.value.trim();
-    
-    // メッセージもURLも空の場合は処理しない
-    if (!text && !fileUrl) {
-        return;
-    }
-
-    const now = new Date();
-    const timeStr = `${now.getFullYear()}/${(now.getMonth() + 1).toString().padStart(2, '0')}/${now.getDate().toString().padStart(2, '0')} ${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
-    
-    // ログイン中のユーザー名を投稿者名として取得
-    const author = localStorage.getItem(USERNAME_KEY) || "ゲスト";
-
-    // 1. 画面に追加
-    createAndAppendMessage(author, timeStr, text, 'outgoing', fileUrl); 
-
-    // 2. localStorageに保存
-    const savedMessages = getStoredMessages();
-    savedMessages.push({
-        author: author,
-        time: timeStr,
-        text: text,
-        type: 'outgoing', 
-        fileUrl: fileUrl
-    });
-    localStorage.setItem(MESSAGE_STORAGE_KEY, JSON.stringify(savedMessages));
-
-    // 3. 入力フィールドをクリア
-    input.value = '';
-    urlInput.value = '';
-}
-
-/**
- * localStorageからメッセージデータを取得する関数
- */
-function getStoredMessages() {
-    const json = localStorage.getItem(MESSAGE_STORAGE_KEY);
-    if (json) {
-        try {
-            return JSON.parse(json);
-        } catch (e) {
-            console.error("Failed to parse stored messages:", e);
-        }
-    }
-    // 初期メッセージ (投稿者名とfileUrl)
-    return [
-       
-    ];
-}
-
-/**
- * ページ読み込み時にメッセージボードをクリアし、保存されたメッセージを復元する関数
- */
-function loadMessages() {
-    const board = document.getElementById('messageBoard');
-    board.innerHTML = ''; 
-    
-    const messages = getStoredMessages();
-    messages.forEach(msg => {
-        // ロード時は、保存されているtypeとログインユーザーを比較して表示タイプを決定
-        const isOutgoing = (localStorage.getItem(USERNAME_KEY) === msg.author);
-        const displayType = isOutgoing ? 'outgoing' : 'incoming';
-        
-        createAndAppendMessage(msg.author, msg.time, msg.text, displayType, msg.fileUrl);
-    });
-}
-
-// loadMessages() は認証成功時 (showContent) に呼び出されます
 
 </script>
 </body>
 </html>
-
