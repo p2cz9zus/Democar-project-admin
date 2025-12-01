@@ -6,9 +6,98 @@
     <title>【管理者用】創成プロジェクト A1班: 管理・開発リソース</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="admin_style.css"> <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="admin_style.css"> 
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        /* 認証フォームの基本的なスタイル (admin_style.cssに移動しても良い) */
+        #auth-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            text-align: center;
+        }
+        .auth-form {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            max-width: 350px;
+            width: 90%;
+        }
+        .auth-form input {
+            width: 90%;
+            padding: 10px;
+            margin: 8px 0 15px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+        .auth-form button {
+            background-color: #007bff;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 90%;
+            font-size: 18px;
+        }
+        .auth-form button:hover {
+            background-color: #0056b3;
+        }
+        #auth-message {
+            color: red;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        /* コンテンツをデフォルトで非表示にする */
+        #content-wrapper {
+            display: none;
+        }
+        /* 班員チャットの添付ファイル表示スタイル */
+        .file-input {
+            margin-bottom: 10px;
+        }
+        .file-attachment {
+            margin-top: 10px;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: #f9f9f9;
+        }
+        .file-attachment img {
+            display: block;
+            margin-bottom: 5px;
+            max-width: 100%; /* 親要素に合わせて調整 */
+            height: auto;
+        }
+        .file-attachment a {
+            word-break: break-all;
+        }
+    </style>
 </head>
 <body>
+
+<div id="auth-container">
+    <div class="auth-form">
+        <h2>管理者サイトへようこそ</h2>
+        <p>アクセスには認証が必要です。</p>
+        <input type="text" id="username" placeholder="ユーザー名 (例: Yuto)" required>
+        <input type="password" id="password" placeholder="パスワード" required>
+        <button onclick="checkAuth()">ログイン</button>
+        <p id="auth-message"></p>
+    </div>
+</div>
+
+<div id="content-wrapper">
 
 <header class="navbar">
   <div class="navbar-container">
@@ -88,7 +177,7 @@
         <div class="tech-card animate-on-scroll">
             <h4>部品リスト (Excel)</h4>
             <p>使用部品、単価、調達状況をまとめたリストです。部品の予備発注にご活用ください。</p>
-            <a href="./parts_list_v1.xlsx" class="resource-link">部品リスト (Excel) ダウンロード</a>
+            <a href="./parts_list_v1.xlsx" class="resource-link">部品リスト (Excel) ダウンलोड</a>
         </div>
         <div class="tech-card animate-on-scroll">
             <h4>設計変更ログ</h4>
@@ -118,27 +207,27 @@ Servo front_steer_servo; // ステアリング制御用サーボモーター
 
 // --- シーケンス状態の定義（課題の進行を管理） ---
 enum SequenceState {
-  WAIT_START = 0, // ピース待機中（リセット状態）
-  DRIVING,        // 自律的な直進駆動中
-  PAUSE,          // ピース除去による一時停止中（金属検出時）
-  COMPLETE        // 課題完了（未使用の可能性あり）
+  WAIT_START = 0, // ピース待機中（リセット状態）
+  DRIVING,        // 自律的な直進駆動中
+  PAUSE,          // ピース除去による一時停止中（金属検出時）
+  COMPLETE        // 課題完了（未使用の可能性あり）
 };
 SequenceState current_state = WAIT_START;
 
 // --- 動作パラメータ（試験後に調整） ---
-const int DC_DRIVE_PWM = 200;  // DCモーターの駆動速度 (0-255)
+const int DC_DRIVE_PWM = 200;  // DCモーターの駆動速度 (0-255)
 const int STEER_STRAIGHT = 90; // サーボ: 直進角度
-const int STEER_LEFT = 140;    // サーボ: 左旋回角度 (Uターン用)
-const int STEER_RIGHT = 40;    // サーボ: 右旋回角度（※未使用）
+const int STEER_LEFT = 140;    // サーボ: 左旋回角度 (Uターン用)
+const int STEER_RIGHT = 40;    // サーボ: 右旋回角度（※未使用）
 
 // Uターン動作に必要な時間（ミリ秒） - 調整必須 ★
 const unsigned long UTURN_DURATION_MS = 1500;
 
 // --- ピン割り当て ---
-const int METAL_SENSOR_PIN = 3;  // 金属センサーの入力ピン
-const int SERVO_PIN = 9;         // ステアリングサーボの出力ピン
-const int DC_MOTOR_PWM = 5;      // 後輪DCモーターの速度制御（PWM）ピン
-const int DC_MOTOR_DIR = 6;      // 後輪DCモーターの方向制御ピン
+const int METAL_SENSOR_PIN = 3;  // 金属センサーの入力ピン
+const int SERVO_PIN = 9;         // ステアリングサーボの出力ピン
+const int DC_MOTOR_PWM = 5;      // 後輪DCモーターの速度制御（PWM）ピン
+const int DC_MOTOR_DIR = 6;      // 後輪DCモーターの方向制御ピン
 
 // --- デバウンス変数 ---
 unsigned long lastSensorChange = 0; // 最後にセンサー値が変化した時間
@@ -152,38 +241,38 @@ int lastMetalStatus = HIGH; // 前回の金属センサーの状態 (HIGH=金属
 
 // 全ての駆動を停止させる
 void stop_all_motors(void) {
-  analogWrite(DC_MOTOR_PWM, 0); // DCモーターの速度を0に設定
-  front_steer_servo.write(STEER_STRAIGHT); // ステアリングを直進に戻す
+  analogWrite(DC_MOTOR_PWM, 0); // DCモーターの速度を0に設定
+  front_steer_servo.write(STEER_STRAIGHT); // ステアリングを直進に戻す
 }
 
 // 直進駆動
 void drive_forward() {
-  front_steer_servo.write(STEER_STRAIGHT); // ステアリングは直進
-  digitalWrite(DC_MOTOR_DIR, HIGH); // 前進方向
-  analogWrite(DC_MOTOR_PWM, DC_DRIVE_PWM); // 設定速度で駆動
+  front_steer_servo.write(STEER_STRAIGHT); // ステアリングは直進
+  digitalWrite(DC_MOTOR_DIR, HIGH); // 前進方向
+  analogWrite(DC_MOTOR_PWM, DC_DRIVE_PWM); // 設定速度で駆動
 }
 
 // 左旋回駆動（Uターンの一段階）
 void drive_turn_left() {
-  front_steer_servo.write(STEER_LEFT); // ステアリングを左旋回角度に
-  digitalWrite(DC_MOTOR_DIR, HIGH); // 前進方向
-  analogWrite(DC_MOTOR_PWM, DC_DRIVE_PWM); // 設定速度で駆動
+  front_steer_servo.write(STEER_LEFT); // ステアリングを左旋回角度に
+  digitalWrite(DC_MOTOR_DIR, HIGH); // 前進方向
+  analogWrite(DC_MOTOR_PWM, DC_DRIVE_PWM); // 設定速度で駆動
 }
 
 // Uターンを自律的に実行する関数（課題必須動作）
 void perform_uturn() {
-  Serial.println("🔥 Performing mandatory U-Turn...");
-  // 指定時間だけ左旋回を行う
-  drive_turn_left();
-  delay(UTURN_DURATION_MS); // 指定時間待機
-  stop_all_motors(); // 一旦停止
+  Serial.println("🔥 Performing mandatory U-Turn...");
+  // 指定時間だけ左旋回を行う
+  drive_turn_left();
+  delay(UTURN_DURATION_MS); // 指定時間待機
+  stop_all_motors(); // 一旦停止
 }
 
 // 状態遷移のための駆動停止処理（PAUSE状態へ移行）
 void drive_motor_stop_pause() {
-  stop_all_motors();
-  current_state = PAUSE;
-  Serial.println("⏸️ State PAUSE (Piece removed).");
+  stop_all_motors();
+  current_state = PAUSE;
+  Serial.println("⏸️ State PAUSE (Piece removed).");
 }
 
 
@@ -192,86 +281,86 @@ void drive_motor_stop_pause() {
 // ----------------------------------------------------------------------
 
 void setup(void) {
-  Serial.begin(9600); // PCとのデバッグ用シリアル通信を開始
+  Serial.begin(9600); // PCとのデバッグ用シリアル通信を開始
 
-  // ピン設定
-  pinMode(DC_MOTOR_PWM, OUTPUT); // DCモーター速度制御
-  pinMode(DC_MOTOR_DIR, OUTPUT); // DCモーター方向制御
-  // METAL_SENSOR_PIN: LOW=金属あり, HIGH=金属なし
-  pinMode(METAL_SENSOR_PIN, INPUT_PULLUP); // 内部プルアップを使用してセンサーを入力に設定
+  // ピン設定
+  pinMode(DC_MOTOR_PWM, OUTPUT); // DCモーター速度制御
+  pinMode(DC_MOTOR_DIR, OUTPUT); // DCモーター方向制御
+  // METAL_SENSOR_PIN: LOW=金属あり, HIGH=金属なし
+  pinMode(METAL_SENSOR_PIN, INPUT_PULLUP); // 内部プルアップを使用してセンサーを入力に設定
 
-  front_steer_servo.attach(SERVO_PIN); // D9ピンにサーボを接続
+  front_steer_servo.attach(SERVO_PIN); // D9ピンにサーボを接続
 
-  stop_all_motors(); // 初期状態で全モーターを停止
-  Serial.println("System Ready. Autonomous Mode Active.");
+  stop_all_motors(); // 初期状態で全モーターを停止
+  Serial.println("System Ready. Autonomous Mode Active.");
 }
 
 
 void loop(void) {
-  // 1. センサー読み取り（デバウンス処理）
-  int raw_metal_status = digitalRead(METAL_SENSOR_PIN);
-  int metal_status = raw_metal_status;
+  // 1. センサー読み取り（デバウンス処理）
+  int raw_metal_status = digitalRead(METAL_SENSOR_PIN);
+  int metal_status = raw_metal_status;
 
-  // センサー値が前回と異なる場合、デバウンス開始時間を記録
-  if (raw_metal_status != lastMetalStatus) {
-    lastSensorChange = millis();
-  }
+  // センサー値が前回と異なる場合、デバウンス開始時間を記録
+  if (raw_metal_status != lastMetalStatus) {
+    lastSensorChange = millis();
+  }
 
-  // 2. 安定したセンサー値での状態遷移判定（課題の進行）
-  if ((millis() - lastSensorChange) > DEBOUNCE_DELAY) {
-    metal_status = raw_metal_status;
+  // 2. 安定したセンサー値での状態遷移判定（課題の進行）
+  if ((millis() - lastSensorChange) > DEBOUNCE_DELAY) {
+    metal_status = raw_metal_status;
 
-    // 安定したセンサー値で状態をチェック
-    switch (current_state) {
+    // 安定したセンサー値で状態をチェック
+    switch (current_state) {
 
-      case WAIT_START:
-        // 【ピースを置く】(LOW) -> 駆動開始 (DRIVING)
-        if (metal_status == LOW) {
-          current_state = DRIVING;
-          Serial.println("▶️ DRIVING state started.");
-        }
-        break;
+      case WAIT_START:
+        // 【ピースを置く】(LOW) -> 駆動開始 (DRIVING)
+        if (metal_status == LOW) {
+          current_state = DRIVING;
+          Serial.println("▶️ DRIVING state started.");
+        }
+        break;
 
-      case DRIVING:
-        // AI指令がないため、直進を継続
-        drive_forward();
+      case DRIVING:
+        // AI指令がないため、直進を継続
+        drive_forward();
 
-        // 【ピースを取る】(HIGH) -> 一時停止へ (PAUSE)
-        if (metal_status == HIGH) {
-          drive_motor_stop_pause(); // モーターを停止し、PAUSE状態へ
-        }
-        break;
+        // 【ピースを取る】(HIGH) -> 一時停止へ (PAUSE)
+        if (metal_status == HIGH) {
+          drive_motor_stop_pause(); // モーターを停止し、PAUSE状態へ
+        }
+        break;
 
-      case PAUSE:
-        // 【ピースを置く】(LOW) -> Uターン実行後に駆動再開
-        if (metal_status == LOW) {
-          // 課題ルール: Uターン実行
-          perform_uturn();
+      case PAUSE:
+        // 【ピースを置く】(LOW) -> Uターン実行後に駆動再開
+        if (metal_status == LOW) {
+          // 課題ルール: Uターン実行
+          perform_uturn();
 
-          // Uターン完了後、DRIVING状態に移行
-          current_state = DRIVING;
-          Serial.println("🔄 DRIVING resumed after U-turn.");
-        }
-        break;
+          // Uターン完了後、DRIVING状態に移行
+          current_state = DRIVING;
+          Serial.println("🔄 DRIVING resumed after U-turn.");
+        }
+        break;
 
-      case COMPLETE:
-        // 【ピースを取る】(HIGH) -> リセット (WAIT_START)
-        if (metal_status == HIGH) {
-          current_state = WAIT_START;
-          Serial.println("⏹️ Sequence Reset.");
-        }
-        break;
+      case COMPLETE:
+        // 【ピースを取る】(HIGH) -> リセット (WAIT_START)
+        if (metal_status == HIGH) {
+          current_state = WAIT_START;
+          Serial.println("⏹️ Sequence Reset.");
+        }
+        break;
 
-      default:
-        // 予期せぬ状態の場合、全て停止してリセット状態へ
-        stop_all_motors();
-        current_state = WAIT_START;
-        break;
-    }
-  }
+      default:
+        // 予期せぬ状態の場合、全て停止してリセット状態へ
+        stop_all_motors();
+        current_state = WAIT_START;
+        break;
+    }
+  }
 
-  // 次のループのためにセンサー値を更新
-  lastMetalStatus = raw_metal_status;
+  // 次のループのためにセンサー値を更新
+  lastMetalStatus = raw_metal_status;
 }
 </code></pre>
             </div>
@@ -285,26 +374,12 @@ void loop(void) {
 
     <div class="chat-container animate-on-scroll">
         <div class="message-input">
+            <input type="url" placeholder="PDF/画像などの共有URL (オプション)" id="fileUrlInput" class="file-input">
             <input type="text" placeholder="メッセージを入力してください..." id="chatInput">
             <button onclick="postMessage()">送信</button>
         </div>
         <div class="message-board" id="messageBoard">
-            <div class="message incoming">
-                <span class="author">Bさん</span>
-                <span class="time">2025/11/30 14:30</span>
-                <p>Uターン角度を145度に微調整したところ、安定性が向上しました。UTURN_DURATION_MSは1450msでテスト中です。</p>
             </div>
-            <div class="message outgoing">
-                <span class="author">Aさん (あなた)</span>
-                <span class="time">2025/11/30 15:45</span>
-                <p>了解。そのコードを今日の夕方に「調整用コード」セクションに反映しておきます。</p>
-            </div>
-            <div class="message incoming">
-                <span class="author">Cさん</span>
-                <span class="time">2025/11/30 18:00</span>
-                <p>回路図の電源分離の場所について、少し質問があります。明日の朝会で確認させてください。</p>
-            </div>
-        </div>
     </div>
 </section>
 
@@ -340,7 +415,55 @@ void loop(void) {
     </div>
 </footer>
 
-<script>
+</div> <script>
+// ====================================================================
+// ★★★ 認証ロジック ★★★
+// ====================================================================
+
+const VALID_USERS = ['Yuto', 'Arikawa', 'katunari', 'takuto'];
+const VALID_PASSWORD = 'okadaiA1';
+const AUTH_KEY = 'a1_admin_authenticated';
+const USERNAME_KEY = 'a1_current_user'; // ユーザー名を保存するキー
+
+function checkAuth() {
+    const usernameInput = document.getElementById('username').value.trim();
+    const passwordInput = document.getElementById('password').value.trim();
+    const message = document.getElementById('auth-message');
+
+    // ユーザー名チェック
+    const isUserValid = VALID_USERS.includes(usernameInput);
+    // パスワードチェック
+    const isPasswordValid = (passwordInput === VALID_PASSWORD);
+
+    if (isUserValid && isPasswordValid) {
+        // 認証成功
+        message.textContent = 'ログイン成功！';
+        localStorage.setItem(AUTH_KEY, 'true'); 
+        localStorage.setItem(USERNAME_KEY, usernameInput); // ★ ユーザー名を保存 ★
+        showContent();
+    } else {
+        // 認証失敗
+        message.textContent = 'ユーザー名またはパスワードが違います。';
+        document.getElementById('password').value = ''; 
+    }
+}
+
+// 認証状態に応じてコンテンツの表示を切り替える
+function showContent() {
+    document.getElementById('auth-container').style.display = 'none';
+    document.getElementById('content-wrapper').style.display = 'block';
+    loadMessages(); // コンテンツ表示後にチャットをロード
+}
+
+// ページ読み込み時に認証チェックを行う
+if (localStorage.getItem(AUTH_KEY) === 'true') {
+    showContent();
+}
+
+// ====================================================================
+// ★★★ その他のJSロジック (チャット永続化機能を含む) ★★★
+// ====================================================================
+
 // --- JS: アニメーション処理 (メインサイトと共通) ---
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
@@ -357,12 +480,11 @@ function toggleMenu() {
   menu.classList.toggle("is-open"); 
 }
 
-// --- JS: コードコピー機能の修正 ---
+// --- JS: コードコピー機能 ---
 function copyCode(elementId) {
     const codeElement = document.getElementById(elementId);
     if (!codeElement) return;
 
-    // 💡 修正: preタグ内の<code>のテキスト内容を正確に取得
     const codeText = codeElement.querySelector('code').textContent; 
     
     const tempTextArea = document.createElement('textarea');
@@ -372,8 +494,6 @@ function copyCode(elementId) {
     tempTextArea.select();
     document.execCommand('copy');
     document.body.removeChild(tempTextArea);
-
-    alert('コードがクリップボードにコピーされました！');
 }
 
 
@@ -385,23 +505,44 @@ const MESSAGE_STORAGE_KEY = 'a1_admin_chat_messages';
 
 /**
  * 画面にメッセージ要素を生成し追加する関数
- * @param {string} author - 投稿者名
- * @param {string} timeStr - 投稿時間
- * @param {string} text - メッセージ本文
- * @param {string} type - 'outgoing' or 'incoming'
  */
-function createAndAppendMessage(author, timeStr, text, type) {
+function createAndAppendMessage(author, timeStr, text, type, fileUrl) {
     const board = document.getElementById('messageBoard');
     const newMessage = document.createElement('div');
-    newMessage.className = `message ${type}`;
+    
+    // ログインユーザー名とメッセージ投稿者名を比較してタイプを決定
+    const currentUser = localStorage.getItem(USERNAME_KEY);
+    // 自分の投稿であれば outgoing にする（他の班員がログインしても自分のブラウザでは outgoing）
+    const messageType = (currentUser === author) ? 'outgoing' : type; 
+
+    newMessage.className = `message ${messageType}`;
+    
+    let fileHtml = '';
+    if (fileUrl) {
+        // ファイルの拡張子に基づいて表示を切り替える（簡易版）
+        const ext = fileUrl.split('.').pop().toLowerCase();
+        let linkText = '添付ファイルを開く';
+
+        if (ext === 'pdf') {
+            linkText = 'PDFファイルを開く 📄';
+        } else if (['png', 'jpg', 'jpeg', 'gif'].includes(ext)) {
+            // 画像の場合はサムネイルを表示 (URLが直リンクの場合のみ動作)
+            fileHtml = `<div class="file-attachment"><a href="${fileUrl}" target="_blank" class="resource-link"><img src="${fileUrl}" alt="添付画像" style="max-width: 100px; max-height: 100px; display: block; margin-bottom: 5px; object-fit: contain;"></a><a href="${fileUrl}" target="_blank">${linkText}</a></div>`;
+        } else {
+            fileHtml = `<div class="file-attachment"><a href="${fileUrl}" target="_blank" class="resource-link">${linkText}</a></div>`;
+        }
+    }
+
+    // 投稿者名の表示を修正 (ログインユーザーが投稿した場合は「(あなた)」を付けない)
+    const displayAuthor = (currentUser === author && type === 'outgoing') ? author : author;
 
     newMessage.innerHTML = `
-        <span class="author">${author}</span>
+        <span class="author">${displayAuthor}</span>
         <span class="time">${timeStr}</span>
         <p>${text}</p>
+        ${fileHtml} 
     `;
     board.appendChild(newMessage);
-    // スクロールを一番下へ
     board.scrollTop = board.scrollHeight;
 }
 
@@ -410,34 +551,43 @@ function createAndAppendMessage(author, timeStr, text, type) {
  */
 function postMessage() {
     const input = document.getElementById('chatInput');
+    const urlInput = document.getElementById('fileUrlInput'); 
+    
     const text = input.value.trim();
-
-    if (text) {
-        const now = new Date();
-        const timeStr = `${now.getFullYear()}/${(now.getMonth() + 1).toString().padStart(2, '0')}/${now.getDate().toString().padStart(2, '0')} ${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
-        const author = "Aさん (あなた)"; // 投稿者は常に「あなた」とする
-
-        // 1. 画面に追加
-        createAndAppendMessage(author, timeStr, text, 'outgoing');
-
-        // 2. localStorageに保存
-        const savedMessages = getStoredMessages();
-        savedMessages.push({
-            author: author,
-            time: timeStr,
-            text: text,
-            type: 'outgoing'
-        });
-        localStorage.setItem(MESSAGE_STORAGE_KEY, JSON.stringify(savedMessages));
-
-        // 3. 入力フィールドをクリア
-        input.value = '';
+    const fileUrl = urlInput.value.trim();
+    
+    // メッセージもURLも空の場合は処理しない
+    if (!text && !fileUrl) {
+        return;
     }
+
+    const now = new Date();
+    const timeStr = `${now.getFullYear()}/${(now.getMonth() + 1).toString().padStart(2, '0')}/${now.getDate().toString().padStart(2, '0')} ${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
+    
+    // ログイン中のユーザー名を投稿者名として取得
+    const author = localStorage.getItem(USERNAME_KEY) || "ゲスト";
+
+    // 1. 画面に追加
+    createAndAppendMessage(author, timeStr, text, 'outgoing', fileUrl); 
+
+    // 2. localStorageに保存
+    const savedMessages = getStoredMessages();
+    savedMessages.push({
+        author: author,
+        time: timeStr,
+        text: text,
+        type: 'outgoing', // 自分の投稿は常にoutgoingとして保存
+        fileUrl: fileUrl
+    });
+    localStorage.setItem(MESSAGE_STORAGE_KEY, JSON.stringify(savedMessages));
+
+    // 3. 入力フィールドをクリア
+    input.value = '';
+    urlInput.value = '';
 }
 
 /**
  * localStorageからメッセージデータを取得する関数
- * @returns {Array} 既存のメッセージ配列（存在しない場合は初期メッセージを含む）
  */
 function getStoredMessages() {
     const json = localStorage.getItem(MESSAGE_STORAGE_KEY);
@@ -446,14 +596,13 @@ function getStoredMessages() {
             return JSON.parse(json);
         } catch (e) {
             console.error("Failed to parse stored messages:", e);
-            // パース失敗時は初期メッセージを返す
         }
     }
-    // メッセージが存在しない、またはパース失敗時はHTMLの初期メッセージを返す
+    // 初期メッセージ (投稿者名を既存のユーザー名に修正し、fileUrlを追加)
     return [
-        { author: "Bさん", time: "2025/11/30 14:30", text: "Uターン角度を145度に微調整したところ、安定性が向上しました。UTURN_DURATION_MSは1450msでテスト中です。", type: "incoming" },
-        { author: "Aさん (あなた)", time: "2025/11/30 15:45", text: "了解。そのコードを今日の夕方に「調整用コード」セクションに反映しておきます。", type: "outgoing" },
-        { author: "Cさん", time: "2025/11/30 18:00", text: "回路図の電源分離の場所について、少し質問があります。明日の朝会で確認させてください。", type: "incoming" }
+        { author: "katunari", time: "2025/11/30 14:30", text: "Uターン角度を145度に微調整したところ、安定性が向上しました。UTURN_DURATION_MSは1450msでテスト中です。", type: "incoming", fileUrl: "" },
+        { author: "Arikawa", time: "2025/11/30 15:45", text: "了解。そのコードを今日の夕方に「調整用コード」セクションに反映しておきます。", type: "outgoing", fileUrl: "" },
+        { author: "Yuto", time: "2025/11/30 18:00", text: "回路図の電源分離の場所について、少し質問があります。明日の朝会で確認させてください。", type: "incoming", fileUrl: "https://example.com/circuit_question.pdf" } 
     ];
 }
 
@@ -462,21 +611,20 @@ function getStoredMessages() {
  */
 function loadMessages() {
     const board = document.getElementById('messageBoard');
-    // HTMLにハードコードされたメッセージを削除 (二重表示を防ぐ)
     board.innerHTML = ''; 
     
     const messages = getStoredMessages();
     messages.forEach(msg => {
-        createAndAppendMessage(msg.author, msg.time, msg.text, msg.type);
+        // ロード時は、保存されているtype（incoming/outgoing）とログインユーザーを比較して表示タイプを決定
+        const isOutgoing = (localStorage.getItem(USERNAME_KEY) === msg.author);
+        const displayType = isOutgoing ? 'outgoing' : 'incoming';
+        
+        createAndAppendMessage(msg.author, msg.time, msg.text, displayType, msg.fileUrl);
     });
 }
 
-// ページ読み込みが完了したらメッセージを復元
-window.onload = loadMessages;
+// loadMessages() は認証成功時 (showContent) に呼び出されます
 
 </script>
 </body>
 </html>
-
-
-
