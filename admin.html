@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>【管理者用】創成プロジェクト A1班: 管理・開発リソース</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="admin_style.css"> <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<header class="navbar">
+  <div class="navbar-container">
+    <a href="./admin.html" class="logo">
+    <img src="A1.png" alt="プロジェクトロゴ" class="logo">
+    </a>
+    
+    <nav class="hero-tabs-container">
+      <a href="#schedule" class="hero-tab-button">今後の予定</a>
+      <a href="#resources" class="hero-tab-button">技術リソース</a>
+      <a href="#code" class="hero-tab-button">調整用コード</a>
+      <a href="#chat" class="hero-tab-button">班員チャット</a>
+    </nav>
+
+    <div class="menu-icon" onclick="toggleMenu()">&#9776;</div>
+  </div>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#schedule" onclick="toggleMenu()">今後の予定を見る</a>
+    <a href="#resources" onclick="toggleMenu()">技術リソースを見る</a>
+    <a href="#code" onclick="toggleMenu()">調整用コードを見る</a>
+    <a href="#chat" onclick="toggleMenu()">班員チャットを見る</a>
+  </div>
+</header>
+  
+
+<section class="hero admin-hero">
+    <div class="hero-content">
+        <h1>【管理者用サイト】 A1班</h1>
+        <h2>プロジェクト進捗管理と開発リソース共有の場</h2>
+        <p>機密性の高い情報を含むため、関係者のみ利用してください。</p>
+    </div>
+</section>
+
+<section id="schedule" class="section light-bg">
+    <h3>🗓️ 今後の予定とマイルストーン</h3>
+    <p class="process-preamble">デモンストレーションに向けた今後の重要タスクを管理します。</p>
+    <div class="process-container">
+        
+        <div class="step animate-on-scroll">
+            <span class="step-number">マイルストーン 1 (12/08)</span>
+            <h4>① Uターン精度 95% 達成</h4>
+            <p>サーボモータの角度調整とDCモータのPWM値調整を完了し、目標精度をクリアする。</p>
+            <div class="status-indicator completed">✅ 完了</div>
+        </div>
+
+        <div class="step animate-on-scroll">
+            <span class="step-number">マイルストーン 2 (12/15)</span>
+            <h4>② 電源系統 ノイズテスト</h4>
+            <p>駆動時およびサーボ反転時のマイコン動作の安定性を最終確認する。</p>
+            <div class="status-indicator pending">⚠️ 進行中</div>
+        </div>
+        
+        <div class="step animate-on-scroll">
+            <span class="step-number">マイルストーン 3 (12/22)</span>
+            <h4>③ 最終デモ用ムービー制作</h4>
+            <p>デモンストレーションの様子を記録し、プレゼンテーション資料と連携する。</p>
+            <div class="status-indicator todo">✍️ 未着手</div>
+        </div>
+    </div>
+</section>
+
+<section id="resources" class="section dark-bg">
+    <h3>🔧 技術リソース</h3>
+    <div class="tech-card-container">
+        <div class="tech-card animate-on-scroll">
+            <h4>回路図 (最新版)</h4>
+            <p>最終決定した電源分離ロジックを含む回路図のPDFです。誤配線がないか常に確認してください。</p>
+            <a href="./circuit_diagram_v3.pdf" class="resource-link">回路図 (PDF) ダウンロード</a>
+            <img src="./kuwashiikairo.jpeg" alt="最新回路図" class="process-media">
+        </div>
+        <div class="tech-card animate-on-scroll">
+            <h4>車体 CAD データ (STL)</h4>
+            <p>3Dプリンタで出力するためのSTLファイルおよび設計元のSTEPファイルです。</p>
+            <a href="./chassis_v2.stl" class="resource-link">STLファイル ダウンロード</a>
+        </div>
+        <div class="tech-card animate-on-scroll">
+            <h4>部品リスト (Excel)</h4>
+            <p>使用部品、単価、調達状況をまとめたリストです。部品の予備発注にご活用ください。</p>
+            <a href="./parts_list_v1.xlsx" class="resource-link">部品リスト (Excel) ダウンロード</a>
+        </div>
+        <div class="tech-card animate-on-scroll">
+            <h4>設計変更ログ</h4>
+            <p>ファン駆動からタイヤ駆動への変更など、主要な設計変更の経緯と理由を記録しています。</p>
+            <a href="./design_change_log.txt" class="resource-link">ログファイル閲覧</a>
+        </div>
+    </div>
+</section>
+
+<section id="code" class="section light-bg">
+    <h3>💻 調整用プログラム (C++ / Arduino)</h3>
+    <p class="process-preamble">デモンストレーションに合わせて調整中の制御コードをここに掲載します。本番コードのパラメータ調整にご利用ください。</p>
+
+    <div class="code-display animate-on-scroll">
+        <h5 class="text-lg font-medium mb-2 text-gray-800 dark:text-gray-200">最新調整コード (Uターン角度改善版)</h5>
+        <div class="code-block-wrapper">
+            <button class="copy-button" onclick="copyCode('adjustedCode')">コードをコピー</button>
+            <div class="code-block">
+<pre id="adjustedCode"><code>#include &lt;Arduino.h&gt;
+#include &lt;Servo.h&gt;
+// ----------------------------------------------------------------------
+// I. 管理者調整用パラメータ
+// ----------------------------------------------------------------------
+const int DC_DRIVE_PWM = 220;  // DCモーターの駆動速度 (200から220へ調整)
+const int STEER_STRAIGHT = 92; // サーボ: 直進角度 (90から92へ微調整)
+const int STEER_UTURN_ANGLE = 145; // サーボ: Uターン左旋回角度 (140から145へ調整)
+const unsigned long UTURN_DURATION_MS = 1450; // Uターン動作に必要な時間（ミリ秒）
+
+// ----------------------------------------------------------------------
+// II. 制御関数 (省略)
+// ----------------------------------------------------------------------
+// ... (中略：perform_uturn(), drive_forward() などの関数はメインコードを参照)
+
+// ----------------------------------------------------------------------
+// III. SetupとLoop (省略)
+// ----------------------------------------------------------------------
+// ... (中略：センサーロジックと状態遷移はメインコードを参照)
+
+void perform_uturn() {
+    // 調整された角度と時間でUターン実行
+    front_steer_servo.write(STEER_UTURN_ANGLE);
+    digitalWrite(DC_MOTOR_DIR, HIGH);
+    analogWrite(DC_MOTOR_PWM, DC_DRIVE_PWM);
+    delay(UTURN_DURATION_MS);
+    stop_all_motors();
+}
+
+void loop(void) {
+    // ... (メインロジック)
+}
+</code></pre>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="chat" class="section dark-bg">
+    <h3>💬 班員メッセージボード</h3>
+    <p class="process-preamble">班員間で非同期にメッセージを共有するための掲示板です。</p>
+
+    <div class="chat-container animate-on-scroll">
+        <div class="message-input">
+            <input type="text" placeholder="メッセージを入力してください..." id="chatInput">
+            <button onclick="postMessage()">送信</button>
+        </div>
+        <div class="message-board" id="messageBoard">
+            <div class="message incoming">
+                <span class="author">Bさん</span>
+                <span class="time">2025/11/30 14:30</span>
+                <p>Uターン角度を145度に微調整したところ、安定性が向上しました。UTURN_DURATION_MSは1450msでテスト中です。</p>
+            </div>
+            <div class="message outgoing">
+                <span class="author">Aさん (あなた)</span>
+                <span class="time">2025/11/30 15:45</span>
+                <p>了解。そのコードを今日の夕方に「調整用コード」セクションに反映しておきます。</p>
+            </div>
+            <div class="message incoming">
+                <span class="author">Cさん</span>
+                <span class="time">2025/11/30 18:00</span>
+                <p>回路図の電源分離の場所について、少し質問があります。明日の朝会で確認させてください。</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<footer class="site-footer dark-footer">
+    <div class="footer-container">
+        <div class="footer-section">
+            <h4>ナビゲーション</h4>
+            <ul>
+                <li><a href="./index.html">公開用サイトへ戻る</a></li>
+                <li><a href="#schedule">今後の予定</a></li>
+                <li><a href="#resources">技術リソース</a></li>
+                <li><a href="#code">調整用コード</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h4>連絡先/管理者</h4>
+            <ul>
+                <li>プロジェクトリーダー: (氏名)</li>
+                <li>回路担当: (氏名)</li>
+                <li>駆動系担当: (氏名)</li>
+            </ul>
+        </div>
+        <div class="footer-section contact-info">
+            <h4>サイト情報</h4>
+            <p>本サイトはA1班の進捗管理専用です。</p>
+            <p class="project-id">創成プロジェクト A1班 管理者サイト</p>
+        </div>
+    </div>
+    
+    <div class="footer-bottom">
+        <p>&copy; 創成プロジェクト A1班. All rights reserved.</p>
+    </div>
+</footer>
+
+<script>
+// --- JS: アニメーション処理 (メインサイトと共通) ---
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+});
+document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
+
+// --- JS: モバイルメニュー処理 (メインサイトと共通) ---
+function toggleMenu() {
+  const menu = document.getElementById("mobileMenu");
+  menu.classList.toggle("is-open"); 
+}
+
+// --- JS: コードコピー機能 (新規) ---
+function copyCode(elementId) {
+    const codeElement = document.getElementById(elementId);
+    if (!codeElement) return;
+
+    // テキストエリアにコードを一時的にコピー
+    const tempTextArea = document.createElement('textarea');
+    tempTextArea.value = codeElement.textContent;
+    document.body.appendChild(tempTextArea);
+    tempTextArea.select();
+    document.execCommand('copy');
+    document.body.removeChild(tempTextArea);
+
+    alert('コードがクリップボードにコピーされました！');
+}
+
+// --- JS: ダミーチャット機能 (新規) ---
+function postMessage() {
+    const input = document.getElementById('chatInput');
+    const board = document.getElementById('messageBoard');
+    const text = input.value.trim();
+
+    if (text) {
+        const newMessage = document.createElement('div');
+        newMessage.className = 'message outgoing';
+        const now = new Date();
+        const timeStr = `${now.getFullYear()}/${now.getMonth() + 1}/${now.getDate()} ${now.getHours()}:${now.getMinutes().toString().padStart(2, '0')}`;
+        
+        newMessage.innerHTML = `
+            <span class="author">Aさん (あなた)</span>
+            <span class="time">${timeStr}</span>
+            <p>${text}</p>
+        `;
+        board.appendChild(newMessage);
+        input.value = '';
+        // スクロールを一番下へ
+        board.scrollTop = board.scrollHeight;
+    }
+}
+</script>
+</body>
+</html>
