@@ -418,6 +418,34 @@ a:focus, button:focus, .hero-tab-button:focus, .menu-icon:focus {
     }
 }
 
+/* 活動記録テーブルのヘッダーを固定するためのCSS */
+#log .log-table-container {
+    /* スクロール可能にするためにコンテナの高さを制限する（必要に応じて） */
+    max-height: 400px; /* 例: 400pxを超えたらテーブル内でスクロールバーが表示される */
+    overflow-y: auto;
+    border: 1px solid var(--color-dark-bg); /* 見た目をわかりやすくするため */
+}
+
+#log table {
+    width: 100%;
+    border-collapse: collapse; /* セルの境界線を結合 */
+}
+
+#log thead {
+    /* thead全体を固定する */
+    position: sticky;
+    top: 0; /* スクロールコンテナの最上部に固定 */
+    z-index: 10; /* 他の要素の上に表示されるように設定 */
+    background-color: #333; /* ヘッダーの背景色（暗い色）を再設定 */
+    color: white; /* テキストを白に */
+    box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.4); /* わずかな影で区切りを強調 */
+}
+
+#log th {
+    /* thead内のth要素のパディングも調整すると見やすくなります */
+    padding: 10px 8px;
+    text-align: left;
+}
 
 /* ==========================================================================
  * 8. ナビゲーションバー
@@ -727,4 +755,5 @@ a:focus, button:focus, .hero-tab-button:focus, .menu-icon:focus {
     .chat-container { padding: 15px; }
     .message { max-width: 95%; }
 }
+
 
