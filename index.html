@@ -34,7 +34,7 @@
     <a href="#schedule" onclick="toggleMenu()">今後の予定を見る</a>
     <a href="#resources" onclick="toggleMenu()">技術リソースを見る</a>
     <a href="#code" onclick="toggleMenu()">調整用コードを見る</a>
-    <a href="#log" onclick="toggleMenu()">これまでの活動記録</a>  
+    <a href="#log" onclick="toggleMenu()">これまでの活動記録を見る</a>  
   </div>
 </header>
   
@@ -50,28 +50,28 @@
 ---
 
 <section id="schedule" class="section light-bg">
-    <h3>🗓️ 今後の予定とマイルストーン</h3>
+    <h3>今後の予定</h3>
     <p class="process-preamble">デモンストレーションに向けた今後の重要タスクを管理します。</p>
     <div class="process-container">
         
         <div class="step animate-on-scroll">
-            <span class="step-number">マイルストーン 1 (12/08)</span>
-            <h4>① Uターン精度 95% 達成</h4>
-            <p>サーボモータの角度調整とDCモータのPWM値調整を完了し、目標精度をクリアする。</p>
-            <div class="status-indicator completed">✅ 完了</div>
+            <span class="step-number">マイルストーン 1 (12/11)</span>
+            <h4>① 回路設計・試走・プログラム調整</h4>
+            <p>回路設計を完了させる。また，余裕があれば、試走・プログラム調整も行いたい。</p>
+            <div class="status-indicator pending">⚠️ 進行中</div>
         </div>
 
         <div class="step animate-on-scroll">
-            <span class="step-number">マイルストーン 2 (12/15)</span>
-            <h4>② 電源系統 ノイズテスト</h4>
-            <p>駆動時およびサーボ反転時のマイコン動作の安定性を最終確認する。</p>
+            <span class="step-number">マイルストーン 2 (12/18)</span>
+            <h4>② 試走・プログラム調整</h4>
+            <p>プログラムの調整を十分に行う。</p>
             <div class="status-indicator pending">⚠️ 進行中</div>
         </div>
         
         <div class="step animate-on-scroll">
-            <span class="step-number">マイルストーン 3 (12/22)</span>
-            <h4>③ 最終デモ用ムービー制作</h4>
-            <p>デモンストレーションの様子を記録し、プレゼンテーション資料と連携する。</p>
+            <span class="step-number">マイルストーン 3 (1/8)</span>
+            <h4>③ 試走（未定）</h4>
+            <p>今後の様子を見ながら更新する。ただし，車体先端中央部にマーカーをつける必要あり。</p>
             <div class="status-indicator todo">✍️ 未着手</div>
         </div>
     </div>
@@ -293,7 +293,7 @@ void loop(void) {
 ---
 
 <section id="log" class="section dark-bg">
-    <h3>📋 これまでのプロジェクト活動記録</h3>
+    <h3>活動記録</h3>
     <p class="process-preamble" style="color: var(--color-hero-text-secondary);">過去の討議内容、作業内容、反省点を記録しています。特に重要な方針転換や技術的課題に焦点を当てています。</p>
 
     <div class="log-table-container animate-on-scroll">
@@ -488,6 +488,7 @@ function copyCode(elementId) {
 </script>
 </body>
 </html>
+
 
 
 
