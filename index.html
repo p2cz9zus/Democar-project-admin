@@ -17,30 +17,26 @@
 <header class="navbar">
   <div class="navbar-container">
     <a href="./admin.html" class="logo">
-      <img src="A1.png" alt="プロジェクトロゴ" class="logo">
+    <img src="A1.png" alt="プロジェクトロゴ" class="logo">
     </a>
-
+    
     <nav class="hero-tabs-container">
       <a href="#schedule" class="hero-tab-button">今後の予定</a>
       <a href="#resources" class="hero-tab-button">技術リソース</a>
       <a href="#code" class="hero-tab-button">調整用コード</a>
       <a href="#log" class="hero-tab-button">これまでの活動記録</a>
-      <a href="https://p2cz9zus.github.io/Democar-project/" class="hero-tab-button">公開用サイト</a>
+      <a href="https://p2cz9zus.github.io/Democar-project/" class="hero-tab-button">公開用サイト</a>  
     </nav>
 
-    <button class="menu-trigger" id="menuTrigger" onclick="toggleMenu()">
-      <span></span>
-      <span></span>
-      <span></span>
-    </button>
+    <div class="menu-icon" onclick="toggleMenu()">&#9776;</div>
   </div>
 
   <div class="mobile-menu" id="mobileMenu">
     <a href="#schedule" onclick="toggleMenu()">今後の予定を見る</a>
     <a href="#resources" onclick="toggleMenu()">技術リソースを見る</a>
     <a href="#code" onclick="toggleMenu()">調整用コードを見る</a>
-    <a href="#log" onclick="toggleMenu()">これまでの活動記録を見る</a>
-    <a href="https://p2cz9zus.github.io/Democar-project/" onclick="toggleMenu()">公開用サイトに戻る</a>
+    <a href="#log" onclick="toggleMenu()">これまでの活動記録を見る</a>  
+    <a href="https://p2cz9zus.github.io/Democar-project/" onclick="toggleMenu()">公開用サイトに戻る</a> 
   </div>
 </header>
   
@@ -52,7 +48,9 @@
         <p>関係者専用の情報共有サイトです。</p>
     </div>
 </section>
-    
+
+---
+
 <section id="schedule" class="section light-bg">
     <h3>今後の予定</h3>
     <p class="process-preamble">デモンストレーションに向けた今後の重要タスクを管理します。</p>
@@ -81,6 +79,8 @@
     </div>
 </section>
 
+---
+
 <section id="resources" class="section dark-bg">
     <h3>🔧 技術リソース</h3>
     <div class="tech-card-container">
@@ -107,6 +107,8 @@
         </div>
     </div>
 </section>
+
+---
 
 <section id="code" class="section light-bg">
     <h3>調整用プログラム (C++ / Arduino)</h3>
@@ -366,6 +368,9 @@ void waitForRelease() {
     </div>
 </section>
 
+---
+---
+
 <section id="log" class="section dark-bg">
     <h3>活動記録</h3>
     <p class="process-preamble" style="color: var(--color-hero-text-secondary);">過去の討議内容、作業内容、反省点を記録しています。特に重要な方針転換や技術的課題に焦点を当てています。</p>
@@ -508,7 +513,9 @@ void waitForRelease() {
             </tbody>
         </table>
     </div>
-</section> 
+</section>
+
+---    
 
 <footer class="site-footer dark-footer">
     <div class="footer-container">
@@ -541,34 +548,40 @@ void waitForRelease() {
 // ====================================================================
 
 // --- JS: アニメーション処理 ---
-// ... (アニメーション処理はそのまま) ...
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+        }
+    });
+});
+document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
 
-// --- JS: モバイルメニュー処理 (ここを修正) ---
+// --- JS: モバイルメニュー処理 ---
 function toggleMenu() {
     const menu = document.getElementById("mobileMenu");
-    const trigger = document.getElementById("menuTrigger"); 
-
     menu.classList.toggle("is-open"); 
-    trigger.classList.toggle("active");
-    
-    // ★追加: bodyにクラスを追加/削除し、スクロール固定とオーバーレイを制御
-    document.body.classList.toggle("menu-open");
 }
 
 // --- JS: コードコピー機能 ---
 function copyCode(elementId) {
     const codeElement = document.getElementById(elementId);
-    // プレタグの内容全体を取得
-    const codeToCopy = codeElement.textContent;
+    if (!codeElement) return;
+
+    const codeText = codeElement.querySelector('code').textContent; 
     
-    // 現代的な Clipboard APIを使用
-    navigator.clipboard.writeText(codeToCopy).then(() => {
-        alert('コードをクリップボードにコピーしました！');
-    }).catch(err => {
-        console.error('コピーに失敗しました:', err);
-    });
+    const tempTextArea = document.createElement('textarea');
+    tempTextArea.value = codeText.trim();
+    
+    document.body.appendChild(tempTextArea);
+    tempTextArea.select();
+    document.execCommand('copy');
+    document.body.removeChild(tempTextArea);
+    
+    // コピー成功メッセージ表示
+    alert("コードをクリップボードにコピーしました！");
 }
+
 </script>
 </body>
 </html>
-
