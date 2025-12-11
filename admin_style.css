@@ -4,7 +4,7 @@
  */
 
 /* ==========================================================================
- * 0. アニメーションキーフレーム定義
+ * 0. アニメーションキーフレーム定義 (メインサイトと共通)
  * ========================================================================== */
 @keyframes slideInUp {
     0% { opacity: 0; transform: translateY(30px); }
@@ -12,7 +12,7 @@
 }
 
 /* ==================================== */
-/* アニメーション関連 CSS */
+/* アニメーション関連 CSS (メインサイトと共通) */
 /* ==================================== */
 .animate-on-scroll {
     opacity: 0; 
@@ -25,7 +25,7 @@
 }
 
 /* ==========================================================================
- * 1. カスタムプロパティ (変数) 定義
+ * 1. カスタムプロパティ (変数) 定義 (メインサイトと共通)
  * ========================================================================== */
 :root {
     /* カラーパレット */
@@ -60,7 +60,7 @@
 }
 
 /* ==========================================================================
- * 2. ベーススタイル
+ * 2. ベーススタイル (メインサイトと共通)
  * ========================================================================== */
 html { scroll-behavior: smooth; overflow-x: hidden; }
 body {
@@ -289,7 +289,7 @@ a:focus, button:focus, .hero-tab-button:focus, .menu-icon:focus {
 
 
 /* ==========================================================================
- * 6. 調整用コード
+ * 6. 調整用コード (メインサイトと共通)
  * ========================================================================== */
 
 /* コードブロックのラッパー（相対位置の基準） */
@@ -352,31 +352,8 @@ a:focus, button:focus, .hero-tab-button:focus, .menu-icon:focus {
 }
 .copy-button:hover { background-color: rgba(255, 255, 255, 0.2); }
 
-/* --- コードブロック内の簡易シンタックスハイライト --- */
-.code-block code {
-    /* 基本のコード色 */
-    color: var(--color-code-text);
-}
-.code-block code .comment {
-    color: #75715e; /* コメント: グレー */
-}
-.code-block code .keyword {
-    color: #f92672; /* キーワード (e.g., const, enum, void, switch, case): ピンク */
-}
-.code-block code .type {
-    color: #66d9ef; /* 型/関数 (e.g., int, bool, setup, loop): 水色 */
-}
-.code-block code .string {
-    color: #e6db74; /* 文字列 (e.g., "System Ready..."): 黄色 */
-}
-.code-block code .number {
-    color: #ae81ff; /* 数字 (e.g., 200, 90, 1500): 紫 */
-}
-.code-block code .directive { color: #f92672; } /* #include, #define */
-
-
 /* ==========================================================================
- * 7. 活動記録テーブル
+ * 7. 活動記録テーブル (新規)
  * ========================================================================== */
 
 .log-table-container {
@@ -386,12 +363,6 @@ a:focus, button:focus, .hero-tab-button:focus, .menu-icon:focus {
     text-align: left;
     border-radius: 8px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
-}
-/* スクロール可能にするためにコンテナの高さを制限する（ヘッダー固定用） */
-#log .log-table-container {
-    max-height: 400px; 
-    overflow-y: auto;
-    border: 1px solid var(--color-background-dark); 
 }
 
 .log-table-container table {
@@ -416,8 +387,7 @@ a:focus, button:focus, .hero-tab-button:focus, .menu-icon:focus {
     text-align: center; /* ヘッダーは中央揃え */
     position: sticky; /* スクロール時に固定 */
     top: 0;
-    z-index: 10; /* 他の要素の上に表示されるように設定 */
-    box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.4); /* 影で区切りを強調 */
+    z-index: 1;
 }
 
 .log-table-container tbody tr:nth-child(even) {
@@ -441,31 +411,83 @@ a:focus, button:focus, .hero-tab-button:focus, .menu-icon:focus {
     flex-shrink: 0;
 }
 
+/* スマホ対応（横スクロールが必要なため、特別な調整は少なめ） */
+@media (max-width: 768px) {
+    .log-table-container table {
+        /* スマホでも横スクロールを強制するために min-width を維持 */
+    }
+}
+
+/* 活動記録テーブルのヘッダーを固定するためのCSS */
+#log .log-table-container {
+    /* スクロール可能にするためにコンテナの高さを制限する（必要に応じて） */
+    max-height: 400px; /* 例: 400pxを超えたらテーブル内でスクロールバーが表示される */
+    overflow-y: auto;
+    border: 1px solid var(--color-dark-bg); /* 見た目をわかりやすくするため */
+}
+
+#log table {
+    width: 100%;
+    border-collapse: collapse; /* セルの境界線を結合 */
+}
+
+#log thead {
+    /* thead全体を固定する */
+    position: sticky;
+    top: 0; /* スクロールコンテナの最上部に固定 */
+    z-index: 10; /* 他の要素の上に表示されるように設定 */
+    background-color: #333; /* ヘッダーの背景色（暗い色）を再設定 */
+    color: white; /* テキストを白に */
+    box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.4); /* わずかな影で区切りを強調 */
+}
+
+#log th {
+    /* thead内のth要素のパディングも調整すると見やすくなります */
+    padding: 10px 8px;
+    text-align: left;
+}
+
 /* ==========================================================================
- * 8. ナビゲーションバー (モバイル対応強化)
+ * 8. ナビゲーションバー
  * ========================================================================== */
+
+/* スクロールしていないときの初期状態（JSでこのクラスが付与される） */
+.navbar.transparent {
+    background-color: transparent;
+    box-shadow: none;
+    /* アニメーションの時間を設定 */
+    transition: background-color 0.3s ease-out, box-shadow 0.3s ease-out;
+    /* ★修正点1: ナビバーのテキスト色を白に強制 ★ */
+    color: var(--color-text-light);
+}
+
+/* スクロール後（背景を黒に戻す） */
+.navbar:not(.transparent) {
+    background-color: #000;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+}
 
 /* ナビバー全体 */
 .navbar {
-    background-color: var(--color-background-dark); /* 管理者サイトは常に黒 */
-    color: var(--color-text-light);
-    width: 100%;
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 1000;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+    background-color: #000;
+    color: #fff;
+    width: 100%;
+    /* ナビゲーションバーを上部に固定 */
+    position: fixed;     
+    top: 0;
+    left: 0;
+    z-index: 1000;
 }
 
-/* ナビバーコンテナ */
+/* コンテナ（ロゴ＋タブ＋メニューアイコン） */
 .navbar-container {
-    display: flex;
-    align-items: center;
-    padding: 10px 5%; /* 上下パディングを少し増やして見やすく */
-    min-height: 60px; /* ナビバーの最小高さを設定 */
+    display: flex;
+    align-items: center;
+    padding: 6px 20px;
+    min-height: 70px;
 }
 
-/* ロゴ (PC用) */
+/* ロゴ */
 .logo {
     width: 120px;
     height: auto;
@@ -498,68 +520,68 @@ a:focus, button:focus, .hero-tab-button:focus, .menu-icon:focus {
 
 /* モバイルメニューアイコン */
 .menu-icon {
-    font-size: 2rem;
-    cursor: pointer;
-    padding: 5px;
-    margin-left: auto;
+    font-size: 2rem;
+    cursor: pointer;
+    padding: 5px;
+    /* 右端に寄せる */
+    margin-left: auto;      
+    display: none; /* PCでは非表示 */
 }
 
-/* --- モバイルメニュー本体 --- */
+/* モバイルメニュー本体 */
 .mobile-menu {
-    /* 初期状態: 非表示（高さ0、クリップ） */
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94); /* 滑らかなスライド */
-    
-    flex-direction: column;
-    background-color: #111; /* ナビバーの黒よりわずかに明るい色 */
-    width: 100%;
-    position: absolute; 
-    top: 100%; /* ナビバーの直下に配置 */
-    left: 0;
-    z-index: 999;
-    display: flex; 
-    padding: 0 5%; /* 左右のパディングをコンテナに合わせる */
+    /* 初期状態: 非表示（height: 0） */
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out; /* 開閉アニメーション */
+    flex-direction: column;
+    background-color: #111;
+    width: 100%;
+    position: absolute; /* .navbar内を基準 */
+    top: 100%; /* ナビバーの直下に配置 */
+    left: 0;
+    z-index: 999;
+    display: flex; /* モバイルでの表示を確保 */
 }
 
-/* 展開状態 (JSによって付与されるクラス) */
+/* 展開状態 */
 .mobile-menu.is-open {
-    max-height: 500px; /* 展開時に十分な高さを設定 */
+    max-height: 500px; /* 展開時に十分な高さを設定 */
+    transition: max-height 0.5s ease-in;
 }
 
-/* モバイルメニュー内のリンク */
+/* 開閉時のリンクのフェードイン/アウトアニメーション */
 .mobile-menu a {
-    color: var(--color-text-light);
-    padding: 15px 0; 
-    text-decoration: none;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    transition: background-color 0.3s;
-    text-align: left; /* リンクを左寄せに */
-    
-    /* リンクのフェードインアニメーション設定 */
-    opacity: 0;
-    transform: translateY(-10px);
-    transition: opacity 0.3s ease-out, transform 0.3s ease-out, background-color 0.3s;
+    color: var(--color-text-light);
+    padding: 15px 20px;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    transition: background-color 0.3s;
+    /* 初期状態: 非表示 */
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: opacity 0.3s ease-out, transform 0.3s ease-out, background-color 0.3s;
 }
 
-/* 展開時のリンクのフェードイン */
+/* 開いた状態のアニメーション */
 .mobile-menu.is-open a {
-    opacity: 1;
-    transform: translateY(0);
+    opacity: 1;
+    transform: translateY(0);
 }
 
-/* 複数のリンクにディレイをかける */
+/* 複数のリンクにディレイをかける (CSSのみで実現) */
 .mobile-menu.is-open a:nth-child(1) { transition-delay: 0.1s; }
 .mobile-menu.is-open a:nth-child(2) { transition-delay: 0.15s; }
 .mobile-menu.is-open a:nth-child(3) { transition-delay: 0.2s; }
 .mobile-menu.is-open a:nth-child(4) { transition-delay: 0.25s; }
 .mobile-menu.is-open a:nth-child(5) { transition-delay: 0.3s; }
 
+/* モバイルメニュー内のリンク */
 .mobile-menu a:last-child {
-    border-bottom: none;
+    border-bottom: none;
 }
 .mobile-menu a:hover {
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: rgba(255, 255, 255, 0.1);
 }
 
 /* ==========================================================================
@@ -568,6 +590,7 @@ a:focus, button:focus, .hero-tab-button:focus, .menu-icon:focus {
 
 /* フッター全体 */
 .site-footer {
+    /* 既存のダーク背景変数を使用 */
     background-color: var(--color-background-dark);  
     color: var(--color-text-light); /* 明るい文字色 */
     padding: 60px var(--space-page-padding-horizontal) 0; /* 上のパディングを増やす */
@@ -663,8 +686,8 @@ a:focus, button:focus, .hero-tab-button:focus, .menu-icon:focus {
     .mobile-menu { display: flex; }
     
     /* ナビバーのロゴサイズを小さくする（900px以下） */
-    .navbar .logo img {      
-        height: 40px;  
+    .navbar .logo {      
+        width: 50px;  
     }
     .tech-card-container { grid-template-columns: 1fr; }
 }
@@ -727,4 +750,8 @@ a:focus, button:focus, .hero-tab-button:focus, .menu-icon:focus {
         margin-right: 0; /* PC用マージンをリセット */
         margin-bottom: 20px;
     }
+    
+    /* チャット */
+    .chat-container { padding: 15px; }
+    .message { max-width: 95%; }
 }
