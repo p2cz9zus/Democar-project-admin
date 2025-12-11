@@ -17,26 +17,30 @@
 <header class="navbar">
   <div class="navbar-container">
     <a href="./admin.html" class="logo">
-    <img src="A1.png" alt="プロジェクトロゴ" class="logo">
+      <img src="A1.png" alt="プロジェクトロゴ" class="logo">
     </a>
-    
+
     <nav class="hero-tabs-container">
       <a href="#schedule" class="hero-tab-button">今後の予定</a>
       <a href="#resources" class="hero-tab-button">技術リソース</a>
       <a href="#code" class="hero-tab-button">調整用コード</a>
       <a href="#log" class="hero-tab-button">これまでの活動記録</a>
-      <a href="https://p2cz9zus.github.io/Democar-project/" class="hero-tab-button">公開用サイト</a>  
+      <a href="https://p2cz9zus.github.io/Democar-project/" class="hero-tab-button">公開用サイト</a>
     </nav>
 
-    <div class="menu-icon" onclick="toggleMenu()">&#9776;</div>
+    <button class="menu-trigger" id="menuTrigger" onclick="toggleMenu()">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
   </div>
 
   <div class="mobile-menu" id="mobileMenu">
     <a href="#schedule" onclick="toggleMenu()">今後の予定を見る</a>
     <a href="#resources" onclick="toggleMenu()">技術リソースを見る</a>
     <a href="#code" onclick="toggleMenu()">調整用コードを見る</a>
-    <a href="#log" onclick="toggleMenu()">これまでの活動記録を見る</a>  
-    <a href="https://p2cz9zus.github.io/Democar-project/" onclick="toggleMenu()">公開用サイトに戻る</a> 
+    <a href="#log" onclick="toggleMenu()">これまでの活動記録を見る</a>
+    <a href="https://p2cz9zus.github.io/Democar-project/" onclick="toggleMenu()">公開用サイトに戻る</a>
   </div>
 </header>
   
@@ -563,3 +567,4 @@ function toggleMenu() {
 </script>
 </body>
 </html>
+
