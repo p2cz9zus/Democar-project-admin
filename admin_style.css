@@ -720,6 +720,20 @@ a:focus, button:focus, .hero-tab-button:focus, .menu-trigger:focus {
     color: var(--color-secondary-text);
 }
 
+/* ==========================================================================
+ * ★★★ 8.5. モバイルメニュー開閉時のBody制御 (HTML/JS連携) ★★★
+ * ========================================================================== */
+
+/* モバイルメニュー展開時 (body.menu-open) のスクロール固定 */
+/* モバイルデバイスで背景スクロールを完全に防ぐために必要 */
+body.menu-open {
+    overflow: hidden; /* スクロールを禁止 */
+    position: fixed; /* bodyを固定 */
+    width: 100%;
+}
+
+/* ★補足: 既にモバイルメニュー自体にオーバーレイの定義がありましたが、
+   bodyへの固定も行うことで、iOSでのスクロール抜けを防ぎます。 */
 
 /* ==========================================================================
  * 10. レスポンシブ対応 (モバイルフレンドリー)
@@ -821,3 +835,4 @@ a:focus, button:focus, .hero-tab-button:focus, .menu-trigger:focus {
     .chat-container { padding: 15px; }
     .message { max-width: 95%; }
 }
+
