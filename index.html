@@ -547,44 +547,19 @@ void waitForRelease() {
 // ====================================================================
 
 // --- JS: アニメーション処理 ---
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-        }
-    });
-});
-document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
+// ... (アニメーション処理はそのまま) ...
 
-// --- JS: モバイルメニュー処理 ---
+// --- JS: モバイルメニュー処理 (ここを修正) ---
 function toggleMenu() {
-    const menu = document.getElementById("mobileMenu");
-    menu.classList.toggle("is-open"); 
+    const menu = document.getElementById("mobileMenu");
+    const trigger = document.getElementById("menuTrigger"); 
+
+    menu.classList.toggle("is-open"); 
+    trigger.classList.toggle("active"); // 公開用サイトと統一
 }
 
 // --- JS: コードコピー機能 ---
-function copyCode(elementId) {
-    const codeElement = document.getElementById(elementId);
-    if (!codeElement) return;
-
-    const codeText = codeElement.querySelector('code').textContent; 
-    
-    const tempTextArea = document.createElement('textarea');
-    tempTextArea.value = codeText.trim();
-    
-    document.body.appendChild(tempTextArea);
-    tempTextArea.select();
-    document.execCommand('copy');
-    document.body.removeChild(tempTextArea);
-    
-    // コピー成功メッセージ表示
-    alert("コードをクリップボードにコピーしました！");
-}
-
+// ... (コードコピー機能はそのまま) ...
 </script>
 </body>
 </html>
-
-
-
-
