@@ -555,16 +555,29 @@ void waitForRelease() {
 
 // --- JS: モバイルメニュー処理 (ここを修正) ---
 function toggleMenu() {
-    const menu = document.getElementById("mobileMenu");
-    const trigger = document.getElementById("menuTrigger"); 
+    const menu = document.getElementById("mobileMenu");
+    const trigger = document.getElementById("menuTrigger"); 
 
-    menu.classList.toggle("is-open"); 
-    trigger.classList.toggle("active"); // 公開用サイトと統一
+    menu.classList.toggle("is-open"); 
+    trigger.classList.toggle("active");
+    
+    // ★追加: bodyにクラスを追加/削除し、スクロール固定とオーバーレイを制御
+    document.body.classList.toggle("menu-open");
 }
 
 // --- JS: コードコピー機能 ---
-// ... (コードコピー機能はそのまま) ...
+function copyCode(elementId) {
+    const codeElement = document.getElementById(elementId);
+    // プレタグの内容全体を取得
+    const codeToCopy = codeElement.textContent;
+    
+    // 現代的な Clipboard APIを使用
+    navigator.clipboard.writeText(codeToCopy).then(() => {
+        alert('コードをクリップボードにコピーしました！');
+    }).catch(err => {
+        console.error('コピーに失敗しました:', err);
+    });
+}
 </script>
 </body>
 </html>
-
