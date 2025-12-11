@@ -1,6 +1,7 @@
 /*
  * ファイル名: admin_style.css
  * 目的: メインサイトのスタイルを維持しつつ、管理者用コンテンツ（予定、チャットなど）のスタイルを追加
+ * 変更点: ナビゲーションバーとモバイルメニューを公開用サイトの仕様（.menu-trigger, スライドインパネル）に統一
  */
 
 /* ==========================================================================
@@ -87,8 +88,20 @@ body {
 }
 .dark-bg h3 { color: var(--color-dark-bg-heading); }
 
-/* ★ 新規追加: アクセシビリティのためのフォーカスインジケータ改善 ★ */
-a:focus, button:focus, .hero-tab-button:focus, .menu-icon:focus {
+/* ★ 統合: リンクの基本カラー設定 (全ページ共通) ★ */
+a {
+    color: var(--color-primary); /* 全体のリンクにプロジェクトのプライマリカラーを適用 */
+    text-decoration: none; /* デフォルトのアンダーラインを非表示に */
+    transition: color 0.3s ease;
+}
+a:hover {
+    color: var(--color-primary-hover); /* ホバーで色を少し濃くする */
+    text-decoration: underline; /* ホバーでアンダーラインを表示 */
+}
+
+/* ★ 統合: アクセシビリティのためのフォーカスインジケータ改善 ★ */
+/* menu-icon から menu-trigger にセレクタを変更 */
+a:focus, button:focus, .hero-tab-button:focus, .menu-trigger:focus {
     outline: 2px solid var(--color-primary); /* プライマリカラーの青色 */
     outline-offset: 3px;
     border-radius: 4px; /* 角丸を適用 */
@@ -310,7 +323,7 @@ a:focus, button:focus, .hero-tab-button:focus, .menu-icon:focus {
     overflow-y: auto;
     /* コードブロック内の pre タグに横スクロールを許可 */
     overflow-x: auto;
-    -webkit-overflow-scrolling: touch;  
+    -webkit-overflow-scrolling: touch; 
 }
 
 /* コードブロック内の見出し */
@@ -390,20 +403,20 @@ a:focus, button:focus, .hero-tab-button:focus, .menu-icon:focus {
     position: sticky; /* ★ヘッダー固定の設定 */
     top: 0; /* ★コンテナの最上部に固定 */
     z-index: 10; /* 他の要素の上に表示されるように設定 */
-    background-color: #333; /* ヘッダーの背景色（暗い色）を再設定 */
+    
+    /* ★修正: 背景色を強制的に不透明にし、スクロール時にコンテンツが透けるのを防ぐ */
+    background-color: var(--color-background-dark); 
+    
     color: white; /* テキストを白に */
     box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.4); /* わずかな影で区切りを強調 */
 }
 
 .log-table-container thead th {
-    /* thead内のth要素のパディングも調整すると見やすくなります */
     padding: 10px 8px;
     text-align: center; /* ヘッダーは中央揃え */
     background-color: var(--color-primary); /* ヘッダーをプライマリカラーに */
     color: var(--color-text-light);
     font-weight: 700;
-    
-    /* 注: theadにstickyを設定したので、th個々への sticky/top の再設定は不要 */
     position: static; 
 }
 
@@ -429,13 +442,6 @@ a:focus, button:focus, .hero-tab-button:focus, .menu-icon:focus {
     flex-shrink: 0;
 }
 
-/* スマホ対応（横スクロールが必要なため、特別な調整は少なめ） */
-@media (max-width: 768px) {
-    .log-table-container table {
-        /* スマホでも横スクロールを強制するために min-width を維持 */
-    }
-}
-
 /* ==========================================================================
  * 8. ナビゲーションバー
  * ========================================================================== */
@@ -444,9 +450,7 @@ a:focus, button:focus, .hero-tab-button:focus, .menu-icon:focus {
 .navbar.transparent {
     background-color: transparent;
     box-shadow: none;
-    /* アニメーションの時間を設定 */
     transition: background-color 0.3s ease-out, box-shadow 0.3s ease-out;
-    /* ★修正点1: ナビバーのテキスト色を白に強制 ★ */
     color: var(--color-text-light);
 }
 
@@ -461,8 +465,7 @@ a:focus, button:focus, .hero-tab-button:focus, .menu-icon:focus {
     background-color: #000;
     color: #fff;
     width: 100%;
-    /* ナビゲーションバーを上部に固定 */
-    position: fixed;      
+    position: fixed;   
     top: 0;
     left: 0;
     z-index: 1000;
@@ -495,7 +498,7 @@ a:focus, button:focus, .hero-tab-button:focus, .menu-icon:focus {
 .hero-tab-button {
     flex-grow: 1;
     text-align: center;
-    color: inherit;    
+    color: inherit;   
     text-decoration: none;
     padding: 14px 0;
     border-radius: 6px;
@@ -507,65 +510,137 @@ a:focus, button:focus, .hero-tab-button:focus, .menu-icon:focus {
     background-color: rgba(255,255,255,0.05);
 }
 
-/* モバイルメニューアイコン */
-.menu-icon {
-    font-size: 2rem;
+
+/* ★★★ A. アイコンの変更 (.menu-icon -> .menu-trigger) - 公開用サイトから統合 ★★★ */
+
+/* ボタンコンテナ (PCでは非表示) */
+.menu-trigger {
+    position: relative;
+    width: 30px;
+    height: 30px;
     cursor: pointer;
-    padding: 5px;
-    /* 右端に寄せる */
-    margin-left: auto;        
-    display: none; /* PCでは非表示 */
+    background: none;
+    border: none;
+    padding: 0;
+    margin-left: auto; /* 右寄せ */
+    z-index: 1010;
+    display: none; /* デフォルトでは非表示 (メディアクエリで表示) */
 }
 
-/* モバイルメニュー本体 */
-.mobile-menu {
-    /* 初期状態: 非表示（height: 0） */
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.3s ease-out; /* 開閉アニメーション */
-    flex-direction: column;
-    background-color: #111;
+/* アイコンの線 */
+.menu-trigger span {
+    position: absolute;
     width: 100%;
-    position: absolute; /* .navbar内を基準 */
-    top: 100%; /* ナビバーの直下に配置 */
+    height: 3px;
+    background-color: var(--color-text-light); /* 白い線 */
+    border-radius: 3px;
     left: 0;
-    z-index: 999;
-    display: flex; /* モバイルでの表示を確保 */
+    transition: all 0.3s ease;
 }
 
-/* 展開状態 */
+/* 1本目の線（上） */
+.menu-trigger span:nth-of-type(1) { top: 0; }
+/* 2本目の線（中央） */
+.menu-trigger span:nth-of-type(2) { 
+    top: 50%;
+    transform: translateY(-50%);
+}
+/* 3本目の線（下） */
+.menu-trigger span:nth-of-type(3) { bottom: 0; }
+
+/* 展開時 (.active クラスが付いたとき) のアニメーション (X印へ変形) */
+.menu-trigger.active span:nth-of-type(1) {
+    top: 50%;
+    transform: translateY(-50%) rotate(45deg);
+}
+/* 2本目の線（中央）: 透明化して非表示 */
+.menu-trigger.active span:nth-of-type(2) {
+    opacity: 0;
+}
+/* 3本目の線（下）: -45度回転してXの下半分 */
+.menu-trigger.active span:nth-of-type(3) {
+    bottom: 50%;
+    transform: translateY(50%) rotate(-45deg);
+}
+
+/* 旧 .menu-icon の代わりに .menu-trigger を使用 */
+.menu-icon {
+    display: none !important;
+}
+
+
+/* ★★★ B. モバイルメニューパネルの変更 (スライドイン方式) - 公開用サイトから統合 ★★★ */
+
+/* モバイルメニュー本体 (スライドインパネル) */
+.mobile-menu {
+    position: fixed; 
+    top: 0;
+    right: 0;
+    width: 75%; /* メニューパネルの幅 */
+    max-width: 350px; /* 最大幅の制限 */
+    height: 100%;
+    
+    /* スライドインの初期位置 (画面右外に隠す) */
+    transform: translateX(100%);
+    
+    /* メニューパネル自体の背景色 (濃いネイビーブルー) */
+    background-color: #001f40; 
+    
+    z-index: 1000;
+    visibility: hidden;
+    /* スライドと表示/非表示のアニメーション */
+    transition: transform 0.4s ease-out, visibility 0s 0.4s;
+
+    padding-top: 70px; /* ナビバーの高さ分を避ける */
+    
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box; 
+    
+    /* 旧 max-height 制御のスタイルを上書き */
+    max-height: 100% !important;
+    overflow: auto;
+}
+
+/* 展開状態 (.is-open クラスが付いたとき) */
 .mobile-menu.is-open {
-    max-height: 500px; /* 展開時に十分な高さを設定 */
-    transition: max-height 0.5s ease-in;
+    /* スライドイン */
+    transform: translateX(0);
+    
+    /* 見えるようにする */
+    visibility: visible;
+    
+    /* visibilityの遅延をなくす */
+    transition: transform 0.4s ease-out, visibility 0s 0s;
 }
 
-/* 開閉時のリンクのフェードイン/アウトアニメーション */
+/* ★★★ オーバーレイ効果の追加 ★★★ */
+.mobile-menu.is-open:before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%; 
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7); /* 濃い半透明の黒 */
+    z-index: 999; /* メニュー本体 (1000) より下に置く */
+}
+
+/* モバイルメニュー内のリンク（アニメーション関連を削除） */
 .mobile-menu a {
     color: var(--color-text-light);
     padding: 15px 20px;
     text-decoration: none;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     transition: background-color 0.3s;
-    /* 初期状態: 非表示 */
-    opacity: 0;
-    transform: translateY(-10px);
-    transition: opacity 0.3s ease-out, transform 0.3s ease-out, background-color 0.3s;
-}
-
-/* 開いた状態のアニメーション */
-.mobile-menu.is-open a {
+    display: block;
+    
+    /* 旧アニメーション関連のスタイルを上書き/削除 */
     opacity: 1;
-    transform: translateY(0);
+    transform: none;
+    transition-delay: 0s !important;
 }
 
-/* 複数のリンクにディレイをかける (CSSのみで実現) */
-.mobile-menu.is-open a:nth-child(1) { transition-delay: 0.1s; }
-.mobile-menu.is-open a:nth-child(2) { transition-delay: 0.15s; }
-.mobile-menu.is-open a:nth-child(3) { transition-delay: 0.2s; }
-.mobile-menu.is-open a:nth-child(4) { transition-delay: 0.25s; }
-.mobile-menu.is-open a:nth-child(5) { transition-delay: 0.3s; }
-
-/* モバイルメニュー内のリンク */
 .mobile-menu a:last-child {
     border-bottom: none;
 }
@@ -573,18 +648,18 @@ a:focus, button:focus, .hero-tab-button:focus, .menu-icon:focus {
     background-color: rgba(255, 255, 255, 0.1);
 }
 
+
 /* ==========================================================================
  * 9. フッター
  * ========================================================================== */
 
 /* フッター全体 */
 .site-footer {
-    /* 既存のダーク背景変数を使用 */
     background-color: var(--color-background-dark);  
-    color: var(--color-text-light); /* 明るい文字色 */
-    padding: 60px var(--space-page-padding-horizontal) 0; /* 上のパディングを増やす */
-    font-family: 'Noto Sans JP', sans-serif; /* 既存のフォントに統一 */
-    text-align: left; /* テキストを左寄せに */
+    color: var(--color-text-light); 
+    padding: 60px var(--space-page-padding-horizontal) 0; 
+    font-family: 'Noto Sans JP', sans-serif; 
+    text-align: left; 
 }
 
 /* コンテナ */
@@ -594,25 +669,23 @@ a:focus, button:focus, .hero-tab-button:focus, .menu-icon:focus {
     justify-content: space-between;
     max-width: 1200px;
     margin: 0 auto;
-    padding-bottom: 30px; /* コピーライトとの間にスペース */
+    padding-bottom: 30px; 
 }
 
 /* 各セクション */
 .footer-section {
-    /* PCで3列、スマホで1列になるように調整 */
     flex: 1 1 200px;  
     margin: 15px 15px 15px 0;
-    min-width: 150px; /* 小さすぎるのを防ぐ */
+    min-width: 150px; 
 }
 
 .footer-section h4 {
     font-size: 1.25rem;
     font-weight: 700;
     margin-bottom: 12px;
-    /* プライマリカラーの青をアクセントラインに */
     border-bottom: 2px solid var(--color-primary);  
     padding-bottom: 6px;
-    color: var(--color-dark-bg-heading); /* 白に近い色 */
+    color: var(--color-dark-bg-heading); 
 }
 
 /* リスト */
@@ -626,7 +699,6 @@ a:focus, button:focus, .hero-tab-button:focus, .menu-icon:focus {
 }
 
 .footer-section ul li a {
-    /* 既存のセカンダリテキスト色に近づける */
     color: var(--color-hero-text-secondary);  
     text-decoration: none;
     transition: color 0.3s, padding-left 0.3s;
@@ -635,7 +707,7 @@ a:focus, button:focus, .hero-tab-button:focus, .menu-icon:focus {
 }
 
 .footer-section ul li a:hover {
-    color: var(--color-primary); /* ホバー時に青 */
+    color: var(--color-primary); 
     padding-left: 5px;
 }
 
@@ -644,7 +716,7 @@ a:focus, button:focus, .hero-tab-button:focus, .menu-icon:focus {
     text-align: center;
     padding: 20px 0;
     font-size: 0.9rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.1); /* 薄い線 */
+    border-top: 1px solid rgba(255, 255, 255, 0.1); 
     color: var(--color-secondary-text);
 }
 
@@ -660,8 +732,12 @@ a:focus, button:focus, .hero-tab-button:focus, .menu-icon:focus {
         display: flex;  
         flex: 1;  
     }
-    .menu-icon {  
+    .menu-trigger {  
         display: none;  
+    }
+    /* モバイルメニューを非表示にする */
+    .mobile-menu {
+        display: none !important;
     }
 }
 
@@ -670,8 +746,9 @@ a:focus, button:focus, .hero-tab-button:focus, .menu-icon:focus {
 @media (max-width: 900px) {
     /* タブレット以下ではPC用タブを非表示にし、アイコンを表示 */
     .hero-tabs-container { display: none; }  
-    .menu-icon { display: block; }
-    /* モバイルメニューの display を明示し、開閉を可能にする */
+    .menu-trigger { display: block; }
+    
+    /* モバイルメニューの display を明示 */
     .mobile-menu { display: flex; }
     
     /* ナビバーのロゴサイズを小さくする（900px以下） */
@@ -740,7 +817,7 @@ a:focus, button:focus, .hero-tab-button:focus, .menu-icon:focus {
         margin-bottom: 20px;
     }
     
-    /* チャット */
+    /* チャット関連のスタイルがあればここに記載 */
     .chat-container { padding: 15px; }
     .message { max-width: 95%; }
 }
