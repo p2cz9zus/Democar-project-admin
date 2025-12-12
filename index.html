@@ -24,6 +24,7 @@
       <a href="#schedule" class="hero-tab-button">今後の予定</a>
       <a href="#resources" class="hero-tab-button">技術リソース</a>
       <a href="#code" class="hero-tab-button">調整用コード</a>
+      <a href="#log" class="hero-tab-button">これまでの活動記録</a>
       <a href="https://p2cz9zus.github.io/Democar-project/" class="hero-tab-button">公開用サイト</a>  
     </nav>
 
@@ -34,6 +35,7 @@
     <a href="#schedule" onclick="toggleMenu()">今後の予定を見る</a>
     <a href="#resources" onclick="toggleMenu()">技術リソースを見る</a>
     <a href="#code" onclick="toggleMenu()">調整用コードを見る</a>
+    <a href="#log" onclick="toggleMenu()">これまでの活動記録を見る</a>  
     <a href="https://p2cz9zus.github.io/Democar-project/" onclick="toggleMenu()">公開用サイトに戻る</a> 
   </div>
 </header>
@@ -81,6 +83,7 @@
 
 <section id="resources" class="section dark-bg">
     <h3>🔧 技術リソース</h3>
+    <p class="process-preamble">各種設計ファイルや部品、および現在の配線に関する重要な詳細情報です。</p>
     <div class="tech-card-container">
         <div class="tech-card animate-on-scroll">
             <h4>回路図 (最新版)</h4>
@@ -125,7 +128,7 @@
 
         <div class="tech-card animate-on-scroll">
             <h4>トランジスタ 2N222A 配置と役割</h4>
-            <p>モーター制御に使用するNPNトランジスタの接続情報です。</p>
+            <p>モーターのON/OFF制御に使用するNPNトランジスタの接続情報です。</p>
             
             <p class="mt-2">配置: **モータのマイナス（黄色ケーブル）と単3電池のマイナスの間に配置**</p>
             
@@ -400,10 +403,47 @@ void waitForRelease() {
 </section>
 
 ---
----
+<section id="log" class="section dark-bg">
+    <h3>これまでの活動記録 (配線/部品決定ログ)</h3>
+    <p class="process-preamble">デモンストレーションに向けた、直近の重要な回路・配線に関する決定事項を記録しています。</p>
 
+    <div class="tech-card-container">
+        
+        <div class="tech-card animate-on-scroll">
+            <h4>サーボモーターのケーブル接続情報</h4>
+            <p>サーボモーター（ステアリング用）のケーブル色と接続先を以下に示します。</p>
+            <ul>
+                <li>**黄色ケーブル**: Arduinoの **D9** ピンに接続 (信号線)</li>
+                <li>**赤ケーブル**: **+ (電源)** に接続</li>
+                <li>**茶色ケーブル**: **- (アース/GND)** に接続</li>
+            </ul>
+        </div>
 
+        <div class="tech-card animate-on-scroll">
+            <h4>DCモーターのケーブル接続情報</h4>
+            <p>DCモーター（後輪駆動用）のケーブル色と極性（動作方向）を以下に示します。</p>
+            <ul>
+                <li>**青色ケーブル**: **+ (電源)** に接続</li>
+                <li>**黄色ケーブル**: **- (モーターのマイナス側)** に接続</li>
+            </ul>
+        </div>
 
+        <div class="tech-card animate-on-scroll">
+            <h4>トランジスタ 2N222A 配置と役割</h4>
+            <p>モーターのON/OFF制御に使用するNPNトランジスタのピン配置と役割です。</p>
+            
+            <p class="mt-2">配置: **モータのマイナス（黄色ケーブル）と単3電池のマイナスの間に配置**</p>
+            
+            <h5>ピン配置 (平たい面から見て、左から順に)</h5>
+            <ol>
+                <li>**エミッタ (E)**: 電流の放出端子。**アース/GND** につなぐ。</li>
+                <li>**ベース (B)**: 電流を制御する入力端子。Arduinoの **D5** ピンに接続。</li>
+                <li>**コレクタ (C)**: 電流の収集端子。**モータのマイナス（黄色ケーブル）** とつなぐ。</li>
+            </ol>
+        </div>
+
+    </div>
+</section>
 ---     
 
 <footer class="site-footer dark-footer">
@@ -415,6 +455,7 @@ void waitForRelease() {
                 <li><a href="#schedule">今後の予定</a></li>
                 <li><a href="#resources">技術リソース</a></li>
                 <li><a href="#code">調整用コード</a></li>
+                <li><a href="#log">これまでの活動記録</a></li>
             </ul>
         </div>
         
