@@ -606,13 +606,27 @@ document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(e
 // --- JS: モバイルメニュー処理 (新しいロジックに差し替え) ---
 function toggleMenu() {
     // ボタンとメニュー本体の要素を取得
-    const navTrigger = document.getElementById("nav-trigger");
-    const spNav = document.getElementById("spNav");
+    const navTrigger = document.getElementById("nav-trigger");
+    const spNav = document.getElementById("spNav"); // HTMLで mobile-menu クラスが追加されている前提
 
-    // activeクラスとopenクラスをトグル
+    // activeクラスとis-openクラスをトグル
+    // 1. ボタンにactiveクラスをトグル (アイコンのアニメーション用)
     navTrigger.classList.toggle("active");
-    spNav.classList.toggle("open");
+    // 2. メニュー本体に is-open クラスをトグル (CSSの.mobile-menu.is-openに合わせる)
+    spNav.classList.toggle("is-open");
 }
+
+// 注意: HTML側で <a id="nav-trigger" onclick="toggleMenu()"> を設定しない場合、
+// 以下のリスナーが必要です。
+// document.getElementById('nav-trigger').addEventListener('click', function(e) {
+//     e.preventDefault();
+//     toggleMenu();
+// });
+// 
+// 今回はHTML側で onclick="toggleMenu()" を追加することを推奨します。
+
+// --- JS: コードコピー機能 --- (ここは既存のまま)
+// ...
 
 // --- JS: コードコピー機能 ---
 function copyCode(elementId) {
@@ -636,4 +650,5 @@ function copyCode(elementId) {
 </script>
 </body>
 </html>
+
 
