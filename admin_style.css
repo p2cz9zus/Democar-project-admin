@@ -434,10 +434,13 @@ html {
  * ========================================================================== */
 .tech-card-container {
     display: grid;
-    /* 管理者サイトでは3列も許可するが、今回は2列で設定 */
+    /* 公開用サイトでは3列も許可するが、今回は2列で設定 */
     grid-template-columns: repeat(2, 1fr);
     gap: 30px;
     margin-top: 20px;
+    max-width: 1200px; /* 例: 1200px (コンテンツの幅に合わせて調整可能) */
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .tech-card {
@@ -757,6 +760,7 @@ html {
         box-sizing: border-box;
     }
 }
+
 
 
 
