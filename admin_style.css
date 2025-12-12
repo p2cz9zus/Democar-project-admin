@@ -480,7 +480,7 @@ a:focus, button:focus, .hero-tab-button:focus, .menu-icon:focus {
     align-items: center;
     /* paddingを上下10pxに減らし、ナビバーの高さを抑える */
     padding: 10px 20px; 
-    min-height: 50px; /* 最小高さを調整 */
+    min-height: 30px; /* 最小高さを調整 */
 }
 
 /* --- モバイルメニュー内の間隔調整 --- */
@@ -835,6 +835,7 @@ a:focus, button:focus, .hero-tab-button:focus, .menu-icon:focus {
     .chat-container { padding: 15px; }
     .message { max-width: 95%; }
 }
+
 
 
 
