@@ -1,158 +1,171 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>【管理者用】創成プロジェクト A1班: 管理・開発リソース</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="admin_style.css"> 
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;700&display=swap" rel="stylesheet">
-    <style>
-        /* 以前の認証やチャットボード、AIボード関連のインラインスタイルは全て削除しました */
-    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>【管理者用】創成プロジェクト A1班: 管理・開発リソース</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="admin_style.css"> 
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        /* 以前の認証やチャットボード、AIボード関連のインラインスタイルは全て削除しました */
+    </style>
 </head>
 <body>
 
-<header class="navbar">
-  <div class="navbar-container">
-    <a href="./admin.html" class="logo">
-    <img src="A1.png" alt="プロジェクトロゴ" class="logo">
+<header class="navbar" style="position: relative;"> 
+  <div class="navbar-container">
+    <a href="./admin.html" class="logo">
+    <img src="A1.png" alt="プロジェクトロゴ" class="logo">
+    </a>
+    
+    <nav class="hero-tabs-container">
+      <a href="#schedule" class="hero-tab-button">今後の予定</a>
+      <a href="#resources" class="hero-tab-button">技術リソース</a>
+      <a href="#code" class="hero-tab-button">調整用コード</a>
+      <a href="#log" class="hero-tab-button">これまでの活動記録</a>
+      <a href="https://p2cz9zus.github.io/Democar-project/" class="hero-tab-button">公開用サイト</a>  
+    </nav>
+
+    <a class="menu-trigger mobile-menu-trigger" href="#" id="nav-trigger">
+        <span></span>
+        <span></span>
+        <span></span>
     </a>
-    
-    <nav class="hero-tabs-container">
-      <a href="#schedule" class="hero-tab-button">今後の予定</a>
-      <a href="#resources" class="hero-tab-button">技術リソース</a>
-      <a href="#code" class="hero-tab-button">調整用コード</a>
-      <a href="#log" class="hero-tab-button">これまでの活動記録</a>
-      <a href="https://p2cz9zus.github.io/Democar-project/" class="hero-tab-button">公開用サイト</a>  
-    </nav>
+  </div>
+    </header>
+  
 
-    <div class="menu-icon" onclick="toggleMenu()">&#9776;</div>
-  </div>
+<nav id="spNav">
+    <div id="inrBox">
+        <ul class="spUL">
+            <li><a href="#schedule">今後の予定を見る</a></li>
+            <li><a href="#resources">技術リソースを見る</a></li>
+            <li><a href="#code">調整用コードを見る</a></li>
+            <li><a href="#log">これまでの活動記録を見る</a></li>
+        </ul>
+        <div class="btnP">
+            <a href="https://p2cz9zus.github.io/Democar-project/">
+                <span class="btnPInr">公開用サイトに戻る</span>
+            </a>
+        </div>
+        </div>
+</nav>
 
-  <div class="mobile-menu" id="mobileMenu">
-    <a href="#schedule" onclick="toggleMenu()">今後の予定を見る</a>
-    <a href="#resources" onclick="toggleMenu()">技術リソースを見る</a>
-    <a href="#code" onclick="toggleMenu()">調整用コードを見る</a>
-    <a href="#log" onclick="toggleMenu()">これまでの活動記録を見る</a>  
-    <a href="https://p2cz9zus.github.io/Democar-project/" onclick="toggleMenu()">公開用サイトに戻る</a> 
-  </div>
-</header>
-  
 
 <section class="hero admin-hero">
-    <div class="hero-content">
-        <h1>【管理者用サイト】 A1班</h1>
-        <h2>プロジェクト進捗管理と開発リソース共有の場</h2>
-        <p>関係者専用の情報共有サイトです。</p>
-    </div>
+    <div class="hero-content">
+        <h1>【管理者用サイト】 A1班</h1>
+        <h2>プロジェクト進捗管理と開発リソース共有の場</h2>
+        <p>関係者専用の情報共有サイトです。</p>
+    </div>
 </section>
 
 
 
 <section id="schedule" class="section light-bg">
-    <h3>今後の予定</h3>
-    <p class="process-preamble">デモンストレーションに向けた今後の重要タスクを管理します。</p>
-    <div class="process-container">
-        
-        <div class="step animate-on-scroll">
-            <span class="step-number">マイルストーン 1 (12/11)</span>
-            <h4>① 回路設計・試走・プログラム調整</h4>
-            <p>「トランジスタ配置問題の解決（回路設計）と9V電源によるマイコンの安定動作確認」に焦点を絞る。また，余裕があれば、試走・プログラム調整も行いたい。</p>
-            <div class="status-indicator pending">⚠️ 進行中</div>
-        </div>
+    <h3>今後の予定</h3>
+    <p class="process-preamble">デモンストレーションに向けた今後の重要タスクを管理します。</p>
+    <div class="process-container">
+        
+        <div class="step animate-on-scroll">
+            <span class="step-number">マイルストーン 1 (12/11)</span>
+            <h4>① 回路設計・試走・プログラム調整</h4>
+            <p>「トランジスタ配置問題の解決（回路設計）と9V電源によるマイコンの安定動作確認」に焦点を絞る。また，余裕があれば、試走・プログラム調整も行いたい。</p>
+            <div class="status-indicator pending">⚠️ 進行中</div>
+        </div>
 
-        <div class="step animate-on-scroll">
-            <span class="step-number">マイルストーン 2 (12/18)</span>
-            <h4>② 試走・プログラム調整</h4>
-            <p>Uターン動作の成功率を定量的に測定する。また、プログラムの調整を十分に行う。</p>
-            <div class="status-indicator pending">⚠️ 進行中</div>
-        </div>
-        
-        <div class="step animate-on-scroll">
-            <span class="step-number">マイルストーン 3 (1/8)</span>
-            <h4>③ 試走（未定）</h4>
-            <p>今後の様子を見ながら更新する。ただし、車体に計測用のマーカーを物理的に取り付け、最終デモでの走行ラインと停止位置の最終確認を行う必要あり。</p>
-            <div class="status-indicator todo">✍️ 未着手</div>
-        </div>
-    </div>
+        <div class="step animate-on-scroll">
+            <span class="step-number">マイルストーン 2 (12/18)</span>
+            <h4>② 試走・プログラム調整</h4>
+            <p>Uターン動作の成功率を定量的に測定する。また、プログラムの調整を十分に行う。</p>
+            <div class="status-indicator pending">⚠️ 進行中</div>
+        </div>
+        
+        <div class="step animate-on-scroll">
+            <span class="step-number">マイルストーン 3 (1/8)</span>
+            <h4>③ 試走（未定）</h4>
+            <p>今後の様子を見ながら更新する。ただし、車体に計測用のマーカーを物理的に取り付け、最終デモでの走行ラインと停止位置の最終確認を行う必要あり。</p>
+            <div class="status-indicator todo">✍️ 未着手</div>
+        </div>
+    </div>
 </section>
 
 
 
 <section id="resources" class="section dark-bg">
-    <h3>🔧 技術リソース</h3>
-    <p class="process-preamble">各種設計ファイルや部品、および現在の配線に関する重要な詳細情報です。</p>
-    <div class="tech-card-container">
-        <div class="tech-card animate-on-scroll">
-            <h4>回路図 (最新版)</h4>
-            <p>最終決定した電源分離ロジックを含む回路図のPDFです。誤配線がないか常に確認してください。</p>
-            <a href="./circuit_diagram_v3.pdf" class="resource-link">回路図 (PDF) ダウンロード</a>
-            <img src="./kuwashiikairo.jpeg" alt="最新回路図" class="process-media">
-        </div>
-        <div class="tech-card animate-on-scroll">
-            <h4>車体 CAD データ (STL)</h4>
-            <p>3Dプリンタで出力するためのSTLファイルおよび設計元のSTEPファイルです。</p>
-            <a href="./chassis_v2.stl" class="resource-link">STLファイル ダウンロード</a>
-        </div>
-        <div class="tech-card animate-on-scroll">
-            <h4>部品リスト (Excel)</h4>
-            <p>使用部品、単価、調達状況をまとめたリストです。部品の予備発注にご活用ください。</p>
-            <a href="./parts_list_v1.xlsx" class="resource-link">部品リスト (Excel) ダウンロード</a>
-        </div>
-        <div class="tech-card animate-on-scroll">
-            <h4>設計変更ログ</h4>
-            <p>ファン駆動からタイヤ駆動への変更など、主要な設計変更の経緯と理由を記録しています。</p>
-            <a href="./design_change_log.txt" class="resource-link">ログファイル閲覧</a>
-        </div>
-        
-        <div class="tech-card animate-on-scroll">
-            <h4>サーボモーターの接続詳細</h4>
-            <p>ステアリング用サーボモーターのケーブル色とArduino/電源への接続先です。</p>
-            <ul>
-                <li>黄色ケーブル: Arduinoのd9ピンに接続 (信号線)</li>
-                <li>赤ケーブル:+ (電源)に接続</li>
-                <li>茶色ケーブル:- (アース/GND)に接続</li>
-            </ul>
-        </div>
+    <h3>🔧 技術リソース</h3>
+    <p class="process-preamble">各種設計ファイルや部品、および現在の配線に関する重要な詳細情報です。</p>
+    <div class="tech-card-container">
+        <div class="tech-card animate-on-scroll">
+            <h4>回路図 (最新版)</h4>
+            <p>最終決定した電源分離ロジックを含む回路図のPDFです。誤配線がないか常に確認してください。</p>
+            <a href="./circuit_diagram_v3.pdf" class="resource-link">回路図 (PDF) ダウンロード</a>
+            <img src="./kuwashiikairo.jpeg" alt="最新回路図" class="process-media">
+        </div>
+        <div class="tech-card animate-on-scroll">
+            <h4>車体 CAD データ (STL)</h4>
+            <p>3Dプリンタで出力するためのSTLファイルおよび設計元のSTEPファイルです。</p>
+            <a href="./chassis_v2.stl" class="resource-link">STLファイル ダウンロード</a>
+        </div>
+        <div class="tech-card animate-on-scroll">
+            <h4>部品リスト (Excel)</h4>
+            <p>使用部品、単価、調達状況をまとめたリストです。部品の予備発注にご活用ください。</p>
+            <a href="./parts_list_v1.xlsx" class="resource-link">部品リスト (Excel) ダウンロード</a>
+        </div>
+        <div class="tech-card animate-on-scroll">
+            <h4>設計変更ログ</h4>
+            <p>ファン駆動からタイヤ駆動への変更など、主要な設計変更の経緯と理由を記録しています。</p>
+            <a href="./design_change_log.txt" class="resource-link">ログファイル閲覧</a>
+        </div>
+        
+        <div class="tech-card animate-on-scroll">
+            <h4>サーボモーターの接続詳細</h4>
+            <p>ステアリング用サーボモーターのケーブル色とArduino/電源への接続先です。</p>
+            <ul>
+                <li>黄色ケーブル: Arduinoのd9ピンに接続 (信号線)</li>
+                <li>赤ケーブル:+ (電源)に接続</li>
+                <li>茶色ケーブル:- (アース/GND)に接続</li>
+            </ul>
+        </div>
 
-        <div class="tech-card animate-on-scroll">
-            <h4>DCモーターの接続詳細</h4>
-            <p>後輪駆動用DCモーターのケーブル色と極性情報です。</p>
-            <ul>
-                <li>青色ケーブル:+ (電源)に接続</li>
-                <li>黄色ケーブル:- (モーターのマイナス側) に接続</li>
-            </ul>
-        </div>
+        <div class="tech-card animate-on-scroll">
+            <h4>DCモーターの接続詳細</h4>
+            <p>後輪駆動用DCモーターのケーブル色と極性情報です。</p>
+            <ul>
+                <li>青色ケーブル:+ (電源)に接続</li>
+                <li>黄色ケーブル:- (モーターのマイナス側) に接続</li>
+            </ul>
+        </div>
 
-        <div class="tech-card animate-on-scroll">
-            <h4>トランジスタ 2N222A 配置と役割</h4>
-            <p>モーターのON/OFF制御に使用するNPNトランジスタの接続情報です。</p>
-            
-            <p class="mt-2">配置: モータのマイナス（黄色ケーブル）と単3電池のマイナスの間に配置</p>
-            
-            <h5>ピン配置 (平たい面から見て、左から順に)</h5>
-            <ol>
-                <li>エミッタ (E): 電流の放出端子。アース/GNDにつなぐ。</li>
-                <li>ベース (B): 電流を制御する入力端子。Arduinoのd5ピンに接続。</li>
-                <li>コレクタ (C): 電流の収集端子。モータのマイナス（黄色ケーブル）とつなぐ。</li>
-            </ol>
-        </div>
-        </div>
+        <div class="tech-card animate-on-scroll">
+            <h4>トランジスタ 2N222A 配置と役割</h4>
+            <p>モーターのON/OFF制御に使用するNPNトランジスタの接続情報です。</p>
+            
+            <p class="mt-2">配置: モータのマイナス（黄色ケーブル）と単3電池のマイナスの間に配置</p>
+            
+            <h5>ピン配置 (平たい面から見て、左から順に)</h5>
+            <ol>
+                <li>エミッタ (E): 電流の放出端子。アース/GNDにつなぐ。</li>
+                <li>ベース (B): 電流を制御する入力端子。Arduinoのd5ピンに接続。</li>
+                <li>コレクタ (C): 電流の収集端子。モータのマイナス（黄色ケーブル）とつなぐ。</li>
+            </ol>
+        </div>
+        </div>
 </section>
 
 
 
 <section id="code" class="section light-bg">
-    <h3>調整用プログラム (C++ / Arduino)</h3>
-    <p class="process-preamble">デモンストレーションに合わせて調整中の制御コードをここに掲載します。本番コードのパラメータ調整にご利用ください。</p>
+    <h3>調整用プログラム (C++ / Arduino)</h3>
+    <p class="process-preamble">デモンストレーションに合わせて調整中の制御コードをここに掲載します。本番コードのパラメータ調整にご利用ください。</p>
 
-    <div class="code-display animate-on-scroll">
-        <h5 class="text-lg font-medium mb-2 text-gray-800 dark:text-gray-200">最新調整コード1 (Uターン角度改善版)</h5>
-        <div class="code-block-wrapper">
-            <button class="copy-button" onclick="copyCode('adjustedCode')">コードをコピー</button>
-            <div class="code-block">
+    <div class="code-display animate-on-scroll">
+        <h5 class="text-lg font-medium mb-2 text-gray-800 dark:text-gray-200">最新調整コード1 (Uターン角度改善版)</h5>
+        <div class="code-block-wrapper">
+            <button class="copy-button" onclick="copyCode('adjustedCode')">コードをコピー</button>
+            <div class="code-block">
 <pre id="adjustedCode"><code>#include &lt;Arduino.h;>
 #include &lt;Servo.h;>
 
@@ -164,27 +177,27 @@ Servo front_steer_servo; // ステアリング制御用サーボモーター
 
 // --- シーケンス状態の定義（課題の進行を管理） ---
 enum SequenceState {
-  WAIT_START = 0, // ピース待機中（リセット状態）
-  DRIVING,        // 自律的な直進駆動中
-  PAUSE,          // ピース除去による一時停止中（金属検出時）
-  COMPLETE        // 課題完了（未使用の可能性あり）
+  WAIT_START = 0, // ピース待機中（リセット状態）
+  DRIVING,        // 自律的な直進駆動中
+  PAUSE,          // ピース除去による一時停止中（金属検出時）
+  COMPLETE        // 課題完了（未使用の可能性あり）
 };
 SequenceState current_state = WAIT_START;
 
 // --- 動作パラメータ（試験後に調整） ---
-const int DC_DRIVE_PWM = 200;  // DCモーターの駆動速度 (0-255)
+const int DC_DRIVE_PWM = 200;  // DCモーターの駆動速度 (0-255)
 const int STEER_STRAIGHT = 90; // サーボ: 直進角度
-const int STEER_LEFT = 140;    // サーボ: 左旋回角度 (Uターン用)
-const int STEER_RIGHT = 40;    // サーボ: 右旋回角度（※未使用）
+const int STEER_LEFT = 140;    // サーボ: 左旋回角度 (Uターン用)
+const int STEER_RIGHT = 40;    // サーボ: 右旋回角度（※未使用）
 
 // Uターン動作に必要な時間（ミリ秒） - 調整必須 ★
 const unsigned long UTURN_DURATION_MS = 1500;
 
 // --- ピン割り当て ---
-const int METAL_SENSOR_PIN = 3;  // 金属センサーの入力ピン
-const int SERVO_PIN = 9;         // ステアリングサーボの出力ピン
-const int DC_MOTOR_PWM = 5;      // 後輪DCモーターの速度制御（PWM）ピン
-const int DC_MOTOR_DIR = 6;      // 後輪DCモーターの方向制御ピン
+const int METAL_SENSOR_PIN = 3;  // 金属センサーの入力ピン
+const int SERVO_PIN = 9;         // ステアリングサーボの出力ピン
+const int DC_MOTOR_PWM = 5;      // 後輪DCモーターの速度制御（PWM）ピン
+const int DC_MOTOR_DIR = 6;      // 後輪DCモーターの方向制御ピン
 
 // --- デバウンス変数 ---
 unsigned long lastSensorChange = 0; // 最後にセンサー値が変化した時間
@@ -198,38 +211,38 @@ int lastMetalStatus = HIGH; // 前回の金属センサーの状態 (HIGH=金属
 
 // 全ての駆動を停止させる
 void stop_all_motors(void) {
-  analogWrite(DC_MOTOR_PWM, 0); // DCモーターの速度を0に設定
-  front_steer_servo.write(STEER_STRAIGHT); // ステアリングを直進に戻す
+  analogWrite(DC_MOTOR_PWM, 0); // DCモーターの速度を0に設定
+  front_steer_servo.write(STEER_STRAIGHT); // ステアリングを直進に戻す
 }
 
 // 直進駆動
 void drive_forward() {
-  front_steer_servo.write(STEER_STRAIGHT); // ステアリングは直進
-  digitalWrite(DC_MOTOR_DIR, HIGH); // 前進方向
-  analogWrite(DC_MOTOR_PWM, DC_DRIVE_PWM); // 設定速度で駆動
+  front_steer_servo.write(STEER_STRAIGHT); // ステアリングは直進
+  digitalWrite(DC_MOTOR_DIR, HIGH); // 前進方向
+  analogWrite(DC_MOTOR_PWM, DC_DRIVE_PWM); // 設定速度で駆動
 }
 
 // 左旋回駆動（Uターンの一段階）
 void drive_turn_left() {
-  front_steer_servo.write(STEER_LEFT); // ステアリングを左旋回角度に
-  digitalWrite(DC_MOTOR_DIR, HIGH); // 前進方向
-  analogWrite(DC_MOTOR_PWM, DC_DRIVE_PWM); // 設定速度で駆動
+  front_steer_servo.write(STEER_LEFT); // ステアリングを左旋回角度に
+  digitalWrite(DC_MOTOR_DIR, HIGH); // 前進方向
+  analogWrite(DC_MOTOR_PWM, DC_DRIVE_PWM); // 設定速度で駆動
 }
 
 // Uターンを自律的に実行する関数（課題必須動作）
 void perform_uturn() {
-  Serial.println("🔥 Performing mandatory U-Turn...");
-  // 指定時間だけ左旋回を行う
-  drive_turn_left();
-  delay(UTURN_DURATION_MS); // 指定時間待機
-  stop_all_motors(); // 一旦停止
+  Serial.println("🔥 Performing mandatory U-Turn...");
+  // 指定時間だけ左旋回を行う
+  drive_turn_left();
+  delay(UTURN_DURATION_MS); // 指定時間待機
+  stop_all_motors(); // 一旦停止
 }
 
 // 状態遷移のための駆動停止処理（PAUSE状態へ移行）
 void drive_motor_stop_pause() {
-  stop_all_motors();
-  current_state = PAUSE;
-  Serial.println("⏸️ State PAUSE (Piece removed).");
+  stop_all_motors();
+  current_state = PAUSE;
+  Serial.println("⏸️ State PAUSE (Piece removed).");
 }
 
 
@@ -238,339 +251,339 @@ void drive_motor_stop_pause() {
 // ----------------------------------------------------------------------
 
 void setup(void) {
-  Serial.begin(9600); // PCとのデバッグ用シリアル通信を開始
+  Serial.begin(9600); // PCとのデバッグ用シリアル通信を開始
 
-  // ピン設定
-  pinMode(DC_MOTOR_PWM, OUTPUT); // DCモーター速度制御
-  pinMode(DC_MOTOR_DIR, OUTPUT); // DCモーター方向制御
-  // METAL_SENSOR_PIN: LOW=金属あり, HIGH=金属なし
-  pinMode(METAL_SENSOR_PIN, INPUT_PULLUP); // 内部プルアップを使用してセンサーを入力に設定
+  // ピン設定
+  pinMode(DC_MOTOR_PWM, OUTPUT); // DCモーター速度制御
+  pinMode(DC_MOTOR_DIR, OUTPUT); // DCモーター方向制御
+  // METAL_SENSOR_PIN: LOW=金属あり, HIGH=金属なし
+  pinMode(METAL_SENSOR_PIN, INPUT_PULLUP); // 内部プルアップを使用してセンサーを入力に設定
 
-  front_steer_servo.attach(SERVO_PIN); // D9ピンにサーボを接続
+  front_steer_servo.attach(SERVO_PIN); // D9ピンにサーボを接続
 
-  stop_all_motors(); // 初期状態で全モーターを停止
-  Serial.println("System Ready. Autonomous Mode Active.");
+  stop_all_motors(); // 初期状態で全モーターを停止
+  Serial.println("System Ready. Autonomous Mode Active.");
 }
 
 
 void loop(void) {
-  // 1. センサー読み取り（デバウンス処理）
-  int raw_metal_status = digitalRead(METAL_SENSOR_PIN);
-  int metal_status = raw_metal_status;
+  // 1. センサー読み取り（デバウンス処理）
+  int raw_metal_status = digitalRead(METAL_SENSOR_PIN);
+  int metal_status = raw_metal_status;
 
-  // センサー値が前回と異なる場合、デバウンス開始時間を記録
-  if (raw_metal_status != lastMetalStatus) {
-    lastSensorChange = millis();
-  }
+  // センサー値が前回と異なる場合、デバウンス開始時間を記録
+  if (raw_metal_status != lastMetalStatus) {
+    lastSensorChange = millis();
+  }
 
-  // 2. 安定したセンサー値での状態遷移判定（課題の進行）
-  if ((millis() - lastSensorChange) > DEBOUNCE_DELAY) {
-    metal_status = raw_metal_status;
+  // 2. 安定したセンサー値での状態遷移判定（課題の進行）
+  if ((millis() - lastSensorChange) > DEBOUNCE_DELAY) {
+    metal_status = raw_metal_status;
 
-    // 安定したセンサー値で状態をチェック
-    switch (current_state) {
+    // 安定したセンサー値で状態をチェック
+    switch (current_state) {
 
-      case WAIT_START:
-        // 【ピースを置く】(LOW) -> 駆動開始 (DRIVING)
-        if (metal_status == LOW) {
-          current_state = DRIVING;
-          Serial.println("▶️ DRIVING state started.");
-        }
-        break;
+      case WAIT_START:
+        // 【ピースを置く】(LOW) -> 駆動開始 (DRIVING)
+        if (metal_status == LOW) {
+          current_state = DRIVING;
+          Serial.println("▶️ DRIVING state started.");
+        }
+        break;
 
-      case DRIVING:
-        // AI指令がないため、直進を継続
-        drive_forward();
+      case DRIVING:
+        // AI指令がないため、直進を継続
+        drive_forward();
 
-        // 【ピースを取る】(HIGH) -> 一時停止へ (PAUSE)
-        if (metal_status == HIGH) {
-          drive_motor_stop_pause(); // モーターを停止し、PAUSE状態へ
-        }
-        break;
+        // 【ピースを取る】(HIGH) -> 一時停止へ (PAUSE)
+        if (metal_status == HIGH) {
+          drive_motor_stop_pause(); // モーターを停止し、PAUSE状態へ
+        }
+        break;
 
-      case PAUSE:
-        // 【ピースを置く】(LOW) -> Uターン実行後に駆動再開
-        if (metal_status == LOW) {
-          // 課題ルール: Uターン実行
-          perform_uturn();
+      case PAUSE:
+        // 【ピースを置く】(LOW) -> Uターン実行後に駆動再開
+        if (metal_status == LOW) {
+          // 課題ルール: Uターン実行
+          perform_uturn();
 
-          // Uターン完了後、DRIVING状態に移行
-          current_state = DRIVING;
-          Serial.println("🔄 DRIVING resumed after U-turn.");
-        }
-        break;
+          // Uターン完了後、DRIVING状態に移行
+          current_state = DRIVING;
+          Serial.println("🔄 DRIVING resumed after U-turn.");
+        }
+        break;
 
-      case COMPLETE:
-        // 【ピースを取る】(HIGH) -> リセット (WAIT_START)
-        if (metal_status == HIGH) {
-          current_state = WAIT_START;
-          Serial.println("⏹️ Sequence Reset.");
-        }
-        break;
+      case COMPLETE:
+        // 【ピースを取る】(HIGH) -> リセット (WAIT_START)
+        if (metal_status == HIGH) {
+          current_state = WAIT_START;
+          Serial.println("⏹️ Sequence Reset.");
+        }
+        break;
 
-      default:
-        // 予期せぬ状態の場合、全て停止してリセット状態へ
-        stop_all_motors();
-        current_state = WAIT_START;
-        break;
-    }
-  }
+      default:
+        // 予期せぬ状態の場合、全て停止してリセット状態へ
+        stop_all_motors();
+        current_state = WAIT_START;
+        break;
+    }
+  }
 
-  // 次のループのためにセンサー値を更新
-  lastMetalStatus = raw_metal_status;
+  // 次のループのためにセンサー値を更新
+  lastMetalStatus = raw_metal_status;
 }
 </code></pre>
-            </div>
-        </div>
-    </div>
-    <div class="code-display animate-on-scroll">
-        <h5 class="text-lg font-medium mb-2 text-gray-800 dark:text-gray-200">最新調整コード2 (シンプルなフェーズベース ON/OFF制御版)</h5>
-        <div class="code-block-wrapper">
-            <button class="copy-button" onclick="copyCode('adjustedCode2')">コードをコピー</button>
-            <div class="code-block">
+            </div>
+        </div>
+    </div>
+    <div class="code-display animate-on-scroll">
+        <h5 class="text-lg font-medium mb-2 text-gray-800 dark:text-gray-200">最新調整コード2 (シンプルなフェーズベース ON/OFF制御版)</h5>
+        <div class="code-block-wrapper">
+            <button class="copy-button" onclick="copyCode('adjustedCode2')">コードをコピー</button>
+            <div class="code-block">
 <pre id="adjustedCode2"><code>#include &lt;Servo.h>
 
 // ピン指定
-const int sensorPin = 2;   // 金属ピースの検知ピン (INPUT_PULLUPを使用)
-const int motorPin = 5;    // 走行用モーター（簡易的にON/OFF制御）
-const int servoPin = 9;    // サーボモーター
+const int sensorPin = 2;   // 金属ピースの検知ピン (INPUT_PULLUPを使用)
+const int motorPin = 5;    // 走行用モーター（簡易的にON/OFF制御）
+const int servoPin = 9;    // サーボモーター
 
 Servo myServo;
 int phase = 1; // 1: 直進フェーズ, 2: Uターンフェーズ
 
 // 各自のロボットに合わせて調整する値
 const int STRAIGHT_ANGLE = 90; // 直進時のサーボ角度
-const int TURN_ANGLE = 135;      // 曲がる時のサーボ角度（Uターン用）
+const int TURN_ANGLE = 135;      // 曲がる時のサーボ角度（Uターン用）
 const int STRAIGHT_TIME = 5000; // 直線走行にかかる時間（ミリ秒）
-const int CIRCLE_TIME = 5000;    // 360度旋回にかかる時間（ミリ秒）
+const int CIRCLE_TIME = 5000;    // 360度旋回にかかる時間（ミリ秒）
 
 void setup() {
-  // 金属センサーは内部プルアップを使用して設定 (LOWで金属接触と判断)
-  pinMode(sensorPin, INPUT_PULLUP);
-  pinMode(motorPin, OUTPUT);
-  myServo.attach(servoPin);
-  
-  // 初期状態は直進方向にセット
-  myServo.write(STRAIGHT_ANGLE);
+  // 金属センサーは内部プルアップを使用して設定 (LOWで金属接触と判断)
+  pinMode(sensorPin, INPUT_PULLUP);
+  pinMode(motorPin, OUTPUT);
+  myServo.attach(servoPin);
+  
+  // 初期状態は直進方向にセット
+  myServo.write(STRAIGHT_ANGLE);
 }
 
 void loop() {
-  // 金属ピースが触れた（センサーピンがLOWになった）
-  if (digitalRead(sensorPin) == LOW) {
-    
-    if (phase == 1) {
-      Serial.println("Phase 1: Straight Driving");
-      
-      // --- 1回目の動作：直線運動 ---
-      myServo.write(STRAIGHT_ANGLE); // ハンドルを真っ直ぐに
-      digitalWrite(motorPin, HIGH);  // 走行開始 (ON)
-      delay(STRAIGHT_TIME);          // 設定時間走る
-      digitalWrite(motorPin, LOW);   // 停止 (OFF)
+  // 金属ピースが触れた（センサーピンがLOWになった）
+  if (digitalRead(sensorPin) == LOW) {
+    
+    if (phase == 1) {
+      Serial.println("Phase 1: Straight Driving");
+      
+      // --- 1回目の動作：直線運動 ---
+      myServo.write(STRAIGHT_ANGLE); // ハンドルを真っ直ぐに
+      digitalWrite(motorPin, HIGH);  // 走行開始 (ON)
+      delay(STRAIGHT_TIME);          // 設定時間走る
+      digitalWrite(motorPin, LOW);   // 停止 (OFF)
 
-      waitForRelease();              // 金属ピースが離れるのを待つ
-      phase = 2; // 次はUターンフェーズへ
-    } 
-    else {
-      Serial.println("Phase 2: U-Turn and Resume Straight");
-      
-      // --- 2回目の動作：360度回転 ＋ 直進 ---
-      // 1. まずUターン実行
-      myServo.write(TURN_ANGLE);     // ハンドルを全開に切る
-      digitalWrite(motorPin, HIGH);  // 走行開始 (ON)
-      delay(CIRCLE_TIME);            // 1周するまで待機（Uターン時間）
+      waitForRelease();              // 金属ピースが離れるのを待つ
+      phase = 2; // 次はUターンフェーズへ
+    } 
+    else {
+      Serial.println("Phase 2: U-Turn and Resume Straight");
+      
+      // --- 2回目の動作：360度回転 ＋ 直進 ---
+      // 1. まずUターン実行
+      myServo.write(TURN_ANGLE);     // ハンドルを全開に切る
+      digitalWrite(motorPin, HIGH);  // 走行開始 (ON)
+      delay(CIRCLE_TIME);            // 1周するまで待機（Uターン時間）
 
-      // 2. 真っ直ぐに戻して直進
-      myServo.write(STRAIGHT_ANGLE); // ハンドルを戻す
-      delay(STRAIGHT_TIME);          // そのまま直進
-      digitalWrite(motorPin, LOW);   // 停止 (OFF)
+      // 2. 真っ直ぐに戻して直進
+      myServo.write(STRAIGHT_ANGLE); // ハンドルを戻す
+      delay(STRAIGHT_TIME);          // そのまま直進
+      digitalWrite(motorPin, LOW);   // 停止 (OFF)
 
-      waitForRelease();              // 金属ピースが離れるのを待つ
-      phase = 1; // 次は直進フェーズへ
-    }
-  }
+      waitForRelease();              // 金属ピースが離れるのを待つ
+      phase = 1; // 次は直進フェーズへ
+    }
+  }
 }
 
 // 金属ピースが離れるのを待つ関数
 void waitForRelease() {
-  digitalWrite(motorPin, LOW); // モーターは必ず停止
-  delay(50); // チャタリング防止
-  while(digitalRead(sensorPin) == LOW); // センサーがHIGHに戻るまで待機
-  delay(50);
+  digitalWrite(motorPin, LOW); // モーターは必ず停止
+  delay(50); // チャタリング防止
+  while(digitalRead(sensorPin) == LOW); // センサーがHIGHに戻るまで待機
+  delay(50);
 }</code></pre>
-            </div>
-        </div>
-    </div>
+            </div>
+        </div>
+    </div>
 </section>
 
 
 <section id="log" class="section dark-bg">
-    <h3>活動記録</h3>
-    <p class="process-preamble" style="color: var(--color-hero-text-secondary);">過去の討議内容、作業内容、反省点を記録しています。特に重要な方針転換や技術的課題に焦点を当てています。</p>
+    <h3>活動記録</h3>
+    <p class="process-preamble" style="color: var(--color-hero-text-secondary);">過去の討議内容、作業内容、反省点を記録しています。特に重要な方針転換や技術的課題に焦点を当てています。</p>
 
-    <div class="log-table-container animate-on-scroll">
-        <table>
-            <thead>
-                <tr>
-                    <th>授業日</th>
-                    <th>回次</th>
-                    <th>討議内容（方針・課題）</th>
-                    <th>作業内容（実施したこと）</th>
-                    <th>反省点・課題</th>
-                    <th>今後の予定</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>10月23日</td>
-                    <td>第4回</td>
-                    <td>機構の全般的な見直し。「ファン推進力」から「タイヤ駆動方式」へ目標を変更。マイコンを利用したタイヤ駆動制御を目安に、プログラム・回路設計を実施 (2)。</td>
-                    <td>PC給電のもと、モータを回すことに成功。乾電池・サーボモータの購入、車体全体の印刷。車体解説スライドの制作。</td>
-                    <td>課題解決に向けた十分な工夫点が得られていない。</td>
-                    <td>タイヤ駆動の試験走行の実施。</td>
-                </tr>
-                <tr>
-                    <td>10月30日</td>
-                    <td>第5回</td>
-                    <td>ファン式車体の再現性が高くないことを確認し、モータ式車体へ方針転換を決定。制御回路の車体への接合方法は次回へ持ち越し。</td>
-                    <td>3Dプリンター製部品のやすり加工。サーボモータとモータを制御する回路の組み立て。プログラムを作成し、PC給電で動作確認を実施。車体の工夫を説明するためのスライド・ホームページ制作。</td>
-                    <td>サーボモータによる旋回制御において、エラーを回避するための工夫が必要。</td>
-                    <td>プログラムの改良（異常をきたさないように工夫)。車体の走行試験を行い、実験値をもとにプログラムを最適化する。</td>
-                </tr>
-                <tr>
-                    <td>11月6日</td>
-                    <td>第6回</td>
-                    <td>マイコン制御プログラムの流れや問題点、サーボモータ利用時の課題、サーボモータ周りの部品の形状と役割について討議。</td>
-                    <td>サーボモータ周りの部品のCAD制作。プログラムを回路と接続した際、サーボモータが基準位置を見失う問題が発覚し、改良が必要と判断。</td>
-                    <td>サーボモータの問題点を事前に考慮しきれず、予想外のトラブルに遭遇した。</td>
-                    <td>プログラムの調整。工夫によりサーボモータの問題を克服する。ホームページ、スライドの制作。</td>
-                </tr>
-                <tr>
-                    <td>11月13日</td>
-                    <td>第7回</td>
-                    <td>回路図を作成し、電源の配置について議論。電圧条件から、モータ(3V)とサーボモータ+マイコン(9V)で電源を共用する案を採用。既存の電池ケースの不具合（ショート）が判明し、9V電池を使用することに決定。</td>
-                    <td>不具合により9V電池の使用に変更。最終回路の設計・組み立て、マイコンの動作確認。工夫点を伝えるスライド・ホームページの制作・調整。車体は、前輪の動きとサーボモータ設置を考慮し、新たに印刷する予定。</td>
-                    <td>回路組み立て後、マイコンがうまく起動しない問題が発生（回路の改善が必要かもしれない）。プログラムの調整が未実施。</td>
-                    <td>9V電池の購入、プログラムの調整。</td>
-                </tr>
-                <tr>
-                    <td>11月27日</td>
-                    <td>第8回</td>
-                    <td>回路の配線確認、一部理解が浅い点の討議。トランジスタを正しく配置するために議論・整理した。</td>
-                    <td>車体を再度印刷していたため、車体の組み立てを実施。試走させる前段階まで準備が整う。マイコン制御の回路が複雑で、正しく動作しないトラブルが発生し、原因追究を行った。</td>
-                    <td>回路接続後に正しく動作しない問題が発生→原因追究の結果、トランジスタの配置に問題があることが判明した。プログラム調整が未実施。</td>
-                    <td>トランジスタに関するトラブルの解消。試走を踏まえたうえでのプログラムの調整。次講義でトランジスタの正しい配置、プログラム調整、回路の車体への埋め込み、試運転を行う予定。</td>
-                </tr>
-                <tr>
-                    <td>12月11日</td>
-                    <td>第9回</td>
-                    <td>
-                        <ul class="list-disc ml-4">
-                            <li>前回トラブルが発生したコンデンサーの問題を解決し、回路図に反映。</li>
-                            <li>回路図の配線を詳細に確認し、部品のケーブル色と接続先を整理。
-                                <ul>
-                                    <li>サーボモータ: 黄色(D9)、赤(+), 茶色(-)</li>
-                                    <li>モータ: 青(+), 黄色(-)</li>
-                                    <li>トランジスタ(2N222A): エミッタ(アース), ベース(D5), コレクタ(モータ(-))</li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </td>
-                    <td>
-                        <ul class="list-disc ml-4">
-                            <li>コンデンサのトラブルを解決。</li>
-                            <li>車体と回路の配線がすべて完了し、<strong>配線のはんだ付けを実施</strong>し、最終的な造形に近づいた。</li>
-                            <li>回路図を更新し、管理者用・公開用サイトの回路図も更新。</li>
-                            <li>公開用サイトに製作ヒストリーを追加。</li>
-                        </ul>
-                    </td>
-                    <td>試走段階でトランジスタが故障。はんだ付け時に足を開きすぎたことが原因と推測される。トランジスタに負荷がかからないよう、基板の活用を検討する必要がある。</td>
-                    <td>トランジスタの再度はんだ付け、試走・プログラムの微調整、実験値のまとめによる精度の向上、サイトUIの向上。</td>
-                </tr>
-                <tr>
-                    <td>12月18日</td>
-                    <td>第10回</td>
-                    <td>-</td>
-                    <td>現代版からくり作成（後半）継続。</td>
-                    <td>-</td>
-                    <td>-</td>
-                </tr>
-                <tr>
-                    <td>1月8日</td>
-                    <td>第11回</td>
-                    <td>-</td>
-                    <td>現代版からくり作成（後半）継続。</td>
-                    <td>-</td>
-                    <td>（現代版からくりの完成、動作テスト、プレゼン練習） (35)。</td>
-                </tr>
-                <tr>
-                    <td>1月15日</td>
-                    <td>第12回</td>
-                    <td>-</td>
-                    <td>現代版からくり作成（後半）継続。</td>
-                    <td>-</td>
-                    <td>-</td>
-                </tr>
-                <tr>
-                    <td>1月22日</td>
-                    <td>第13回</td>
-                    <td>-</td>
-                    <td>現代版からくり作成（後半）継続。</td>
-                    <td>-</td>
-                    <td>-</td>
-                </tr>
-                <tr>
-                    <td>1月29日</td>
-                    <td>第14回</td>
-                    <td>-</td>
-                    <td>現代版からくり作成（後半）継続。</td>
-                    <td>-</td>
-                    <td>-</td>
-                </tr>
-                <tr>
-                    <td>2月5日</td>
-                    <td>第15回</td>
-                    <td>「現代版からくり」金属ピース運びコンテスト。</td>
-                    <td>各グループの「金属ピース運び現代版からくり」による競技、工夫点と苦労点のプレゼンテーション。</td>
-                    <td>-</td>
-                    <td>-</td>
-                </tr>
-                <tr>
-                    <td>2月12日</td>
-                    <td>第16回</td>
-                    <td>コンテスト結果発表。</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+    <div class="log-table-container animate-on-scroll">
+        <table>
+            <thead>
+                <tr>
+                    <th>授業日</th>
+                    <th>回次</th>
+                    <th>討議内容（方針・課題）</th>
+                    <th>作業内容（実施したこと）</th>
+                    <th>反省点・課題</th>
+                    <th>今後の予定</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>10月23日</td>
+                    <td>第4回</td>
+                    <td>機構の全般的な見直し。「ファン推進力」から「タイヤ駆動方式」へ目標を変更。マイコンを利用したタイヤ駆動制御を目安に、プログラム・回路設計を実施 (2)。</td>
+                    <td>PC給電のもと、モータを回すことに成功。乾電池・サーボモータの購入、車体全体の印刷。車体解説スライドの制作。</td>
+                    <td>課題解決に向けた十分な工夫点が得られていない。</td>
+                    <td>タイヤ駆動の試験走行の実施。</td>
+                </tr>
+                <tr>
+                    <td>10月30日</td>
+                    <td>第5回</td>
+                    <td>ファン式車体の再現性が高くないことを確認し、モータ式車体へ方針転換を決定。制御回路の車体への接合方法は次回へ持ち越し。</td>
+                    <td>3Dプリンター製部品のやすり加工。サーボモータとモータを制御する回路の組み立て。プログラムを作成し、PC給電で動作確認を実施。車体の工夫を説明するためのスライド・ホームページ制作。</td>
+                    <td>サーボモータによる旋回制御において、エラーを回避するための工夫が必要。</td>
+                    <td>プログラムの改良（異常をきたさないように工夫)。車体の走行試験を行い、実験値をもとにプログラムを最適化する。</td>
+                </tr>
+                <tr>
+                    <td>11月6日</td>
+      〠             <td>第6回</td>
+                    <td>マイコン制御プログラムの流れや問題点、サーボモータ利用時の課題、サーボモータ周りの部品の形状と役割について討議。</td>
+                    <td>サーボモータ周りの部品のCAD制作。プログラムを回路と接続した際、サーボモータが基準位置を見失う問題が発覚し、改良が必要と判断。</td>
+                    <td>サーボモータの問題点を事前に考慮しきれず、予想外のトラブルに遭遇した。</td>
+                    <td>プログラムの調整。工夫によりサーボモータの問題を克服する。ホームページ、スライドの制作。</td>
+                </tr>
+                <tr>
+                    <td>11月13日</td>
+                    <td>第7回</td>
+                    <td>回路図を作成し、電源の配置について議論。電圧条件から、モータ(3V)とサーボモータ+マイコン(9V)で電源を共用する案を採用。既存の電池ケースの不具合（ショート）が判明し、9V電池を使用することに決定。</td>
+                    <td>不具合により9V電池の使用に変更。最終回路の設計・組み立て、マイコンの動作確認。工夫点を伝えるスライド・ホームページの制作・調整。車体は、前輪の動きとサーボモータ設置を考慮し、新たに印刷する予定。</td>
+                    <td>回路組み立て後、マイコンがうまく起動しない問題が発生（回路の改善が必要かもしれない）。プログラムの調整が未実施。</td>
+                    <td>9V電池の購入、プログラムの調整。</td>
+                </tr>
+                <tr>
+                    <td>11月27日</td>
+                    <td>第8回</td>
+                    <td>回路の配線確認、一部理解が浅い点の討議。トランジスタを正しく配置するために議論・整理した。</td>
+                    <td>車体を再度印刷していたため、車体の組み立てを実施。試走させる前段階まで準備が整う。マイコン制御の回路が複雑で、正しく動作しないトラブルが発生し、原因追究を行った。</td>
+                    <td>回路接続後に正しく動作しない問題が発生→原因追究の結果、トランジスタの配置に問題があることが判明した。プログラム調整が未実施。</td>
+                    <td>トランジスタに関するトラブルの解消。試走を踏まえたうえでのプログラムの調整。次講義でトランジスタの正しい配置、プログラム調整、回路の車体への埋め込み、試運転を行う予定。</td>
+                </tr>
+                <tr>
+                    <td>12月11日</td>
+                    <td>第9回</td>
+                    <td>
+                        <ul class="list-disc ml-4">
+                            <li>前回トラブルが発生したコンデンサーの問題を解決し、回路図に反映。</li>
+                            <li>回路図の配線を詳細に確認し、部品のケーブル色と接続先を整理。
+                                <ul>
+                                    <li>サーボモータ: 黄色(D9)、赤(+), 茶色(-)</li>
+                                    <li>モータ: 青(+), 黄色(-)</li>
+                                    <li>トランジスタ(2N222A): エミッタ(アース), ベース(D5), コレクタ(モータ(-))</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </td>
+                    <td>
+                        <ul class="list-disc ml-4">
+                            <li>コンデンサのトラブルを解決。</li>
+                            <li>車体と回路の配線がすべて完了し、<strong>配線のはんだ付けを実施</strong>し、最終的な造形に近づいた。</li>
+                            <li>回路図を更新し、管理者用・公開用サイトの回路図も更新。</li>
+                            <li>公開用サイトに製作ヒストリーを追加。</li>
+                        </ul>
+                    </td>
+                    <td>試走段階でトランジスタが故障。はんだ付け時に足を開きすぎたことが原因と推測される。トランジスタに負荷がかからないよう、基板の活用を検討する必要がある。</td>
+                    <td>トランジスタの再度はんだ付け、試走・プログラムの微調整、実験値のまとめによる精度の向上、サイトUIの向上。</td>
+                </tr>
+                <tr>
+                    <td>12月18日</td>
+                    <td>第10回</td>
+                    <td>-</td>
+                    <td>現代版からくり作成（後半）継続。</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>1月8日</td>
+                    <td>第11回</td>
+                    <td>-</td>
+                    <td>現代版からくり作成（後半）継続。</td>
+                    <td>-</td>
+                    <td>（現代版からくりの完成、動作テスト、プレゼン練習） (35)。</td>
+                </tr>
+                <tr>
+                    <td>1月15日</td>
+                    <td>第12回</td>
+                    <td>-</td>
+                    <td>現代版からくり作成（後半）継続。</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>1月22日</td>
+                    <td>第13回</td>
+                    <td>-</td>
+                    <td>現代版からくり作成（後半）継続。</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>1月29日</td>
+                    <td>第14回</td>
+                    <td>-</td>
+                    <td>現代版からくり作成（後半）継続。</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>2月5日</td>
+                    <td>第15回</td>
+                    <td>「現代版からくり」金属ピース運びコンテスト。</td>
+                    <td>各グループの「金属ピース運び現代版からくり」による競技、工夫点と苦労点のプレゼンテーション。</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>2月12日</td>
+                    <td>第16回</td>
+                    <td>コンテスト結果発表。</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </section>
-     
+     
 
 <footer class="site-footer dark-footer">
-    <div class="footer-container">
-        <div class="footer-section">
-            <h4>ナビゲーション</h4>
-            <ul>
-                <li><a href="https://p2cz9zus.github.io/Democar-project/">公開用サイトへ戻る</a></li>
-                <li><a href="#schedule">今後の予定</a></li>
-                <li><a href="#resources">技術リソース</a></li>
-                <li><a href="#code">調整用コード</a></li>
-                <li><a href="#log">これまでの活動記録</a></li>
-            </ul>
-        </div>
-        
-        <div class="footer-section contact-info">
-            <h4>サイト情報</h4>
-            <p>本サイトはA1班の進捗管理専用です。</p>
-            <p class="project-id">創成プロジェクト A1班 管理者サイト</p>
-        </div>
-    </div>
-    
-    <div class="footer-bottom">
-        <p>&copy; 創成プロジェクト A1班. All rights reserved.</p>
-    </div>
+    <div class="footer-container">
+        <div class="footer-section">
+            <h4>ナビゲーション</h4>
+            <ul>
+                <li><a href="https://p2cz9zus.github.io/Democar-project/">公開用サイトへ戻る</a></li>
+                <li><a href="#schedule">今後の予定</a></li>
+                <li><a href="#resources">技術リソース</a></li>
+                <li><a href="#code">調整用コード</a></li>
+                <li><a href="#log">これまでの活動記録</a></li>
+            </ul>
+        </div>
+        
+        <div class="footer-section contact-info">
+            <h4>サイト情報</h4>
+            <p>本サイトはA1班の進捗管理専用です。</p>
+            <p class="project-id">創成プロジェクト A1班 管理者サイト</p>
+        </div>
+    </div>
+    
+    <div class="footer-bottom">
+        <p>&copy; 創成プロジェクト A1班. All rights reserved.</p>
+    </div>
 </footer>
 
 
@@ -581,41 +594,44 @@ void waitForRelease() {
 
 // --- JS: アニメーション処理 ---
 const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-        }
-    });
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+        }
+    });
 });
 document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
 
-// --- JS: モバイルメニュー処理 ---
+// --- JS: モバイルメニュー処理 (新しいロジックに差し替え) ---
 function toggleMenu() {
-    const menu = document.getElementById("mobileMenu");
-    menu.classList.toggle("is-open"); 
+    // ボタンとメニュー本体の要素を取得
+    const navTrigger = document.getElementById("nav-trigger");
+    const spNav = document.getElementById("spNav");
+
+    // activeクラスとopenクラスをトグル
+    navTrigger.classList.toggle("active");
+    spNav.classList.toggle("open");
 }
 
 // --- JS: コードコピー機能 ---
 function copyCode(elementId) {
-    const codeElement = document.getElementById(elementId);
-    if (!codeElement) return;
+    const codeElement = document.getElementById(elementId);
+    if (!codeElement) return;
 
-    const codeText = codeElement.querySelector('code').textContent; 
-    
-    const tempTextArea = document.createElement('textarea');
-    tempTextArea.value = codeText.trim();
-    
-    document.body.appendChild(tempTextArea);
-    tempTextArea.select();
-    document.execCommand('copy');
-    document.body.removeChild(tempTextArea);
-    
-    // コピー成功メッセージ表示
-    alert("コードをクリップボードにコピーしました！");
+    const codeText = codeElement.querySelector('code').textContent; 
+    
+    const tempTextArea = document.createElement('textarea');
+    tempTextArea.value = codeText.trim();
+    
+    document.body.appendChild(tempTextArea);
+    tempTextArea.select();
+    document.execCommand('copy');
+    document.body.removeChild(tempTextArea);
+    
+    // コピー成功メッセージ表示
+    alert("コードをクリップボードにコピーしました！");
 }
 
 </script>
 </body>
 </html>
-
-
