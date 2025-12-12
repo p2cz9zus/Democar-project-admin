@@ -437,7 +437,7 @@ a:focus, button:focus, .hero-tab-button:focus, .menu-icon:focus {
 }
 
 /* ==========================================================================
- * 8. ナビゲーションバー
+ * 8. ナビゲーションバー (アップグレード)
  * ========================================================================== */
 
 /* スクロールしていないときの初期状態（JSでこのクラスが付与される） */
@@ -449,6 +449,13 @@ a:focus, button:focus, .hero-tab-button:focus, .menu-icon:focus {
     /* ★修正点1: ナビバーのテキスト色を白に強制 ★ */
     color: var(--color-text-light);
 }
+
+/* ★新規追加: トランスペアレント時のナビゲーションリンクの色を白に ★ */
+.navbar.transparent .hero-tab-button,
+.navbar.transparent .menu-icon {
+    color: var(--color-text-light);
+}
+
 
 /* スクロール後（背景を黒に戻す） */
 .navbar:not(.transparent) {
@@ -462,7 +469,7 @@ a:focus, button:focus, .hero-tab-button:focus, .menu-icon:focus {
     color: #fff;
     width: 100%;
     /* ナビゲーションバーを上部に固定 */
-    position: fixed;      
+    position: fixed;     
     top: 0;
     left: 0;
     z-index: 1000;
@@ -530,7 +537,8 @@ a:focus, button:focus, .hero-tab-button:focus, .menu-icon:focus {
     top: 100%; /* ナビバーの直下に配置 */
     left: 0;
     z-index: 999;
-    display: flex; /* モバイルでの表示を確保 */
+    /* ★修正: PCサイズで表示されないように、一旦非表示を設定。モバイルのメディアクエリで flex に変更する ★ */
+    display: none; 
 }
 
 /* 展開状態 */
@@ -650,7 +658,7 @@ a:focus, button:focus, .hero-tab-button:focus, .menu-icon:focus {
 
 
 /* ==========================================================================
- * 10. レスポンシブ対応 (モバイルフレンドリー)
+ * 10. レスポンシブ対応 (モバイルフレンドリー) (アップグレード)
  * ========================================================================== */
 
 /* PC版（901px以上）: ここでタブの表示を確定させる */
@@ -663,6 +671,10 @@ a:focus, button:focus, .hero-tab-button:focus, .menu-icon:focus {
     .menu-icon {  
         display: none;  
     }
+    /* ★修正: PCではモバイルメニューを完全に非表示にする（念のため !important を使用） */
+    .mobile-menu {
+        display: none !important;
+    }
 }
 
 
@@ -671,7 +683,8 @@ a:focus, button:focus, .hero-tab-button:focus, .menu-icon:focus {
     /* タブレット以下ではPC用タブを非表示にし、アイコンを表示 */
     .hero-tabs-container { display: none; }  
     .menu-icon { display: block; }
-    /* モバイルメニューの display を明示し、開閉を可能にする */
+
+    /* ★修正: モバイルメニューをこのブレークポイントでのみ flex 表示を有効にする ★ */
     .mobile-menu { display: flex; }
     
     /* ナビバーのロゴサイズを小さくする（900px以下） */
