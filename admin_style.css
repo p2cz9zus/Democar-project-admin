@@ -437,7 +437,7 @@ html {
     /* 公開用サイトでは3列も許可するが、今回は2列で設定 */
     grid-template-columns: repeat(2, 1fr);
     gap: 30px;
-    max-width: 1200px; /* 例: 1200px (コンテンツの幅に合わせて調整可能) */
+    max-width: 900px; /* 例: 900px (コンテンツの幅に合わせて調整可能) */
     margin: 20px auto 0 auto; /* 上20px, 左右auto, 下0px で中央揃えを確定 */
 }
 
@@ -758,6 +758,7 @@ html {
         box-sizing: border-box;
     }
 }
+
 
 
 
