@@ -465,11 +465,10 @@ a:focus, button:focus, .hero-tab-button:focus, .menu-icon:focus {
 
 /* ナビバー全体 */
 .navbar {
+    /* 異様な高さを防ぐため、min-heightは維持しつつ、paddingを調整 */
     background-color: #000;
-    color: #fff;
     width: 100%;
-    /* ナビゲーションバーを上部に固定 */
-    position: fixed;     
+    position: fixed;
     top: 0;
     left: 0;
     z-index: 1000;
@@ -479,8 +478,69 @@ a:focus, button:focus, .hero-tab-button:focus, .menu-icon:focus {
 .navbar-container {
     display: flex;
     align-items: center;
-    padding: 6px 20px;
-    min-height: 70px;
+    /* paddingを上下10pxに減らし、ナビバーの高さを抑える */
+    padding: 10px 20px; 
+    min-height: 50px; /* 最小高さを調整 */
+}
+
+/* --- モバイルメニュー内の間隔調整 --- */
+
+/* モバイルメニュー本体 */
+.mobile-menu {
+    /* ... 既存のスタイルを維持 ... */
+    /* top: 100%; はナビバー直下に配置するために重要です */
+}
+
+/* モバイルメニュー内のUL/LI/Aの過剰な間隔を調整 */
+
+/* リスト全体（ul.spUL）: 
+   HTMLの<ul class="spUL">に対応。これに過剰なマージン/パディングがかかっている可能性を排除 */
+.mobile-menu #inrBox {
+    padding: 0; /* inrBoxのパディングを削除 */
+}
+.mobile-menu .spUL {
+    list-style: none;
+    padding: 0; /* ULのパディングを確実に削除 */
+    margin: 0; /* ULのマージンを確実に削除 */
+}
+
+/* 各リストアイテム（li）: 
+   過剰なマージンを削除 */
+.mobile-menu .spUL li {
+    margin: 0; 
+    padding: 0;
+}
+
+/* リンク（a）: 
+   リンク自体に上下のパディングを指定して間隔を制御する */
+.mobile-menu .spUL a {
+    color: var(--color-text-light);
+    /* 縦の間隔を20pxから10pxに半減 */
+    padding: 10px 20px; 
+    text-decoration: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    display: block; /* リンクをブロック要素にしてパディングを有効化 */
+    transition: background-color 0.3s;
+    /* ... 既存のアニメーション設定を維持 ... */
+}
+
+/* リンクとボタンのラッパー div.btnP */
+.mobile-menu .btnP {
+    padding: 15px 20px; /* リンクと区別するために少しパディングを残す */
+    text-align: center;
+}
+
+/* --- モバイルメニューアイコンのアニメーション (ハンバーガーメニューの開閉視覚効果) --- */
+
+/* 開閉時に線が回転し、Xになるアニメーション */
+.menu-trigger.active span:nth-of-type(1) {
+    transform: translateY(8px) rotate(45deg);
+}
+.menu-trigger.active span:nth-of-type(2) {
+    opacity: 0; /* 中央の線を消す */
+}
+.menu-trigger.active span:nth-of-type(3) {
+    transform: translateY(-8px) rotate(-45deg);
 }
 
 /* ロゴ */
@@ -775,6 +835,7 @@ a:focus, button:focus, .hero-tab-button:focus, .menu-icon:focus {
     .chat-container { padding: 15px; }
     .message { max-width: 95%; }
 }
+
 
 
 
