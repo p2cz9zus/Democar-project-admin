@@ -437,10 +437,8 @@ html {
     /* 公開用サイトでは3列も許可するが、今回は2列で設定 */
     grid-template-columns: repeat(2, 1fr);
     gap: 30px;
-    margin-top: 20px;
     max-width: 1200px; /* 例: 1200px (コンテンツの幅に合わせて調整可能) */
-    margin-left: auto;
-    margin-right: auto;
+    margin: 20px auto 0 auto; /* 上20px, 左右auto, 下0px で中央揃えを確定 */
 }
 
 .tech-card {
@@ -760,6 +758,7 @@ html {
         box-sizing: border-box;
     }
 }
+
 
 
 
