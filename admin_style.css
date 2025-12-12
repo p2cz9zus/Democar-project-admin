@@ -237,23 +237,27 @@ a:focus, button:focus, .hero-tab-button:focus, .menu-icon:focus, .menu-trigger:f
  * ========================================================================== */
 .tech-card-container {
     display: grid;
-    grid-template-columns: repeat(2, 1fr); 
+    grid-template-columns: repeat(2, 1fr); /* デスクトップで2列 */
     gap: 30px;
-    max-width: 1000px; 
+    max-width: 1000px; /* ★コンテナの最大幅を統一し、中央寄せを確保★ */
     margin: 0 auto;
-    text-align: left;
+    text-align: left; /* テキストは左寄せ */
 }
+
+/* ★追加修正★ カード自体の flex/grid 属性は不要だが、
+   もしカード内要素が右に寄っている場合は以下の p タグの幅を確認 */
 .tech-card {
     padding: 25px;
     border: 1px solid #e0e0e0;
     border-left: 5px solid var(--color-primary);
     border-radius: 8px;
-    /* 管理者サイトのダーク背景に合うよう調整 */
     box-shadow: 0 2px 10px rgba(255, 255, 255, 0.05); 
     background-color: var(--color-card-dark);
     opacity: 0;
     transform: translateY(30px);
     transition: opacity 0.6s ease-out, transform 0.6s ease-out, box-shadow 0.3s;
+    /* ★追加: カード内のコンテンツが確実に左寄せになることを保証（Flex/Gridの影響を排除） */
+    text-align: left; 
 }
 .tech-card:hover {
     transform: translateY(-3px);
@@ -268,7 +272,7 @@ a:focus, button:focus, .hero-tab-button:focus, .menu-icon:focus, .menu-trigger:f
 }
 .tech-card p {
     font-size: 1rem;
-    color: var(--color-hero-text-secondary); /* 明るい背景テキスト色を流用 */
+    color: var(--color-hero-text-secondary); 
     margin-bottom: 0;
 }
 /* リソースダウンロードリンク */
@@ -719,4 +723,5 @@ a:focus, button:focus, .hero-tab-button:focus, .menu-icon:focus, .menu-trigger:f
 }
 /* ページ全体の横スクロール禁止 */
 html, body { overflow-x: hidden; }
+
 
