@@ -163,7 +163,8 @@ a:focus, button:focus, .hero-tab-button:focus, .menu-icon:focus, .menu-trigger:f
     display: flex;
     flex-direction: column;
     gap: 50px;
-    max-width: 800px; 
+    /* ★修正点 1: コンテンツ幅の統一 (メインサイトのタブコンテナなどに合わせる) */
+    max-width: 1000px; 
     margin: 0 auto;
     text-align: left;
 }
@@ -238,7 +239,7 @@ a:focus, button:focus, .hero-tab-button:focus, .menu-icon:focus, .menu-trigger:f
     display: grid;
     grid-template-columns: repeat(2, 1fr); 
     gap: 30px;
-    max-width: 1000px;
+    max-width: 1000px; 
     margin: 0 auto;
     text-align: left;
 }
@@ -330,6 +331,8 @@ a:focus, button:focus, .hero-tab-button:focus, .menu-icon:focus, .menu-trigger:f
     max-width: 100%;
     box-sizing: border-box;
     display: block;
+    /* ★修正点 2: コードブロックの文字色を強制的に明るい色に設定し、視認性を確保 */
+    color: var(--color-code-text); 
 }
 
 
@@ -339,16 +342,15 @@ a:focus, button:focus, .hero-tab-button:focus, .menu-icon:focus, .menu-trigger:f
 
 .log-table-container {
     max-width: 1200px;
-    margin: 0 auto;
+    /* ★修正点 3: セクションタイトル (h3: margin-bottom: 60px) との距離を詰める */
+    margin: -30px auto 0; 
     overflow-x: auto; 
     text-align: left;
     border-radius: 8px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
     
-    /* ★ヘッダーずれ修正 1: コンテナのパディングをゼロにする */
+    /* ヘッダーずれ解消のための継続設定 */
     padding: 0;
-    
-    /* ヘッダー固定のための設定 */
     max-height: 400px; 
     overflow-y: auto;
     border: 1px solid var(--color-background-dark);
@@ -372,13 +374,13 @@ a:focus, button:focus, .hero-tab-button:focus, .menu-icon:focus, .menu-trigger:f
 .log-table-container thead {
     /* thead全体を固定する */
     position: sticky; 
-    top: 0; 
+    top: 0; /* ★固定位置は最上部 (0) を維持★ */
     z-index: 10; 
     background-color: #333; 
     color: white; 
     box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.4); 
     
-    /* ★ヘッダーずれ修正 2: thead自体のマージン/パディングをゼロにする */
+    /* ヘッダーずれ解消のための継続設定 */
     margin: 0;
     padding: 0;
 }
@@ -391,10 +393,11 @@ a:focus, button:focus, .hero-tab-button:focus, .menu-icon:focus, .menu-trigger:f
     font-weight: 700;
     position: static;
     
-    /* ★ヘッダーずれ修正 3: ボーダーずれ対策 */
+    /* ヘッダーずれ解消のための継続設定 */
     box-sizing: border-box; 
     line-height: 1.2;
 }
+
 
 
 .log-table-container tbody tr:nth-child(even) {
@@ -716,3 +719,4 @@ a:focus, button:focus, .hero-tab-button:focus, .menu-icon:focus, .menu-trigger:f
 }
 /* ページ全体の横スクロール禁止 */
 html, body { overflow-x: hidden; }
+
