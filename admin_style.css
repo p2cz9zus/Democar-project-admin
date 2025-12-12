@@ -111,13 +111,14 @@ html {
     background-position: center top;
     background-repeat: no-repeat;
     padding: calc(150px + 70px) 5% 100px;
-    min-height: 70vh; 
+    text-align: center;
+    min-height: 50vh; 
     position: relative;
     overflow: hidden;
 }
 
 /* 背景画像の上に暗いオーバーレイをかけ、テキストの視認性を高める */
-.hero::before {
+.admin-hero::before {
     content: '';
     position: absolute;
     top: 0;
@@ -756,6 +757,7 @@ html {
         box-sizing: border-box;
     }
 }
+
 
 
 
