@@ -677,9 +677,31 @@ a:focus, button:focus, .hero-tab-button:focus, .menu-icon:focus {
 /* タブレットサイズ以下（900px以下）: モバイルレイアウトに切り替える */
 @media (max-width: 900px) {
     /* タブレット以下ではPC用タブを非表示にし、アイコンを表示 */
-    .hero-tabs-container { display: none; }  
-    .menu-icon { display: block; }
+    .hero-tabs-container { display: none; } 
 
+    /* ★修正: HTMLで使われている.menu-triggerを表示する★ */  
+
+    .menu-trigger { 
+        display: flex; /* flexを使用して、中の span が縦に並ぶようにする */
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+        width: 30px; /* アイコンの幅 */
+        height: 30px; /* アイコンの高さ */
+        cursor: pointer;
+        /* ナビバーの右端に寄せる */
+        margin-left: auto; 
+    }
+    
+    /* ハンバーガーアイコンの線（<span>タグ）のスタイル */
+    .menu-trigger span {
+        display: block;
+        height: 3px;
+        width: 100%;
+        background: white;
+        border-radius: 3px;
+        transition: all 0.3s;
+    }
     /* ★修正: モバイルメニューをこのブレークポイントでのみ flex 表示を有効にする ★ */
     .mobile-menu { display: flex; }
     
@@ -753,5 +775,6 @@ a:focus, button:focus, .hero-tab-button:focus, .menu-icon:focus {
     .chat-container { padding: 15px; }
     .message { max-width: 95%; }
 }
+
 
 
