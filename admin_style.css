@@ -515,13 +515,9 @@ a:focus, button:focus, .hero-tab-button:focus, .menu-icon:focus {
 }
 
 /* モバイルメニューアイコン */
-.menu-icon {
-    font-size: 2rem;
-    cursor: pointer;
-    padding: 5px;
-    /* 右端に寄せる */
-    margin-left: auto;        
-    display: none; /* PCでは非表示 */
+.menu-trigger { 
+    /* PCでは非表示。CSSでは.menu-iconが使用されていないが、このクラスに相当する */
+    display: none; 
 }
 
 /* モバイルメニュー本体 */
@@ -757,4 +753,5 @@ a:focus, button:focus, .hero-tab-button:focus, .menu-icon:focus {
     .chat-container { padding: 15px; }
     .message { max-width: 95%; }
 }
+
 
