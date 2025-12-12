@@ -19,7 +19,6 @@
     <a href="" class="logo">
       <img src="A1.png" alt="プロジェクトロゴ" class="logo">
     </a>
-    
     <nav class="hero-tabs-container">
       <a href="#schedule" class="hero-tab-button">今後の予定</a>
       <a href="#resources" class="hero-tab-button">技術リソース</a>
@@ -27,14 +26,12 @@
       <a href="#log" class="hero-tab-button">これまでの活動記録</a>
       <a href="https://p2cz9zus.github.io/Democar-project/" class="hero-tab-button">公開用サイト</a>  
     </nav>
-
     <a class="menu-trigger" href="#" id="nav-trigger" onclick="toggleMenu()">
       <span></span>
       <span></span>
       <span></span>
     </a>
   </div>
-
   <nav id="spNav" class="mobile-menu">
     <a href="#schedule">今後の予定を見る</a>
     <a href="#resources">技術リソースを見る</a>
@@ -44,7 +41,6 @@
   </nav>
 </header>     
 
-
 <section class="hero admin-hero">
     <div class="hero-content">
         <h1>【管理者用サイト】 A1班</h1>
@@ -53,27 +49,22 @@
     </div>
 </section>
 
-
-
 <section id="schedule" class="section light-bg">
     <h3>今後の予定</h3>
     <p class="process-preamble">デモンストレーションに向けた今後の重要タスクを管理します。</p>
     <div class="process-container">
-        
         <div class="step animate-on-scroll">
             <span class="step-number">マイルストーン 1 (12/11)</span>
             <h4>① 回路設計・試走・プログラム調整</h4>
             <p>「トランジスタ配置問題の解決（回路設計）と9V電源によるマイコンの安定動作確認」に焦点を絞る。また，余裕があれば、試走・プログラム調整も行いたい。</p>
             <div class="status-indicator pending">⚠️ 進行中</div>
         </div>
-
         <div class="step animate-on-scroll">
             <span class="step-number">マイルストーン 2 (12/18)</span>
             <h4>② 試走・プログラム調整</h4>
             <p>Uターン動作の成功率を定量的に測定する。また、プログラムの調整を十分に行う。</p>
             <div class="status-indicator pending">⚠️ 進行中</div>
         </div>
-        
         <div class="step animate-on-scroll">
             <span class="step-number">マイルストーン 3 (1/8)</span>
             <h4>③ 試走（未定）</h4>
@@ -82,8 +73,6 @@
         </div>
     </div>
 </section>
-
-
 
 <section id="resources" class="section dark-bg">
     <h3>🔧 技術リソース</h3>
@@ -110,7 +99,6 @@
             <p>ファン駆動からタイヤ駆動への変更など、主要な設計変更の経緯と理由を記録しています。</p>
             <a href="./design_change_log.txt" class="resource-link">ログファイル閲覧</a>
         </div>
-        
         <div class="tech-card animate-on-scroll">
             <h4>サーボモーターの接続詳細</h4>
             <p>ステアリング用サーボモーターのケーブル色とArduino/電源への接続先です。</p>
@@ -120,7 +108,6 @@
                 <li>茶色ケーブル:- (アース/GND)に接続</li>
             </ul>
         </div>
-
         <div class="tech-card animate-on-scroll">
             <h4>DCモーターの接続詳細</h4>
             <p>後輪駆動用DCモーターのケーブル色と極性情報です。</p>
@@ -129,7 +116,6 @@
                 <li>黄色ケーブル:- (モーターのマイナス側) に接続</li>
             </ul>
         </div>
-
         <div class="tech-card animate-on-scroll">
             <h4>トランジスタ 2N222A 配置と役割</h4>
             <p>モーターのON/OFF制御に使用するNPNトランジスタの接続情報です。</p>
@@ -145,8 +131,6 @@
         </div>
         </div>
 </section>
-
-
 
 <section id="code" class="section light-bg">
     <h3>調整用プログラム (C++ / Arduino)</h3>
@@ -406,7 +390,6 @@ void waitForRelease() {
     </div>
 </section>
 
-
 <section id="log" class="section dark-bg">
     <h3>活動記録</h3>
     <p class="process-preamble" style="color: var(--color-hero-text-secondary);">過去の討議内容、作業内容、反省点を記録しています。特に重要な方針転換や技術的課題に焦点を当てています。</p>
@@ -551,7 +534,6 @@ void waitForRelease() {
     </div>
 </section>
      
-
 <footer class="site-footer dark-footer">
     <div class="footer-container">
         <div class="footer-section">
@@ -640,6 +622,7 @@ function copyCode(elementId) {
 </script>
 </body>
 </html>
+
 
 
 
