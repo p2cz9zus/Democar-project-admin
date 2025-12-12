@@ -630,7 +630,7 @@ a:focus, button:focus, .hero-tab-button:focus, .menu-icon:focus {
 }
 
 .footer-section ul li {
-    margin: 10px 0;
+    margin: 5px 0;
 }
 
 .footer-section ul li a {
@@ -757,3 +757,4 @@ a:focus, button:focus, .hero-tab-button:focus, .menu-icon:focus {
     .chat-container { padding: 15px; }
     .message { max-width: 95%; }
 }
+
