@@ -189,8 +189,6 @@ html {
     top: 0;
     left: 0;
     z-index: 1000;
-    display: block;    /* 要素としてしっかり認識させる */
-    margin-top: 0;     /* 自身のマージンを確実に0にする */
 }
 
 /* ロゴに余計なマージンがないか確認 */
@@ -768,6 +766,7 @@ html {
         box-sizing: border-box;
     }
 }
+
 
 
 
