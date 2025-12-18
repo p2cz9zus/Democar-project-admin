@@ -189,6 +189,15 @@ html {
     top: 0;
     left: 0;
     z-index: 1000;
+    display: block;    /* 要素としてしっかり認識させる */
+    margin-top: 0;     /* 自身のマージンを確実に0にする */
+}
+
+/* ロゴに余計なマージンがないか確認 */
+.logo {
+    display: block;    /* インライン要素特有の隙間を消す */
+    margin: 0;         /* 外側の余白をゼロに */
+}
 }
 /* コンテナ（ロゴ＋タブ＋メニューアイコン） */
 .navbar-container {
@@ -759,6 +768,7 @@ html {
         box-sizing: border-box;
     }
 }
+
 
 
 
