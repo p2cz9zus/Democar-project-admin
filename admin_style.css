@@ -286,7 +286,68 @@ a:focus, button:focus, .hero-tab-button:focus, .menu-icon:focus {
 .resource-link:hover {
     background-color: var(--color-primary-hover);
 }
+/* ==========================================================================
+ * 技術リソースセクションのリンク視認性向上（白文字化）
+ * ========================================================================== */
 
+/* ダーク背景内のリスト形式リンクを白にする */
+.dark-bg .resource-list-min {
+    list-style: none;
+    padding: 0;
+    margin: 10px 0;
+}
+
+.dark-bg .resource-list-min li {
+    margin-bottom: 8px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* 軽い区切り線 */
+    padding-bottom: 4px;
+}
+
+.dark-bg .resource-list-min a {
+    color: #ffffff !important; /* 文字を白に固定 */
+    text-decoration: none;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+    display: inline-block;
+}
+
+/* ホバー時の挙動：色をゴールドにし、少し右に動かす */
+.dark-bg .resource-list-min a:hover {
+    color: #ffcc00 !important; /* 視認性の高いゴールド/イエロー */
+    transform: translateX(5px);
+    text-decoration: underline;
+}
+
+/* 「主要設計データ」などの強調用クラス */
+.fw-bold {
+    font-weight: 700;
+    border-left: 3px solid var(--color-primary); /* 青いアクセント線 */
+    padding-left: 8px;
+}
+
+/* 以前作成したグリッドレイアウトの維持 */
+.resource-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.resource-item h5 {
+    color: var(--color-primary);
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+    border-bottom: 1px solid var(--color-primary);
+    display: inline-block;
+}
+
+/* 参考模型データなどの区切りテキスト */
+.text-muted {
+    color: #aaaaaa !important;
+    font-size: 0.8rem;
+    margin-top: 15px;
+    display: block;
+}
 
 /* ==========================================================================
  * 6. 調整用コード (メインサイトと共通)
@@ -744,3 +805,4 @@ a:focus, button:focus, .hero-tab-button:focus, .menu-icon:focus {
     .chat-container { padding: 15px; }
     .message { max-width: 95%; }
 }
+
