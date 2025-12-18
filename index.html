@@ -92,9 +92,45 @@
             <img src="./kuwashiikairo.jpeg" alt="最新回路図" class="process-media">
         </div>
         <div class="tech-card animate-on-scroll">
-            <h4>車体 CAD データ (STL)</h4>
-            <p>3Dプリンタで出力するためのSTLファイルおよび設計元のSTEPファイルです。</p>
-            <a href="./chassis_v2.stl" class="resource-link">STLファイル ダウンロード</a>
+            <h4>車体 CAD データ (Fusion 360 / STL)</h4>
+            <p>設計・調整用のFusion 360ソースファイル群です。構成パーツごとに詳細なデータを用意しています。</p>
+            
+            <div class="resource-grid">
+                <div class="resource-item">
+                    <h5>メインプロジェクト・全体構成</h5>
+                    <ul class="resource-list-min">
+                        <li><a href="./つくプロ.f3d" class="fw-bold">主要設計データ (つくプロ.f3d)</a></li>
+                        <li><a href="./Assem.f3z">全体アセンブリ (Assem.f3z)</a></li>
+                        <li><a href="./chassis_v2.stl">3Dプリント用 (chassis_v2.stl)</a></li>
+                    </ul>
+                </div>
+
+                <div class="resource-item">
+                    <h5>フロント・ステアリング周り</h5>
+                    <ul class="resource-list-min">
+                        <li><a href="./Front_Assem.f3z">フロント一式 (Front Assem)</a></li>
+                        <li><a href="./Front_Base_Assem.f3z">フロントベース一式</a></li>
+                        <li><a href="./Front_Base_Upper.f3d">ベース上部 (Upper)</a></li>
+                        <li><a href="./Front_Base_Lower.f3d">ベース下部 (Lower)</a></li>
+                        <li><a href="./Front_Wheel.f3d">前輪ホイール</a></li>
+                        <li><a href="./サーボハンドル.f3d">サーボハンドル</a></li>
+                        <li><a href="./サーボモーター土台.f3d">サーボモーター土台</a></li>
+                    </ul>
+                </div>
+
+                <div class="resource-item">
+                    <h5>駆動系・パーツ模型</h5>
+                    <ul class="resource-list-min">
+                        <li><a href="./Rear_Drivetrain.f3z">後輪駆動系 (Rear Drivetrain)</a></li>
+                        <li><a href="./Rear_Wheel.f3d">後輪ホイール</a></li>
+                        <li><a href="./リアシャフト.f3d">リアシャフト</a></li>
+                        <hr>
+                        <li class="text-muted">【参考模型データ】</li>
+                        <li><a href="./モーター.f3d">DCモーター模型</a></li>
+                        <li><a href="./サーボモータ模型.f3d">サーボモータ模型</a></li>
+                    </ul>
+                </div>
+            </div>
         </div>
         <div class="tech-card animate-on-scroll">
             <h4>部品リスト (Excel)</h4>
@@ -617,3 +653,4 @@ function copyCode(elementId) {
 </script>
 </body>
 </html>
+
