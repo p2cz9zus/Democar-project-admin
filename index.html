@@ -179,259 +179,96 @@
 </section>
 
 
-
 <section id="code" class="section light-bg">
     <h3>調整用プログラム (C++ / Arduino)</h3>
-    <p class="process-preamble">デモンストレーションに合わせて調整中の制御コードをここに掲載します。本番コードのパラメータ調整にご利用ください。</p>
+    <p class="process-preamble">12/18の試走成功に基づき更新。現在の車体構成（ピン番号5, 7, 9）に最適化したシーケンス制御コードです。</p>
 
     <div class="code-display animate-on-scroll">
-        <h5 class="text-lg font-medium mb-2 text-gray-800 dark:text-gray-200">最新調整コード1 (Uターン角度改善版)</h5>
+        <h5 class="text-lg font-medium mb-2 text-gray-800 dark:text-gray-200">最新調整コード1 (直進・Uターン・走行再開シーケンス)</h5>
         <div class="code-block-wrapper">
             <button class="copy-button" onclick="copyCode('adjustedCode')">コードをコピー</button>
             <div class="code-block">
-<pre id="adjustedCode"><code>#include &lt;Arduino.h;>
-#include &lt;Servo.h;>
+<pre id="adjustedCode"><code>#include &lt;Arduino.h&gt;
+#include &lt;Servo.h&gt;
 
-// ----------------------------------------------------------------------
-// I. グローバル設定とインスタンス
-// ----------------------------------------------------------------------
+// ******************************************************
+// ① ピン設定
+// ******************************************************
+const int PIN_MOTOR_PWM = 5; // DCモーターの速度制御 (アクセル)
+const int PIN_MOTOR_DIR = 7; // DCモーターの方向制御 (マイナス役)
+const int PIN_SERVO     = 9; // サーボモーターの制御
 
-Servo front_steer_servo; // ステアリング制御用サーボモーター
+// ******************************************************
+// ② 動きの設定
+// ******************************************************
+const int SPEED          = 255; // 走る速さ (0〜255)
+const int ANGLE_STRAIGHT = 90;  // まっすぐの角度
+const int ANGLE_TURN     = 45;  // 曲がる角度 (数値を大きくすると左、小さくすると右)
 
-// --- シーケンス状態の定義（課題の進行を管理） ---
-enum SequenceState {
-  WAIT_START = 0, // ピース待機中（リセット状態）
-  DRIVING,        // 自律的な直進駆動中
-  PAUSE,          // ピース除去による一時停止中（金属検出時）
-  COMPLETE        // 課題完了（未使用の可能性あり）
-};
-SequenceState current_state = WAIT_START;
+// ******************************************************
+// ③ 時間の設定 (1000 = 1秒)
+// ******************************************************
+const int TIME_RUN_1 = 3000; // 最初の直進時間
+const int TIME_STOP  = 1000; // 停止時間
+const int TIME_TURN  = 2400; // Uターンにかかる時間
 
-// --- 動作パラメータ（試験後に調整） ---
-const int DC_DRIVE_PWM = 200;  // DCモーターの駆動速度 (0-255)
-const int STEER_STRAIGHT = 90; // サーボ: 直進角度
-const int STEER_LEFT = 140;    // サーボ: 左旋回角度 (Uターン用)
-const int STEER_RIGHT = 40;    // サーボ: 右旋回角度（※未使用）
-
-// Uターン動作に必要な時間（ミリ秒） - 調整必須 ★
-const unsigned long UTURN_DURATION_MS = 1500;
-
-// --- ピン割り当て ---
-const int METAL_SENSOR_PIN = 3;  // 金属センサーの入力ピン
-const int SERVO_PIN = 9;         // ステアリングサーボの出力ピン
-const int DC_MOTOR_PWM = 5;      // 後輪DCモーターの速度制御（PWM）ピン
-const int DC_MOTOR_DIR = 6;      // 後輪DCモーターの方向制御ピン
-
-// --- デバウンス変数 ---
-unsigned long lastSensorChange = 0; // 最後にセンサー値が変化した時間
-const unsigned long DEBOUNCE_DELAY = 50; // デバウンス遅延時間（ミリ秒）
-int lastMetalStatus = HIGH; // 前回の金属センサーの状態 (HIGH=金属なし, LOW=金属あり)
-
-
-// ----------------------------------------------------------------------
-// II. 駆動・制御関数
-// ----------------------------------------------------------------------
-
-// 全ての駆動を停止させる
-void stop_all_motors(void) {
-  analogWrite(DC_MOTOR_PWM, 0); // DCモーターの速度を0に設定
-  front_steer_servo.write(STEER_STRAIGHT); // ステアリングを直進に戻す
-}
-
-// 直進駆動
-void drive_forward() {
-  front_steer_servo.write(STEER_STRAIGHT); // ステアリングは直進
-  digitalWrite(DC_MOTOR_DIR, HIGH); // 前進方向
-  analogWrite(DC_MOTOR_PWM, DC_DRIVE_PWM); // 設定速度で駆動
-}
-
-// 左旋回駆動（Uターンの一段階）
-void drive_turn_left() {
-  front_steer_servo.write(STEER_LEFT); // ステアリングを左旋回角度に
-  digitalWrite(DC_MOTOR_DIR, HIGH); // 前進方向
-  analogWrite(DC_MOTOR_PWM, DC_DRIVE_PWM); // 設定速度で駆動
-}
-
-// Uターンを自律的に実行する関数（課題必須動作）
-void perform_uturn() {
-  Serial.println("🔥 Performing mandatory U-Turn...");
-  // 指定時間だけ左旋回を行う
-  drive_turn_left();
-  delay(UTURN_DURATION_MS); // 指定時間待機
-  stop_all_motors(); // 一旦停止
-}
-
-// 状態遷移のための駆動停止処理（PAUSE状態へ移行）
-void drive_motor_stop_pause() {
-  stop_all_motors();
-  current_state = PAUSE;
-  Serial.println("⏸️ State PAUSE (Piece removed).");
-}
-
-
-// ----------------------------------------------------------------------
-// III. Arduino SetupとLoop
-// ----------------------------------------------------------------------
-
-void setup(void) {
-  Serial.begin(9600); // PCとのデバッグ用シリアル通信を開始
-
-  // ピン設定
-  pinMode(DC_MOTOR_PWM, OUTPUT); // DCモーター速度制御
-  pinMode(DC_MOTOR_DIR, OUTPUT); // DCモーター方向制御
-  // METAL_SENSOR_PIN: LOW=金属あり, HIGH=金属なし
-  pinMode(METAL_SENSOR_PIN, INPUT_PULLUP); // 内部プルアップを使用してセンサーを入力に設定
-
-  front_steer_servo.attach(SERVO_PIN); // D9ピンにサーボを接続
-
-  stop_all_motors(); // 初期状態で全モーターを停止
-  Serial.println("System Ready. Autonomous Mode Active.");
-}
-
-
-void loop(void) {
-  // 1. センサー読み取り（デバウンス処理）
-  int raw_metal_status = digitalRead(METAL_SENSOR_PIN);
-  int metal_status = raw_metal_status;
-
-  // センサー値が前回と異なる場合、デバウンス開始時間を記録
-  if (raw_metal_status != lastMetalStatus) {
-    lastSensorChange = millis();
-  }
-
-  // 2. 安定したセンサー値での状態遷移判定（課題の進行）
-  if ((millis() - lastSensorChange) > DEBOUNCE_DELAY) {
-    metal_status = raw_metal_status;
-
-    // 安定したセンサー値で状態をチェック
-    switch (current_state) {
-
-      case WAIT_START:
-        // 【ピースを置く】(LOW) -> 駆動開始 (DRIVING)
-        if (metal_status == LOW) {
-          current_state = DRIVING;
-          Serial.println("▶️ DRIVING state started.");
-        }
-        break;
-
-      case DRIVING:
-        // AI指令がないため、直進を継続
-        drive_forward();
-
-        // 【ピースを取る】(HIGH) -> 一時停止へ (PAUSE)
-        if (metal_status == HIGH) {
-          drive_motor_stop_pause(); // モーターを停止し、PAUSE状態へ
-        }
-        break;
-
-      case PAUSE:
-        // 【ピースを置く】(LOW) -> Uターン実行後に駆動再開
-        if (metal_status == LOW) {
-          // 課題ルール: Uターン実行
-          perform_uturn();
-
-          // Uターン完了後、DRIVING状態に移行
-          current_state = DRIVING;
-          Serial.println("🔄 DRIVING resumed after U-turn.");
-        }
-        break;
-
-      case COMPLETE:
-        // 【ピースを取る】(HIGH) -> リセット (WAIT_START)
-        if (metal_status == HIGH) {
-          current_state = WAIT_START;
-          Serial.println("⏹️ Sequence Reset.");
-        }
-        break;
-
-      default:
-        // 予期せぬ状態の場合、全て停止してリセット状態へ
-        stop_all_motors();
-        current_state = WAIT_START;
-        break;
-    }
-  }
-
-  // 次のループのためにセンサー値を更新
-  lastMetalStatus = raw_metal_status;
-}
-</code></pre>
-            </div>
-        </div>
-    </div>
-    <div class="code-display animate-on-scroll">
-        <h5 class="text-lg font-medium mb-2 text-gray-800 dark:text-gray-200">最新調整コード2 (シンプルなフェーズベース ON/OFF制御版)</h5>
-        <div class="code-block-wrapper">
-            <button class="copy-button" onclick="copyCode('adjustedCode2')">コードをコピー</button>
-            <div class="code-block">
-<pre id="adjustedCode2"><code>#include &lt;Servo.h>
-
-// ピン指定
-const int sensorPin = 2;   // 金属ピースの検知ピン (INPUT_PULLUPを使用)
-const int motorPin = 5;    // 走行用モーター（簡易的にON/OFF制御）
-const int servoPin = 9;    // サーボモーター
+// ******************************************************
+// プログラム本体
+// ******************************************************
 
 Servo myServo;
-int phase = 1; // 1: 直進フェーズ, 2: Uターンフェーズ
+bool isFinished = false;
 
-// 各自のロボットに合わせて調整する値
-const int STRAIGHT_ANGLE = 90; // 直進時のサーボ角度
-const int TURN_ANGLE = 135;      // 曲がる時のサーボ角度（Uターン用）
-const int STRAIGHT_TIME = 5000; // 直線走行にかかる時間（ミリ秒）
-const int CIRCLE_TIME = 5000;    // 360度旋回にかかる時間（ミリ秒）
+// ■ モーターON (前進)
+void motorOn() {
+  analogWrite(PIN_MOTOR_PWM, SPEED); // 5番ピンで速度指定
+  digitalWrite(PIN_MOTOR_DIR, LOW);  // 7番ピンは0Vにしておく
+}
+
+// ■ モーターOFF (停止)
+void motorOff() {
+  analogWrite(PIN_MOTOR_PWM, 0);     // 速度0
+  digitalWrite(PIN_MOTOR_DIR, LOW);
+}
 
 void setup() {
-  // 金属センサーは内部プルアップを使用して設定 (LOWで金属接触と判断)
-  pinMode(sensorPin, INPUT_PULLUP);
-  pinMode(motorPin, OUTPUT);
-  myServo.attach(servoPin);
-  
-  // 初期状態は直進方向にセット
-  myServo.write(STRAIGHT_ANGLE);
+  // ピンの準備
+  pinMode(PIN_MOTOR_PWM, OUTPUT);
+  pinMode(PIN_MOTOR_DIR, OUTPUT);
+  myServo.attach(PIN_SERVO);
+
+  // 初期化: 停止＆まっすぐ
+  motorOff();
+  myServo.write(ANGLE_STRAIGHT);
+
+  // 安全のため電源ONから2秒待つ
+  delay(2000);
 }
 
 void loop() {
-  // 金属ピースが触れた（センサーピンがLOWになった）
-  if (digitalRead(sensorPin) == LOW) {
+  if (isFinished == false) {
     
-    if (phase == 1) {
-      Serial.println("Phase 1: Straight Driving");
-      
-      // --- 1回目の動作：直線運動 ---
-      myServo.write(STRAIGHT_ANGLE); // ハンドルを真っ直ぐに
-      digitalWrite(motorPin, HIGH);  // 走行開始 (ON)
-      delay(STRAIGHT_TIME);          // 設定時間走る
-      digitalWrite(motorPin, LOW);   // 停止 (OFF)
+    // 1. 直進
+    myServo.write(ANGLE_STRAIGHT);
+    motorOn();
+    delay(TIME_RUN_1);
 
-      waitForRelease();              // 金属ピースが離れるのを待つ
-      phase = 2; // 次はUターンフェーズへ
-    } 
-    else {
-      Serial.println("Phase 2: U-Turn and Resume Straight");
-      
-      // --- 2回目の動作：360度回転 ＋ 直進 ---
-      // 1. まずUターン実行
-      myServo.write(TURN_ANGLE);     // ハンドルを全開に切る
-      digitalWrite(motorPin, HIGH);  // 走行開始 (ON)
-      delay(CIRCLE_TIME);            // 1周するまで待機（Uターン時間）
+    // 2. 停止
+    motorOff();
+    delay(TIME_STOP);
 
-      // 2. 真っ直ぐに戻して直進
-      myServo.write(STRAIGHT_ANGLE); // ハンドルを戻す
-      delay(STRAIGHT_TIME);          // そのまま直進
-      digitalWrite(motorPin, LOW);   // 停止 (OFF)
+    // 3. 旋回 (Uターン)
+    myServo.write(ANGLE_TURN);
+    motorOn();
+    delay(TIME_TURN);
 
-      waitForRelease();              // 金属ピースが離れるのを待つ
-      phase = 1; // 次は直進フェーズへ
-    }
+    // 4. 直進再開 (ずっと走る)
+    myServo.write(ANGLE_STRAIGHT);
+    motorOn();
+
+    // 完了フラグを立てる (これ以降ここには戻らない)
+    isFinished = true;
   }
-}
-
-// 金属ピースが離れるのを待つ関数
-void waitForRelease() {
-  digitalWrite(motorPin, LOW); // モーターは必ず停止
-  delay(50); // チャタリング防止
-  while(digitalRead(sensorPin) == LOW); // センサーがHIGHに戻るまで待機
-  delay(50);
 }</code></pre>
             </div>
         </div>
@@ -672,6 +509,7 @@ function copyCode(elementId) {
 </script>
 </body>
 </html>
+
 
 
 
