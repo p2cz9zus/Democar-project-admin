@@ -123,13 +123,19 @@ a:focus, button:focus, .hero-tab-button:focus, .menu-trigger:focus {
 .admin-hero p { animation-delay: 0.9s; font-size: 1.2rem; color: var(--color-hero-text-secondary); }
 
 /* ==========================================================================
- * 4. 管理者用スケジュール & ステータス
+ * 4. 製作プロセス (スケジュール) - スタイルはメインサイトから流用
  * ========================================================================== */
+.process-preamble {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto 40px;
+    font-size: 1.1rem;
+}
 .process-container {
     display: flex;
     flex-direction: column;
     gap: 50px;
-    max-width: 1000px; /* style.cssに合わせ拡大 */
+    max-width: 800px; /* 少し狭く */
     margin: 0 auto;
     text-align: left;
 }
@@ -139,33 +145,64 @@ a:focus, button:focus, .hero-tab-button:focus, .menu-trigger:focus {
     margin: 0 auto;
     position: relative;
     border-left: 3px solid var(--color-primary);
+
     opacity: 0;
-    transform: translateX(-30px);
+    transform: translateX(-30px); 
     transition: opacity 0.8s ease-out, transform 0.8s ease-out;
 }
-.process-container .step.visible { opacity: 1; transform: translateX(0); }
+.process-container .step.visible {
+    opacity: 1;
+    transform: translateX(0);
+}
 .process-container .step:before {
     content: '';
     position: absolute;
-    left: -8px; top: -8px; 
-    width: 16px; height: 16px;
+    left: -8px; 
+    top: -8px; 
+    width: 16px;
+    height: 16px;
     background-color: var(--color-primary);
     border-radius: 50%;
 }
+.process-container .step h4 { font-size: 1.5rem; margin-bottom: 15px; font-weight: 700; }
+.step-number { 
+    display: block; 
+    color: var(--color-primary); 
+    font-weight: 500; 
+    margin-bottom: 5px; 
+    font-size: 0.9rem;
+}
+.process-media {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    width: 100%;
+}
 
+
+/* ★新規★ ステータスインジケータ */
 .status-indicator {
     display: inline-block;
-    padding: 5px 12px;
+    padding: 5px 10px;
     border-radius: 5px;
     font-weight: 700;
     margin-top: 10px;
-    font-size: 0.85rem;
+    font-size: 0.9rem;
     color: var(--color-text-light);
-    text-transform: uppercase;
 }
-.status-indicator.completed { background-color: var(--color-status-completed); }
-.status-indicator.pending { background-color: var(--color-status-pending); }
-.status-indicator.todo { background-color: var(--color-status-todo); }
+.status-indicator.completed {
+    background-color: var(--color-status-completed);
+}
+.status-indicator.pending {
+    background-color: var(--color-status-pending);
+}
+.status-indicator.todo {
+    background-color: var(--color-status-todo);
+}
 
 /* ==========================================================================
  * 5. 活動記録テーブル (管理者独自)
@@ -309,3 +346,4 @@ a:focus, button:focus, .hero-tab-button:focus, .menu-trigger:focus {
     .log-table-container { margin: 20px 0; }
     .process-container .step { padding-left: 30px; padding-right: 0; }
 }
+
