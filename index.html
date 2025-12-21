@@ -506,9 +506,21 @@ function copyCode(elementId) {
     alert("コードをクリップボードにコピーしました！");
 }
 
+// --- JS: スクロールによるナビバーの背景切り替え ---
+window.addEventListener('scroll', function() {
+    const navbar = document.querySelector('.navbar');
+    if (window.scrollY > 50) {
+        // 50px以上スクロールしたら透明クラスを外す（背景を黒にする）
+        navbar.classList.remove('transparent');
+    } else {
+        // 最上部にいるときは透明クラスを付与する
+        navbar.classList.add('transparent');
+    }
+});    
 </script>
 </body>
 </html>
+
 
 
 
