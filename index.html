@@ -197,29 +197,28 @@
 const int PIN_MOTOR_PWM = 5;
 const int PIN_MOTOR_DIR = 7;
 const int PIN_SERVO     = 9;
+const int PIN_SENSOR    = 2; // 金属センサー
 
 // ******************************************************
 // ② 動きの設定
 // ******************************************************
-const int SPEED          = 255; // 速さ
-const int ANGLE_STRAIGHT = 90;  // まっすぐ
-const int ANGLE_TURN     = 45;  // ハンドルを切る角度
+const int SPEED          = 255;
+const int ANGLE_STRAIGHT = 90;
+const int ANGLE_TURN     = 45;
 
 // ******************************************************
 // ③ 時間の設定
 // ******************************************************
-const int TIME_RUN_1  = 6500; // 行き
-const int TIME_STOP_1 = 1000; // 休憩（古い TIME_STOP はこれに変えました）
-const int TIME_TURN   = 5100; // Uターン
-const int TIME_RUN_2  = 6500; // 帰り
-const int TIME_STOP_2 = 5000; // ゴール後の停止時間
+const int TIME_RUN_1  = 3100; // 行きの時間
+const int TIME_TURN   = 2400; // Uターン時間
+const int TIME_RUN_2  = 3100; // 帰りの時間
 
 // *****************************************************
 // プログラム本体
 // ******************************************************
 
 Servo myServo;
-bool isFinished = false;
+int stage = 0; // 今どの段階か？ (0:スタート前, 1:行き完了, 2:全部終了)
 
 // ■ モーターON
 void motorOn() {
@@ -236,28 +235,47 @@ void motorOff() {
 void setup() {
   pinMode(PIN_MOTOR_PWM, OUTPUT);
   pinMode(PIN_MOTOR_DIR, OUTPUT);
+  pinMode(PIN_SENSOR, INPUT); 
+  
   myServo.attach(PIN_SERVO);
 
   // 初期化
   motorOff();
   myServo.write(ANGLE_STRAIGHT);
 
-  // 安全のため1秒待つ
   delay(1000);
 }
 
 void loop() {
-  if (isFinished == false) {
+  // センサーが反応しているか確認 (LOWで反応するタイプと仮定)
+  // もし反応しない場合は == LOW を == HIGH に変えてください
+  bool isDetected = (digitalRead(PIN_SENSOR) == LOW);
+
+  // ---------------------------------------------------
+  // ★ 第1段階：最初のスタート (直進して止まる)
+  // ---------------------------------------------------
+  if (stage == 0 && isDetected) {
     
     // 1. 直進 (行き)
     myServo.write(ANGLE_STRAIGHT);
     motorOn();
     delay(TIME_RUN_1);
 
-    // 2. 停止 (休憩)
+    // 2. 停止
     motorOff();
-    delay(TIME_STOP_1); // ★ここを直しました！
+    
+    // 次の段階へ進むために番号を増やす
+    stage = 1;
 
+    // ★重要：すぐに2回目が反応しないように、少し休憩時間を挟む
+    delay(2000); 
+  }
+
+  // ---------------------------------------------------
+  // ★ 第2段階：2回目のスタート (Uターンして帰る)
+  // ---------------------------------------------------
+  else if (stage == 1 && isDetected) {
+    
     // 3. 旋回 (Uターン)
     myServo.write(ANGLE_TURN);
     motorOn();
@@ -268,12 +286,11 @@ void loop() {
     motorOn();
     delay(TIME_RUN_2);
 
-     // 5. 停止 (ゴール)
+    // 5. 完全停止
     motorOff();
-    delay(TIME_STOP_2); // ★ここも直しました！
 
-    // 完了
-    isFinished = true;
+    // 完了フラグ (これ以上は動かない)
+    stage = 2;
   }
 }
 </code></pre>
@@ -527,6 +544,7 @@ window.addEventListener('scroll', function() {
 </script>
 </body>
 </html>
+
 
 
 
