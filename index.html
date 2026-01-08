@@ -194,82 +194,89 @@
 // ******************************************************
 // ① ピン設定
 // ******************************************************
-const int PIN_MOTOR_PWM = 5; // DCモーターの速度制御 (アクセル)
-const int PIN_MOTOR_DIR = 7; // DCモーターの方向制御 (マイナス役)
-const int PIN_SERVO     = 9; // サーボモーターの制御
+const int PIN_MOTOR_PWM = 5;
+const int PIN_MOTOR_DIR = 7;
+const int PIN_SERVO     = 9;
 
 // ******************************************************
 // ② 動きの設定
 // ******************************************************
-const int SPEED          = 255; // 走る速さ (0〜255)
-const int ANGLE_STRAIGHT = 90;  // まっすぐの角度
-const int ANGLE_TURN     = 45;  // 曲がる角度 (数値を大きくすると左、小さくすると右)
+const int SPEED          = 255; // 速さ
+const int ANGLE_STRAIGHT = 90;  // まっすぐ
+const int ANGLE_TURN     = 45;  // ハンドルを切る角度
 
 // ******************************************************
-// ③ 時間の設定 (1000 = 1秒)
+// ③ 時間の設定
 // ******************************************************
-const int TIME_RUN_1 = 3000; // 最初の直進時間
-const int TIME_STOP  = 1000; // 停止時間
-const int TIME_TURN  = 2400; // Uターンにかかる時間
+const int TIME_RUN_1  = 6500; // 行き
+const int TIME_STOP_1 = 1000; // 休憩（古い TIME_STOP はこれに変えました）
+const int TIME_TURN   = 5100; // Uターン
+const int TIME_RUN_2  = 6500; // 帰り
+const int TIME_STOP_2 = 5000; // ゴール後の停止時間
 
-// ******************************************************
+// *****************************************************
 // プログラム本体
 // ******************************************************
 
 Servo myServo;
 bool isFinished = false;
 
-// ■ モーターON (前進)
+// ■ モーターON
 void motorOn() {
-  analogWrite(PIN_MOTOR_PWM, SPEED); // 5番ピンで速度指定
-  digitalWrite(PIN_MOTOR_DIR, LOW);  // 7番ピンは0Vにしておく
+  analogWrite(PIN_MOTOR_PWM, SPEED);
+  digitalWrite(PIN_MOTOR_DIR, LOW);
 }
 
-// ■ モーターOFF (停止)
+// ■ モーターOFF
 void motorOff() {
-  analogWrite(PIN_MOTOR_PWM, 0);     // 速度0
+  analogWrite(PIN_MOTOR_PWM, 0);
   digitalWrite(PIN_MOTOR_DIR, LOW);
 }
 
 void setup() {
-  // ピンの準備
   pinMode(PIN_MOTOR_PWM, OUTPUT);
   pinMode(PIN_MOTOR_DIR, OUTPUT);
   myServo.attach(PIN_SERVO);
 
-  // 初期化: 停止＆まっすぐ
+  // 初期化
   motorOff();
   myServo.write(ANGLE_STRAIGHT);
 
-  // 安全のため電源ONから2秒待つ
-  delay(2000);
+  // 安全のため1秒待つ
+  delay(1000);
 }
 
 void loop() {
   if (isFinished == false) {
     
-    // 1. 直進
+    // 1. 直進 (行き)
     myServo.write(ANGLE_STRAIGHT);
     motorOn();
     delay(TIME_RUN_1);
 
-    // 2. 停止
+    // 2. 停止 (休憩)
     motorOff();
-    delay(TIME_STOP);
+    delay(TIME_STOP_1); // ★ここを直しました！
 
     // 3. 旋回 (Uターン)
     myServo.write(ANGLE_TURN);
     motorOn();
     delay(TIME_TURN);
 
-    // 4. 直進再開 (ずっと走る)
+    // 4. 直進 (帰り)
     myServo.write(ANGLE_STRAIGHT);
     motorOn();
+    delay(TIME_RUN_2);
 
-    // 完了フラグを立てる (これ以降ここには戻らない)
+     // 5. 停止 (ゴール)
+    motorOff();
+    delay(TIME_STOP_2); // ★ここも直しました！
+
+    // 完了
     isFinished = true;
   }
-}</code></pre>
+}
+</code></pre>
             </div>
         </div>
     </div>
@@ -520,6 +527,7 @@ window.addEventListener('scroll', function() {
 </script>
 </body>
 </html>
+
 
 
 
