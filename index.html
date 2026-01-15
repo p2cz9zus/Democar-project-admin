@@ -562,9 +562,22 @@ window.addEventListener('scroll', function() {
         navbar.classList.add('transparent');
     }
 });    
+function openModal() {
+    const modal = document.getElementById("imageModal");
+    const modalImg = document.getElementById("full-image");
+    const srcImg = document.getElementById("circuit-img");
+    
+    modal.style.display = "flex"; // 表示
+    modalImg.src = srcImg.src;    // クリックした画像を入れる
+}
+
+function closeModal() {
+    document.getElementById("imageModal").style.display = "none"; // 隠す
+}    
 </script>
 </body>
 </html>
+
 
 
 
