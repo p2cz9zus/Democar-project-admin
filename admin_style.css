@@ -376,6 +376,32 @@ a:focus, button:focus, .hero-tab-button:focus, .menu-icon:focus {
     margin-top: 15px;
     display: block;
 }
+/* ==========================================================================
+ * 5.1 ダウンロードリンク (.resource-link) のスタイル追加
+ * ========================================================================== */
+
+.resource-link {
+    display: inline-block;
+    color: #ffffff !important; /* 文字を白にする */
+    background-color: rgba(255, 255, 255, 0.1); /* 透過した白背景 */
+    padding: 8px 16px;
+    margin: 10px 0;
+    border: 1px solid rgba(255, 255, 255, 0.3); /* 薄い枠線 */
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+/* マウスを乗せた時の動き */
+.resource-link:hover {
+    background-color: var(--color-primary); /* Apple Blue に変わる */
+    border-color: var(--color-primary);
+    color: #ffffff !important;
+    transform: translateY(-2px); /* 少し浮き上がる */
+    box-shadow: 0 4px 12px rgba(0, 122, 255, 0.3);
+}
 
 /* ==========================================================================
  * 6. 調整用コード (メインサイトと共通)
@@ -833,6 +859,7 @@ a:focus, button:focus, .hero-tab-button:focus, .menu-icon:focus {
     .chat-container { padding: 15px; }
     .message { max-width: 95%; }
 }
+
 
 
 
