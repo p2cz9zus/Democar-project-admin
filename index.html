@@ -89,8 +89,19 @@
             <h4>回路図 (最新版)</h4>
             <p>最終決定した電源分離ロジックを含む回路図のPDFです。誤配線がないか常に確認してください。</p>
             <a href="./circuit_diagram_v3.pdf" class="resource-link">回路図 (PDF) ダウンロード</a>
-            <img src="./kuwashiikairo.jpeg" alt="最新回路図" class="process-media">
+    
+            <div class="image-container" onclick="openModal()">
+            <img src="./kuwashiikairo.jpeg" alt="最新回路図" class="process-media" id="circuit-img">
+            <div class="expand-icon">
+                <i class="fas fa-expand"></i> <span>🔍 拡大</span>
+            </div>
         </div>
+    </div>
+
+    <div id="imageModal" class="modal" onclick="closeModal()">
+        <span class="close-button">&times;</span>
+        <img class="modal-content" id="full-image">
+    </div>
         <div class="tech-card animate-on-scroll">
             <h4>車体 CAD データ (Fusion 360 / STL)</h4>
             <p>設計・調整用のFusion 360ソースファイル群です。構成パーツごとに詳細なデータを用意しています。</p>
@@ -554,6 +565,7 @@ window.addEventListener('scroll', function() {
 </script>
 </body>
 </html>
+
 
 
 
