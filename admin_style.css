@@ -404,6 +404,58 @@ a:focus, button:focus, .hero-tab-button:focus, .menu-icon:focus {
 }
 
 /* ==========================================================================
+ * 拡大アイコンの配置スタイル
+ * ========================================================================== */
+
+/* 親コンテナ：画像とアイコンの基準点 */
+.image-container {
+    position: relative; 
+    display: inline-block; /* 画像のサイズに合わせる */
+    cursor: pointer;
+    width: 100%; /* 親の tech-card に合わせる */
+    margin-top: 15px;
+}
+
+/* 拡大アイコン本体 */
+.expand-icon {
+    position: absolute;
+    bottom: 15px;  /* 画像の右下から浮かせる距離 */
+    right: 15px;
+    background-color: rgba(0, 0, 0, 0.7); /* 少し濃い目の半透明黒 */
+    color: #ffffff;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%; /* 円形にする（四角が良ければ 4px 等に変更） */
+    transition: all 0.3s ease;
+    z-index: 5;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* テキスト（🔍 拡大）を消した後のアイコンサイズ調整 */
+.expand-icon i {
+    font-size: 1.2rem;
+}
+
+/* ホバー時の演出 */
+.image-container:hover .expand-icon {
+    background-color: var(--color-primary); /* Apple Blue に変化 */
+    transform: scale(1.1); /* 少し大きく */
+}
+
+/* スマホでの微調整 */
+@media (max-width: 768px) {
+    .expand-icon {
+        bottom: 10px;
+        right: 10px;
+        width: 35px;
+        height: 35px;
+    }
+}
+
+/* ==========================================================================
  * 6. 調整用コード (メインサイトと共通)
  * ========================================================================== */
 
@@ -859,6 +911,7 @@ a:focus, button:focus, .hero-tab-button:focus, .menu-icon:focus {
     .chat-container { padding: 15px; }
     .message { max-width: 95%; }
 }
+
 
 
 
