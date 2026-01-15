@@ -286,6 +286,35 @@ a:focus, button:focus, .hero-tab-button:focus, .menu-icon:focus {
 .resource-link:hover {
     background-color: var(--color-primary-hover);
 }
+/* 親要素を基準にする */
+.image-container {
+    position: relative;
+    display: inline-block;
+}
+
+/* アイコンを右下に絶対配置 */
+.expand-icon {
+    position: absolute;
+    bottom: 12px;
+    right: 12px;
+    background: rgba(0, 0, 0, 0.7); /* 黒背景を少し透過 */
+    color: #fff;
+    padding: 4px 8px;
+    border-radius: 4px;
+    pointer-events: none; /* アイコンを突き抜けて画像クリックを有効にする */
+}
+
+/* モーダルの基本設定（最初は隠す） */
+.modal {
+    display: none; 
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.9);
+    z-index: 9999;
+    justify-content: center;
+    align-items: center;
+}
 /* ==========================================================================
  * 技術リソースセクションのリンク視認性向上（白文字化）
  * ========================================================================== */
@@ -805,6 +834,7 @@ a:focus, button:focus, .hero-tab-button:focus, .menu-icon:focus {
     .chat-container { padding: 15px; }
     .message { max-width: 95%; }
 }
+
 
 
 
