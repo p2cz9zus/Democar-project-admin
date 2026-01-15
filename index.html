@@ -567,16 +567,19 @@ function openModal() {
     const modalImg = document.getElementById("full-image");
     const srcImg = document.getElementById("circuit-img");
     
-    modal.style.display = "flex"; // 表示
-    modalImg.src = srcImg.src;    // クリックした画像を入れる
+    modal.style.display = "flex"; // ここをflexに
+    modalImg.src = srcImg.src;
+    document.body.style.overflow = "hidden"; // 背後のスクロールを止める（親切設計）
 }
 
 function closeModal() {
-    document.getElementById("imageModal").style.display = "none"; // 隠す
-}    
+    document.getElementById("imageModal").style.display = "none";
+    document.body.style.overflow = "auto"; // スクロールを再開
+}   
 </script>
 </body>
 </html>
+
 
 
 
